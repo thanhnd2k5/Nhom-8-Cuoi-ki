@@ -12,15 +12,6 @@ const User = createModel(
         email: {
             type: String,
             lowercase: true,
-            required: function() {
-                return !this.phone
-            }
-        },
-        phone: {
-            type: String,
-            required: function() {
-                return !this.email
-            }
         },
         gender: {
             type: String,

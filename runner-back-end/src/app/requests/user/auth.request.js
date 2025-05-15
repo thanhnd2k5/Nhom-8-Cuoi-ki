@@ -1,10 +1,9 @@
 import Joi from 'joi'
-import {VALIDATE_PHONE_REGEX, VALIDATE_EMAIL_REGEX} from '@/configs'
+import {VALIDATE_EMAIL_REGEX} from '@/configs/constants'
 
 export const login = Joi.object({
-    username: Joi.alternatives()
+    email: Joi.alternatives()
         .try(
-            Joi.string().pattern(VALIDATE_PHONE_REGEX).label('Số điện thoại'),
             Joi.string().pattern(VALIDATE_EMAIL_REGEX).label('Email')
         )
         .required()
@@ -14,9 +13,8 @@ export const login = Joi.object({
 
 export const register = Joi.object({
     name: Joi.string().required().label('Họ tên'),
-    username: Joi.alternatives()
+    email: Joi.alternatives()
         .try(
-            Joi.string().pattern(VALIDATE_PHONE_REGEX).label('Số điện thoại'),
             Joi.string().pattern(VALIDATE_EMAIL_REGEX).label('Email')
         )
         .required()

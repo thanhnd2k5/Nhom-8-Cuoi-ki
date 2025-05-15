@@ -89,25 +89,14 @@ export async function blockToken(token) {
 
 export async function registerUser(userData) {
     // Xác định username là email hay phone
-    const isEmail = VALIDATE_EMAIL_REGEX.test(userData.username)
+    const isEmail = VALIDATE_EMAIL_REGEX.test(userData.email)
     
     // Kiểm tra email/phone đã tồn tại chưa
     if (isEmail) {
-        const existingEmail = await User.findOne({ email: userData.username, deleted: false })
+        const existingEmail = await User.findOne({ email: userData.email, deleted: false })
         if (existingEmail) {
             abort(400, 'Email đã được sử dụng.')
         }
-        // Gán giá trị cho email và để phone là rỗng
-        userData.email = userData.username
-        userData.phone = ''
-    } else {
-        const existingPhone = await User.findOne({ phone: userData.username, deleted: false })
-        if (existingPhone) {
-            abort(400, 'Số điện thoại đã được sử dụng.')
-        }
-        // Gán giá trị cho phone và để email là rỗng
-        userData.phone = userData.username
-        userData.email = ''
     }
     
     // Tạo user mới
