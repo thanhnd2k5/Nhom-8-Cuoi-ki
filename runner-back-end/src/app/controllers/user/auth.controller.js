@@ -3,7 +3,7 @@ import * as authService from '@/app/services/auth.service'
 
 export async function login(req, res) {
     const validLogin = await authService.checkValidLoginUser(req.body)
-
+    
     if (validLogin) {
         res.jsonify(authService.authTokenUser(validLogin))
     } else {
