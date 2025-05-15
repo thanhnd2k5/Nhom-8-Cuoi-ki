@@ -47,14 +47,8 @@ export async function profileAdmin(currentAdmin) {
     return acc
 }
 
-export async function checkValidLoginUser({username, password}) {
-    // Tìm user theo phone hoặc email
-    const user = await User.findOne({
-        $or: [
-            { phone: username, deleted: false },
-            { email: username, deleted: false }
-        ]
-    })
+export async function checkValidLoginUser({email, password}) {
+    const user = await User.findOne({email, deleted: false})
 
     if (user) {
         const verified = user.verifyPassword(password)
