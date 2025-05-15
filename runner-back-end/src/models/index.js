@@ -8,7 +8,4 @@ export {default as User} from './user'
 export {default as UserRole} from './user-role'
 export {default as UserPermissionGroup} from './user-permission-group'
 export {default as UserPermission} from './user-permission'
-export {default as Achievement} from './achievement'
-export {default as Event} from './event'
-export {default as EventParticipant} from './event-participant'
 
