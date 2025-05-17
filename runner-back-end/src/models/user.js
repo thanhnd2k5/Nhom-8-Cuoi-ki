@@ -37,6 +37,39 @@ const User = createModel(
                 return bcrypt.hashSync(value, salt)
             },
         },
+        idNumber: {
+            type: String,
+            default: '',
+        },
+        phone: {
+            type: String,
+            default: '',
+        },
+        province: {
+            type: String,
+            default: '',
+        },
+        district: {
+            type: String,
+            default: '',
+        },
+        school: {
+            type: String,
+            default: '',
+        },
+        graduationYear: {
+            type: String,
+            default: '',
+        },
+        priorityArea: {
+            type: String,
+            default: '',
+        },
+        priorityGroup: {
+            type: String,
+            default: '',
+        },
+
         status: {
             type: String,
             enum: Object.values(STATUS_ACCOUNT),
