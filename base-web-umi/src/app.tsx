@@ -10,7 +10,6 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { OIDCBounder } from './components/OIDCBounder';
 import { unCheckPermissionPaths } from './components/OIDCBounder/constant';
 import OneSignalBounder from './components/OneSignalBounder';
-import TechnicalSupportBounder from './components/TechnicalSupportBounder';
 import NotAccessible from './pages/exception/403';
 import NotFoundContent from './pages/exception/404';
 import type { IInitialState } from './services/base/typing';
@@ -70,9 +69,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 	return {
 		unAccessible: (
 			<OIDCBounder>
-				<TechnicalSupportBounder>
-					<NotAccessible />
-				</TechnicalSupportBounder>
+				<NotAccessible />
 			</OIDCBounder>
 		),
 		noFound: <NotFoundContent />,
@@ -116,9 +113,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 		childrenRender: (dom) => (
 			<OIDCBounder>
 				<ErrorBoundary>
-					{/* <TechnicalSupportBounder> */}
 					<OneSignalBounder>{dom}</OneSignalBounder>
-					{/* </TechnicalSupportBounder> */}
 				</ErrorBoundary>
 			</OIDCBounder>
 		),
