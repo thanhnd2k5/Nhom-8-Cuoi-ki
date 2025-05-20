@@ -4,28 +4,28 @@ import styles from '../LandingPage.less';
 const steps = [
   {
     step: '01',
-    title: 'Tìm hiểu thông tin',
-    description: 'Khám phá các ngành học, chương trình đào tạo và cơ hội phát triển tại trường',
+    title: 'Đăng ký tài khoản',
+    description: 'Tạo tài khoản cá nhân trên hệ thống UniAdmit để bắt đầu quá trình xét tuyển',
   },
   {
     step: '02',
-    title: 'Đăng ký tư vấn',
-    description: 'Đăng ký nhận tư vấn trực tiếp từ đội ngũ tư vấn tuyển sinh của trường',
+    title: 'Cập nhật thông tin cá nhân',
+    description: 'Nhập đầy đủ thông tin cá nhân, học tập và tải lên các giấy tờ cần thiết',
   },
   {
     step: '03',
-    title: 'Chuẩn bị hồ sơ',
-    description: 'Chuẩn bị đầy đủ các giấy tờ cần thiết theo yêu cầu của trường',
+    title: 'Chọn trường và ngành',
+    description: 'Lựa chọn trường đại học, ngành học và phương thức xét tuyển phù hợp',
   },
   {
     step: '04',
     title: 'Nộp hồ sơ xét tuyển',
-    description: 'Nộp hồ sơ trực tiếp tại trường hoặc qua hệ thống tuyển sinh trực tuyến',
+    description: 'Hoàn thiện và nộp hồ sơ xét tuyển trực tuyến, thanh toán lệ phí xét tuyển',
   },
   {
     step: '05',
-    title: 'Nhận kết quả và nhập học',
-    description: 'Nhận thông báo kết quả và hoàn tất thủ tục nhập học',
+    title: 'Theo dõi kết quả',
+    description: 'Theo dõi trạng thái hồ sơ và nhận thông báo kết quả xét tuyển',
   },
 ];
 
@@ -34,9 +34,9 @@ const ProcessSection: React.FC = () => {
     <section className={styles.stepsSection}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <h2 style={{ fontSize: 36, fontWeight: 700 }}>Quy trình tuyển sinh</h2>
+          <h2 style={{ fontSize: 36, fontWeight: 700 }}>Quy trình xét tuyển</h2>
           <p style={{ marginTop: 16, color: '#666', fontSize: 18, maxWidth: 700, marginLeft: 'auto', marginRight: 'auto' }}>
-            Hướng dẫn chi tiết các bước trong quy trình tuyển sinh của trường
+            Chỉ với vài bước đơn giản, bạn có thể hoàn thành hồ sơ xét tuyển đại học
           </p>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 48 }}>
@@ -51,7 +51,7 @@ const ProcessSection: React.FC = () => {
                 {idx === 0 && (
                   <div style={{ marginTop: 24 }}>
                     <button style={{ background: '#2563eb', color: '#fff', border: 'none', borderRadius: 8, padding: '12px 32px', fontSize: 18, fontWeight: 600, cursor: 'pointer' }}>
-                      Đăng ký tư vấn
+                      Đăng ký ngay
                     </button>
                   </div>
                 )}
