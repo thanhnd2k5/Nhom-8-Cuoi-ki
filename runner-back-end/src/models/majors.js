@@ -18,10 +18,6 @@ const Major = createModel(
             type: String,
             required: true,
         },
-        admissionMethods: {
-            type: [String],
-            default: [],
-        },
     }
 )
 

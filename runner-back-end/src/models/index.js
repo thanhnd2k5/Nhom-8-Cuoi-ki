@@ -17,7 +17,9 @@ export {default as SubjectCombination} from './subject_combinations'
 export {default as ApplicationResult} from './application_results'
 export {default as HighSchoolProfile} from './high_school_profiles'
 export {default as MajorCombination} from './major_combinations'
-
+export {default as UniversityMajorMethods} from './university_major_methods'
+export {default as UniversityMajorMethodCombinations} from './university_major_method_combinations'
+export {default as UniversityMajors} from './university_majors'
 
 
 
