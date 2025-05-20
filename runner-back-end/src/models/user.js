@@ -21,10 +21,6 @@ const User = createModel(
             type: Date,
             default: ''
         },
-        address: {
-            type: Date,
-            default: ''
-        },
         avatar: {
             type: String,
             default: '',
@@ -37,11 +33,15 @@ const User = createModel(
                 return bcrypt.hashSync(value, salt)
             },
         },
-        idNumber: {
+        cccd: {
             type: String,
             default: '',
         },
         phone: {
+            type: String,
+            default: '',
+        },
+        ethnic: {
             type: String,
             default: '',
         },
@@ -53,23 +53,10 @@ const User = createModel(
             type: String,
             default: '',
         },
-        school: {
+        address: {
             type: String,
             default: '',
         },
-        graduationYear: {
-            type: String,
-            default: '',
-        },
-        priorityArea: {
-            type: String,
-            default: '',
-        },
-        priorityGroup: {
-            type: String,
-            default: '',
-        },
-
         status: {
             type: String,
             enum: Object.values(STATUS_ACCOUNT),

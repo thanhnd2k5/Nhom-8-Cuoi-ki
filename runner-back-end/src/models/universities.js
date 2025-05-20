@@ -1,5 +1,4 @@
 import createModel from './base'
-import { Schema } from 'mongoose'
 
 const University = createModel(
     'University',
@@ -11,29 +10,10 @@ const University = createModel(
         },
         code: {
             type: String,
-            required: true,
-        },
-        logo: {
-            type: String,
             default: '',
+            unique: true,
         },
         address: {
-            type: String,
-            default: '',
-        },
-        website: {
-            type: String,
-            default: '',
-        },
-        email: {
-            type: String,
-            default: '',
-        },
-        phone: {
-            type: String,
-            default: '',
-        },
-        description: {
             type: String,
             default: '',
         },
