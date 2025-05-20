@@ -3,28 +3,28 @@ import styles from '../LandingPage.less';
 
 const features = [
   {
-    title: 'Chương trình đào tạo chất lượng',
-    description: 'Chương trình học được thiết kế theo chuẩn quốc tế, cập nhật liên tục theo xu hướng thị trường'
+    title: 'Đa dạng phương thức xét tuyển',
+    description: 'Hỗ trợ tất cả các phương thức xét tuyển: học bạ, điểm thi THPT, đánh giá năng lực, xét tuyển thẳng...'
   },
   {
-    title: 'Đội ngũ giảng viên chuyên môn cao',
-    description: '100% giảng viên có trình độ thạc sĩ trở lên, nhiều năm kinh nghiệm trong giảng dạy và nghiên cứu'
+    title: 'Theo dõi trạng thái hồ sơ',
+    description: 'Cập nhật trạng thái hồ sơ xét tuyển theo thời gian thực, giúp thí sinh nắm bắt tiến độ xét tuyển'
   },
   {
-    title: 'Cơ sở vật chất hiện đại',
-    description: 'Phòng học, phòng thí nghiệm, thư viện được trang bị đầy đủ thiết bị hiện đại phục vụ học tập'
+    title: 'Quản lý hồ sơ thông minh',
+    description: 'Lưu trữ và quản lý tất cả giấy tờ, thông tin cá nhân và học tập một cách an toàn và hiệu quả'
   },
   {
-    title: 'Chương trình thực tập doanh nghiệp',
-    description: 'Liên kết với hơn 100 doanh nghiệp uy tín, tạo cơ hội thực tập và việc làm cho sinh viên'
+    title: 'Xác thực thông tin',
+    description: 'Hệ thống xác thực thông tin tự động, đảm bảo tính chính xác và tin cậy của hồ sơ xét tuyển'
   },
   {
-    title: 'Hoạt động ngoại khóa phong phú',
-    description: 'Câu lạc bộ học thuật, thể thao, văn nghệ giúp sinh viên phát triển toàn diện'
+    title: 'So sánh ngành học',
+    description: 'Công cụ so sánh ngành học giữa các trường đại học, giúp thí sinh đưa ra quyết định phù hợp'
   },
   {
-    title: 'Hỗ trợ sinh viên toàn diện',
-    description: 'Học bổng, chương trình tư vấn học tập, hướng nghiệp và hỗ trợ việc làm sau tốt nghiệp'
+    title: 'Thông báo kết quả',
+    description: 'Nhận thông báo kết quả xét tuyển qua email, SMS và trên hệ thống ngay khi có kết quả'
   },
 ];
 
@@ -33,9 +33,9 @@ const FeaturesSection: React.FC = () => {
     <section className={styles.featuresSection}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <h2 style={{ fontSize: 36, fontWeight: 700 }}>Điểm mạnh của trường</h2>
+          <h2 style={{ fontSize: 36, fontWeight: 700 }}>Tính năng nổi bật</h2>
           <p style={{ marginTop: 16, color: '#666', fontSize: 18, maxWidth: 700, marginLeft: 'auto', marginRight: 'auto' }}>
-            Cam kết mang đến môi trường học tập chất lượng cao và cơ hội phát triển toàn diện cho sinh viên
+            UniAdmit cung cấp đầy đủ các tính năng cần thiết cho quá trình xét tuyển đại học
           </p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 32 }}>

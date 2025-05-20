@@ -1,42 +1,41 @@
 import React from 'react';
-import styles from '../LandingPage.less';
 
 const testimonials = [
   {
     name: 'Nguyễn Văn A',
     avatar: 'A',
-    position: 'Sinh viên năm 4 - Công nghệ thông tin',
-    quote: 'Môi trường học tập tại trường rất năng động và chuyên nghiệp. Các giảng viên luôn nhiệt tình hỗ trợ sinh viên trong học tập và nghiên cứu.',
+    university: 'Đại học Bách Khoa Hà Nội',
+    quote: 'UniAdmit giúp tôi dễ dàng đăng ký xét tuyển vào Đại học Bách Khoa Hà Nội. Giao diện thân thiện và dễ sử dụng.',
   },
   {
     name: 'Trần Thị B',
     avatar: 'B',
-    position: 'Cựu sinh viên - Kinh tế',
-    quote: 'Nhờ chương trình thực tập tại doanh nghiệp, tôi đã có cơ hội làm việc tại một công ty lớn ngay sau khi tốt nghiệp. Kiến thức và kỹ năng được trang bị rất thiết thực.',
+    university: 'Đại học Quốc gia Hà Nội',
+    quote: 'Tôi đã tiết kiệm rất nhiều thời gian và công sức nhờ UniAdmit. Hệ thống thông báo kết quả nhanh chóng và chính xác.',
   },
   {
     name: 'Lê Văn C',
     avatar: 'C',
-    position: 'Sinh viên năm 3 - Kỹ thuật điện',
-    quote: 'Cơ sở vật chất hiện đại, phòng thí nghiệm được trang bị đầy đủ thiết bị. Điều này giúp chúng tôi có thể thực hành và áp dụng kiến thức vào thực tế.',
+    university: 'Đại học Kinh tế Quốc dân',
+    quote: 'Tính năng so sánh ngành học giữa các trường đại học giúp tôi đưa ra quyết định đúng đắn cho tương lai của mình.',
   },
   {
     name: 'Phạm Thị D',
     avatar: 'D',
-    position: 'Sinh viên năm 2 - Ngôn ngữ Anh',
-    quote: 'Các hoạt động ngoại khóa và câu lạc bộ học thuật giúp tôi phát triển kỹ năng mềm và mở rộng mối quan hệ. Đây là môi trường lý tưởng để phát triển toàn diện.',
+    university: 'Đại học Y Hà Nội',
+    quote: 'Đội ngũ hỗ trợ của UniAdmit rất nhiệt tình và chuyên nghiệp. Họ đã giải đáp mọi thắc mắc của tôi trong quá trình xét tuyển.',
   },
   {
     name: 'Hoàng Văn E',
     avatar: 'E',
-    position: 'Cựu sinh viên - Quản trị kinh doanh',
-    quote: 'Chương trình đào tạo được thiết kế khoa học, cập nhật theo xu hướng thị trường. Điều này giúp tôi dễ dàng thích nghi với môi trường làm việc sau khi ra trường.',
+    university: 'Đại học Ngoại thương',
+    quote: 'UniAdmit là công cụ tuyệt vời cho việc quản lý hồ sơ xét tuyển. Tôi có thể theo dõi trạng thái hồ sơ mọi lúc, mọi nơi.',
   },
   {
     name: 'Vũ Thị F',
     avatar: 'F',
-    position: 'Sinh viên năm 1 - Công nghệ sinh học',
-    quote: 'Đội ngũ giảng viên có chuyên môn cao và nhiệt huyết. Họ không chỉ dạy kiến thức mà còn truyền cảm hứng cho sinh viên trong học tập và nghiên cứu.',
+    university: 'Đại học Sư phạm Hà Nội',
+    quote: 'Nhờ UniAdmit, tôi đã trúng tuyển vào ngành học mơ ước. Cảm ơn UniAdmit đã đồng hành cùng tôi trong hành trình này.',
   },
 ];
 
@@ -45,9 +44,9 @@ const TestimonialsSection: React.FC = () => {
     <section style={{ background: 'linear-gradient(to bottom, #fff, #f0f6ff)', padding: '40px 0' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <h2 style={{ fontSize: 36, fontWeight: 700 }}>Cảm nhận từ sinh viên</h2>
+          <h2 style={{ fontSize: 36, fontWeight: 700 }}>Đánh giá từ người dùng</h2>
           <p style={{ marginTop: 16, color: '#666', fontSize: 18, maxWidth: 700, marginLeft: 'auto', marginRight: 'auto' }}>
-            Những chia sẻ chân thực từ sinh viên đang theo học và cựu sinh viên của trường
+            Hàng nghìn thí sinh đã thành công trong kỳ tuyển sinh đại học với UniAdmit
           </p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32 }}>
@@ -59,7 +58,7 @@ const TestimonialsSection: React.FC = () => {
                 </div>
                 <div>
                   <div style={{ fontWeight: 700 }}>{t.name}</div>
-                  <div style={{ color: '#666', fontSize: 15 }}>{t.position}</div>
+                  <div style={{ color: '#666', fontSize: 15 }}>{t.university}</div>
                 </div>
               </div>
               <div style={{ color: '#666', fontSize: 16, marginTop: 8 }}>
