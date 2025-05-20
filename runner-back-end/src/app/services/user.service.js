@@ -3,8 +3,8 @@ import { abort } from '@/utils/helpers'
 
 export async function updateUserProfile(userId, profileData) {
     // Kiểm tra nếu cả email và phone đều trống
-    if (!profileData.email && !profileData.phone) {
-        abort(400, 'Email hoặc số điện thoại là bắt buộc')
+    if (!profileData.email) {
+        abort(400, 'Email không được để trống')
     }
     
     try {

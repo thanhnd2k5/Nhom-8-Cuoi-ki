@@ -26,18 +26,7 @@ export const updateProfile = Joi.object({
     
     phone: Joi.string()
         .pattern(VALIDATE_PHONE_REGEX)
-        .label('Số điện thoại')
-        .custom((value, helpers) => 
-            new AsyncValidate(value, async function(req) {
-                if (!value) return value
-                const existingUser = await User.findOne({ 
-                    phone: value, 
-                    _id: { $ne: req.currentUser._id },
-                    deleted: false 
-                })
-                return !existingUser ? value : helpers.error('any.exists')
-            })
-        ),
+        .label('Số điện thoại'),
     
     gender: Joi.string()
         .valid('male', 'female', 'other', '')
@@ -51,6 +40,26 @@ export const updateProfile = Joi.object({
         .max(200)
         .allow('')
         .label('Địa chỉ'),
+
+    province: Joi.string()
+        .max(50)
+        .allow('')
+        .label('Tỉnh/Thành phố'),
+    
+    district: Joi.string()
+        .max(50)
+        .allow('')
+        .label('Quận/Huyện'),
+    
+    ethnic: Joi.string()
+        .max(50)
+        .allow('')
+        .label('Dân tộc'),
+    
+    cccd: Joi.string()
+        .max(12)
+        .allow('')
+        .label('Số CMND/CCCD'),
     
     avatar: Joi.string()
         .allow('')
