@@ -5,11 +5,6 @@ const Document = createModel(
     'Document',
     'documents',
     {
-        userId: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: true,
-        },
         applicationId: {
             type: Schema.Types.ObjectId,
             ref: 'Application',
@@ -17,20 +12,15 @@ const Document = createModel(
         },
         type: {
             type: String,
-            required: true,
+            default: '',
         },
-        name: {
+        fileUrl: {
             type: String,
-            required: true,
+            default: '',
         },
-        //tài liệu minh chứng
-        file: {
+        fileType: {
             type: String,
-            required: true,
-        },
-        status: {
-            type: String,
-            required: true,
+            default: '',
         }
     }
 )

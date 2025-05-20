@@ -1,36 +1,35 @@
 import createModel from './base'
 import { Schema } from 'mongoose'
 
-const AcademicRecords = createModel(
-    'AcademicRecords',
-    'academic-records',
+const HighSchoolProfile = createModel(
+    'HighSchoolProfile',
+    'high_school_profiles',
     {
         userId: {
             type: Schema.Types.ObjectId,
             ref: 'User',
-            required: true,
+            required: true, 
         },
-        schoolName: {   
+        highSchoolName: {
             type: String,
-            required: true,
+            default: '',
+        },
+        gpaGrade10: {
+            type: Number,
+            default: '',
+        },
+        gpaGrade11: {
+            type: Number,
+            default: '',
+        },
+        gpaGrade12: {
+            type: Number,
+            default: '',
         },
         graduationYear: {
-            type: String,
-            required: true,
-        },
-        gpa10: {
             type: Number,
-            default: 0,
+            default: '',
         },
-        gpa11: {
-            type: Number,
-            default: 0,
-        },
-        gpa12: {
-            type: Number,
-            default: 0,
-        },
-
         priorityArea: {
             type: String,
             default: '',
@@ -39,7 +38,8 @@ const AcademicRecords = createModel(
             type: String,
             default: '',
         },
-    }
+    }  
 )
 
-export default AcademicRecords
+export default HighSchoolProfile
+

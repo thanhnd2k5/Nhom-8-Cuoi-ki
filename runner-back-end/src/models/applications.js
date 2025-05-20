@@ -1,7 +1,6 @@
 import createModel from './base'
 import { Schema } from 'mongoose'
 
-
 const Application = createModel(
     'Application',
     'applications',
@@ -21,28 +20,18 @@ const Application = createModel(
             ref: 'Major',
             required: true,
         },
-        combinationId: {
+        subjectCombinationId: {
             type: Schema.Types.ObjectId,
-            ref: 'Combination',
-            required: true,
+            ref: 'SubjectCombination',
         },
-        admissionId: {
-            type: Schema.Types.ObjectId,
-            ref: 'Admission',
-            required: true,
+        admissionMethod: {
+            type: String,
+            default: '',
         },
         status: {
             type: String,
-            required: true,
+            default: '',
         },
-        priorityScore: {
-            type: Number,
-            required: true,
-        },
-        totalScore: {
-            type: Number,
-            required: true,
-        }
     }
 )
 

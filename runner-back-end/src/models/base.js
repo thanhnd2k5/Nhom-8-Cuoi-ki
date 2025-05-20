@@ -46,88 +46,34 @@ export const STATUS_ACCOUNT = {
     DE_ACTIVE: 'DE_ACTIVE',
 }
 
-export const PRIORITY_AREA = {
-    KV1: 'KV1',
-    KV2: 'KV2',
-    KV2_NT: 'KV2-NT',
-    KV3: 'KV3'
-}
-
-export const PRIORITY_GROUP = {
-    GROUP_01: '01',
-    GROUP_02: '02',
-    GROUP_03: '03',
-    GROUP_04: '04',
-    GROUP_05: '05',
-    GROUP_06: '06',
-    GROUP_07: '07',
-    OTHER: 'OTHER'
-}
-
 export const GENDER = {
-    MALE: 'MALE',
-    FEMALE: 'FEMALE',
-    OTHER: 'OTHER'
+    MALE: 'male',
+    FEMALE: 'female',
+    OTHER: 'other'
 }
 
-export const STATUS_APPLICATION = {
-    PENDING: 'PENDING',
-    APPROVED: 'APPROVED',
-    REJECTED: 'REJECTED',
+export const ADMISSION_METHOD = {
+    HOC_BA: 'hoc_ba',
+    TOT_NGHIEP: 'tot_nghiep',
+    DGNL: 'dgnl',
+    TU_DUY: 'tu_duy'
 }
 
-export const STATUS_DOCUMENT = {
-    PENDING: 'PENDING',
-    APPROVED: 'APPROVED',
-    REJECTED: 'REJECTED',
+export const ADMISSION_STATUS = {
+    PENDING: 'pending',
+    APPROVED: 'approved',
+    REJECTED: 'rejected'
 }
 
 export const DOCUMENT_TYPE = {
-    IDENTITY_CARD: 'IDENTITY_CARD',
-    HIGH_SCHOOL_CERTIFICATE: 'HIGH_SCHOOL_CERTIFICATE',
-    COLLEGE_CERTIFICATE: 'COLLEGE_CERTIFICATE',
-    SAT: 'SAT',
-    ACT: 'ACT',
-    TOEFL: 'TOEFL',
-    IELTS: 'IELTS',
-    OTHER: 'OTHER'
+    IDENTITY_CARD: 'identity_card',
+    HIGH_SCHOOL_CERTIFICATE: 'high_school_certificate',
+    DGNL_CERTIFICATE: 'dgnl_certificate',
+    TU_DUY_CERTIFICATE: 'tu_duy_certificate',
+    OTHER: 'other'
 }
 
 export const NOTIFICATION_TYPE = {
-    APPLICATION_STATUS_CHANGE: 'APPLICATION_STATUS_CHANGE',
-    DOCUMENT_STATUS_CHANGE: 'DOCUMENT_STATUS_CHANGE',
-    COMBINATION_STATUS_CHANGE: 'COMBINATION_STATUS_CHANGE',
-    MAJOR_STATUS_CHANGE: 'MAJOR_STATUS_CHANGE',
-    UNIVERSITY_STATUS_CHANGE: 'UNIVERSITY_STATUS_CHANGE',
-    OTHER: 'OTHER'
-}
-
-export const INTERNATIONAL_CERTIFICATE_TYPE = {
-    IELTS: 'IELTS',
-    TOEFL: 'TOEFL',
-    TOEIC: 'TOEIC',
-    ACT: 'ACT',
-    SAT: 'SAT',
-}
-
-export const UNIVERSITY_EXAM_SCORE_TYPE = {
-    DGNL: 'DGNL', //Kì thi đánh giá năng lực của Đại học Quốc gia Hà Nội
-    TSA: 'TSA', //Kì thi tư duy sáng tạo của ĐH Bách Khoa Hà Nội
-}
-
-export const DIRECT_ADMISSION_TYPE = {
-    NATIONAL_EXCELLENT_STUDENT: 'NATIONAL_EXCELLENT_STUDENT',
-    NATIONAL_SCI_TECH_AWARD: 'NATIONAL_SCI_TECH_AWARD',
-    PROVINCIAL_EXCELLENT_STUDENT: 'PROVINCIAL_EXCELLENT_STUDENT',
-    OTHER_SPECIAL_CASE: 'OTHER_SPECIAL_CASE'
-}
-
-export const TALENT_FIELD = {
-    MUSIC: 'MUSIC',
-    DANCE: 'DANCE',
-    PAINTING: 'PAINTING',
-    SPORTS: 'SPORTS',
-    ROBOTICS: 'ROBOTICS',
-    DEBATE: 'DEBATE',
-    OTHER: 'OTHER'
+    APPLICATION_STATUS_UPDATE: 'application_status_update',
+    APPLICATION_RESULT_UPDATE: 'application_result_update',
 }

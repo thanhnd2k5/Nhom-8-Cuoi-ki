@@ -1,9 +1,15 @@
 import createModel from './base'
+import { Schema } from 'mongoose'
 
 const Major = createModel(
     'Major',
     'majors',
     {
+        universityId: {
+            type: Schema.Types.ObjectId,
+            ref: 'University',
+            required: true,
+        },
         name: {
             type: String,
             required: true,
@@ -12,13 +18,9 @@ const Major = createModel(
             type: String,
             required: true,
         },
-        universityId: {
-            type: String,
-            required: true,
-            ref: 'University',
-        },
-        description: {
-            type: String,
+        admissionMethods: {
+            type: [String],
+            default: [],
         },
     }
 )
