@@ -6,7 +6,7 @@ import { updateHighSchoolProfileRequest } from '@/app/requests/user/high_school_
 import validate from '@/app/middleware/user/validate'
 const router = express.Router()
 
-router.use(checkValidToken)
+router.use(asyncHandler(checkValidToken))
 
 router.get('/', asyncHandler(controller.getProfile))
 router.put('/',
