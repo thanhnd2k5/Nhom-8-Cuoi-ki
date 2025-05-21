@@ -6,7 +6,7 @@ export async function getAll(req, res) {
 }
 
 export async function getOne(req, res) {
-    const university = await universityService.getUniversityById(req.params.id)
+    const university = await universityService.getUniversityById(req.university._id)
     if (!university) {
         return res.status(404).json({ success: false, message: 'Không tìm thấy trường đại học' })
     }
@@ -19,7 +19,7 @@ export async function create(req, res) {
 }
 
 export async function update(req, res) {
-    const university = await universityService.updateUniversity(req.params.id, req.body)
+    const university = await universityService.updateUniversity(req.university._id, req.body)
     if (!university) {
         return res.status(404).json({ success: false, message: 'Không tìm thấy trường đại học' })
     }
@@ -27,7 +27,7 @@ export async function update(req, res) {
 }
 
 export async function remove(req, res) {
-    const university = await universityService.deleteUniversity(req.params.id)
+    const university = await universityService.deleteUniversity(req.university._id)
     if (!university) {
         return res.status(404).json({ success: false, message: 'Không tìm thấy trường đại học' })
     }

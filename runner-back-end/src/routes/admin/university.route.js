@@ -11,7 +11,7 @@ const router = express.Router()
 router.use(asyncHandler(checkValidToken))
 
 router.get('/', asyncHandler(controller.getAll))
-router.get('/:id',
+router.get('/:universityId',
     asyncHandler(checkUniversityExists),
     asyncHandler(controller.getOne)
 )
@@ -19,12 +19,12 @@ router.post('/',
     asyncHandler(validate(createUniversityRequest)),
     asyncHandler(controller.create)
 )
-router.put('/:id',
+router.put('/:universityId',
     asyncHandler(checkUniversityExists),
     asyncHandler(validate(updateUniversityRequest)),
     asyncHandler(controller.update)
 )
-router.delete('/:id',
+router.delete('/:universityId',
     asyncHandler(checkUniversityExists),
     asyncHandler(validate(deleteUniversityRequest)),
     asyncHandler(controller.remove)

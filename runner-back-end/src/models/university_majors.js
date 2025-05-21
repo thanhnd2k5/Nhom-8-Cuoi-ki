@@ -9,13 +9,21 @@ const UniversityMajors = createModel(
             type: mongoose.Schema.Types.ObjectId, 
             ref: 'University' 
         },
-        major_id: { 
-            type: mongoose.Schema.Types.ObjectId, 
-            ref: 'Major'
-        },
-        major_code: {
+        name: {
             type: String,
         },
+        code: {
+            type: String,
+            unique: true,
+        },
+        admission_methods: {
+            type: [String],
+        },
+        // Chỉ áp dụng cho học bạ & tốt nghiệp
+        subject_combination_ids: {
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: 'SubjectCombination'
+        }
     }
 )
 
