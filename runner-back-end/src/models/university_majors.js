@@ -1,5 +1,6 @@
-import createModel from './base'
+import createModel, { ADMISSION_METHOD } from './base'
 import mongoose from 'mongoose'
+
 
 const UniversityMajors = createModel(
     'UniversityMajors',
@@ -18,6 +19,7 @@ const UniversityMajors = createModel(
         },
         admission_methods: {
             type: [String],
+            enum: Object.values(ADMISSION_METHOD),
         },
         // Chỉ áp dụng cho học bạ & tốt nghiệp
         subject_combination_ids: {
