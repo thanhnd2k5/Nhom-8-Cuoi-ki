@@ -10,7 +10,7 @@ const router = express.Router()
 
 router.use(asyncHandler(checkValidToken))
 
-router.post('/', 
+router.post('/',
     asyncHandler(validate(createApplicationSchema)),
     asyncHandler(ApplicationsController.createApplication)
 )

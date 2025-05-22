@@ -10,6 +10,7 @@ const Document = createModel(
             ref: 'Application',
             required: true,
         },
+        //hoc_ba, tot_nghiep, dgnl, tu_duy, ccccd
         type: {
             type: String,
             default: '',

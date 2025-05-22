@@ -1,12 +1,12 @@
 import {Application, Document} from '@/models'
 
-export async function createApplication(data) {
-    const application = await Application.create(data)
+export async function createApplication(userId, data) {
+    const application = await Application.create({ ...data, userId })
     return application
 }
 
-export async function updateApplication(id, data) {
-    const application = await Application.findByIdAndUpdate(id, data, { new: true })
+export async function updateApplication(id, userId, data) {
+    const application = await Application.findByIdAndUpdate(id, { ...data, userId }, { new: true })
     return application
 }
 
@@ -21,8 +21,7 @@ export async function deleteApplication(id) {
 export async function getApplicationById(id) {
     const application = await Application.findById(id)
         .populate('userId')
-        .populate('universityId')
-        .populate('majorId')
+        .populate('universityMajorId')
         .populate('subjectCombinationId')
     return application
 }
@@ -30,8 +29,7 @@ export async function getApplicationById(id) {
 export async function getAllApplicationsByUserId(userId) {
     const applications = await Application.find({ userId })
         .populate('userId')
-        .populate('universityId')
-        .populate('majorId')
+        .populate('universityMajorId')
         .populate('subjectCombinationId')
     return applications
 }
