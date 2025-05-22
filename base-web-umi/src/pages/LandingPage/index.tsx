@@ -8,6 +8,7 @@ import UniversitiesSection from './components/UniversitiesSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import CTASection from './components/CTASection';
 
+
 const LandingPage: React.FC = () => {
   return (
     <div className={styles.landingContainer}>

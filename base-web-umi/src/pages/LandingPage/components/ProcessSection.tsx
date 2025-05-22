@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../LandingPage.less';
+import { useHistory } from 'umi';
 
 const steps = [
   {
@@ -30,6 +31,10 @@ const steps = [
 ];
 
 const ProcessSection: React.FC = () => {
+  const history = useHistory();
+  const handleRegisterClick = () => {
+    history.push('/User/Register');
+  };
   return (
     <section className={styles.stepsSection}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -50,7 +55,10 @@ const ProcessSection: React.FC = () => {
                 <p style={{ color: '#666', fontSize: 17, marginTop: 12 }}>{step.description}</p>
                 {idx === 0 && (
                   <div style={{ marginTop: 24 }}>
-                    <button style={{ background: '#2563eb', color: '#fff', border: 'none', borderRadius: 8, padding: '12px 32px', fontSize: 18, fontWeight: 600, cursor: 'pointer' }}>
+                    <button
+                      style={{ background: '#2563eb', color: '#fff', border: 'none', borderRadius: 8, padding: '12px 32px', fontSize: 18, fontWeight: 600, cursor: 'pointer' }}
+                      onClick={handleRegisterClick}
+                    >
                       Đăng ký ngay
                     </button>
                   </div>
