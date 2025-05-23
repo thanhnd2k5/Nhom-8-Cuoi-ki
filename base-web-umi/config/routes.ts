@@ -2,7 +2,18 @@
 	{
 		path: '/',
 		component: './LandingPage',
+		
+		
 	},
+	{
+		path: '/user/register',
+		component: './User/Register',
+	},
+	{
+		path: '/user/login',
+		component: './User/Login',
+	},
+	
 
 	// DANH MUC HE THONG
 	// {
