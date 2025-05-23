@@ -2,22 +2,45 @@
 	{
 		path: '/',
 		component: './LandingPage',
-		
-		
 	},
 	{
-		path: '/user/register',
-		component: './User/Auth/Register',
+		path: '/user',
+		layout: false,
+		routes: [
+			// Routes không dùng layout (Auth pages)
+			{
+				path: '/user/register',
+				component: './User/Auth/Register',
+			},
+			{
+				path: '/user/login',
+				component: './User/Auth/Login',
+			},
+			// Routes sử dụng UserLayout
+			{
+				path: '/user',
+				component: '@/layouts/UserLayout',
+				routes: [
+					{
+						path: '/user/dashboard',
+						component: './User/Dashboard',
+					},
+					{
+						path: '/user/profile',
+						component: './User/ProfilePage',
+					},
+					// {
+					// 	path: '/user/applications',
+					// 	component: './User/Applications', // Tạo component này sau
+					// },
+					// {
+					// 	path: '/user/settings',
+					// 	component: './User/Settings', // Tạo component này sau
+					// },
+				],
+			},
+		],
 	},
-	{
-		path: '/user/login',
-		component: './User/Auth/Login',
-	},
-	{
-		path: '/user/dashboard',
-		component: './User/Dashboard',
-	},
-
 	{
 		path: '/admin',
 		routes: [

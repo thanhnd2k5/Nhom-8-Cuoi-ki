@@ -7,7 +7,7 @@ export async function handleLogin(form: { email: string; password: string }) {
   try {
     const response = await loginUser(form);
     if (response.data && response.data.data && response.data.data) {
-      localStorage.setItem('userToken', response.data.data);
+      localStorage.setItem('userToken', JSON.stringify(response.data.data));
     }
     return { success: 'Đăng nhập thành công!' };
   } catch (err: any) { 

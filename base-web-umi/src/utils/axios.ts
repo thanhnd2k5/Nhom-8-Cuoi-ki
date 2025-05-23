@@ -33,19 +33,35 @@ import data from './data';
  * Chuyển sang xử lý access_token with OIDC auth ở Technical Support
  */
 // Add a request interceptor
- axios.interceptors.request.use(
-   (config) => {
-     if (!config.headers.Authorization) {
-       const token = localStorage.getItem('userToken');
-       if (token) {
-         // eslint-disable-next-line no-param-reassign
-         config.headers.Authorization = `Bearer ${token}`;
-      }
-     }
-     return config;
-   },
-   (error) => Promise.reject(error),
- );
+axios.interceptors.request.use(
+	(config) => {
+		if (!config.headers.Authorization) {
+			let token = null;
+			const url = config.url || '';
+
+			// Xác định loại token dựa trên URL
+			// Giả sử API admin có prefix là /admin/ trong URL
+			// và user API có prefix là /users/
+			// Bạn cần điều chỉnh logic này cho phù hợp với cấu trúc API của mình
+			if (url.includes('/admin/')) {
+				const adminTokenData = JSON.parse(localStorage.getItem('adminToken') || '{}');
+				token = adminTokenData.access_token || adminTokenData.token; // Hoặc bất kỳ key nào bạn dùng để lưu token admin
+			} else if (url.includes('/users/')) {
+				const userTokenData = JSON.parse(localStorage.getItem('userToken') || '{}');
+				token = userTokenData.access_token || userTokenData.token; // Hoặc bất kỳ key nào bạn dùng để lưu token user
+			}
+			// Nếu không xác định được hoặc là request public không cần token, có thể không gán token
+			// Hoặc bạn có thể có một token mặc định nếu cần
+
+			if (token) {
+				// eslint-disable-next-line no-param-reassign
+				config.headers.Authorization = `Bearer ${token}`;
+			}
+		}
+		return config;
+	},
+	(error) => Promise.reject(error),
+);
 
 // Add a response interceptor
 axios.interceptors.response.use(
@@ -88,6 +104,18 @@ axios.interceptors.response.use(
 							message: 'Phiên đăng nhập đã thay đổi (104)',
 							description: 'Vui lòng tải lại trang (F5) để cập nhật. Chú ý các dữ liệu chưa lưu sẽ bị mất!',
 						});
+					// Quan trọng: Xử lý logout hoặc refresh token riêng cho từng loại user nếu cần
+					// Ví dụ: nếu là admin token hết hạn thì redirect về trang login admin
+					// nếu là user token hết hạn thì redirect về trang login user
+					// Hoặc có thể bạn muốn xóa token tương ứng khỏi localStorage
+					// if (originalRequest.url.includes('/admin/')) {
+					//   localStorage.removeItem('adminToken');
+					//   // history.replace('/admin/login');
+					// } else if (originalRequest.url.includes('/users/')) {
+					//   localStorage.removeItem('userToken');
+					//   // history.replace('/user/login');
+					// }
+
 					if (originalRequest._retry) break;
 					break;
 				// return routeLogin('Unauthorize');
