@@ -15,6 +15,7 @@ import NotFoundContent from './pages/exception/404';
 import type { IInitialState } from './services/base/typing';
 import './styles/global.less';
 import { currentRole } from './utils/ip';
+import { getUserProfile } from '@/services/User/dashboard';
 
 /**  loading */
 export const initialStateConfig = {
@@ -26,8 +27,10 @@ export const initialStateConfig = {
  * // Tobe removed
  * */
 export async function getInitialState(): Promise<IInitialState> {
+	const user = await getUserProfile();
 	return {
 		permissionLoading: true,
+		currentUser: user,
 	};
 }
 
@@ -66,6 +69,7 @@ export const request: RequestConfig = {
 
 // ProLayout  https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
+	console.log('Layout config loaded', initialState);
 	return {
 		unAccessible: (
 			<OIDCBounder>
@@ -84,7 +88,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 				const isUncheckPath = unCheckPermissionPaths.some((path) => window.location.pathname.includes(path));
 
 				if (location.pathname === '/') {
-					history.replace('/dashboard');
+					history.replace('/');
 				} else if (
 					!isUncheckPath &&
 					currentRole &&

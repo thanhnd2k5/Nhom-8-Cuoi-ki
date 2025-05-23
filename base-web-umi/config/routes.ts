@@ -8,12 +8,25 @@
 	{
 		path: '/user/register',
 		component: './User/Register',
+		layout: false,
 	},
 	{
 		path: '/user/login',
 		component: './User/Login',
+		layout: false,
 	},
-	
+	{
+		path: '/',
+		component: './LandingPage',
+		layout: false, // <--- Dòng này sẽ ẩn sidebar, header, footer ở trang landing
+	  },
+	{
+		path: '/user/dashboard',
+		name: 'Trang chủ',
+		icon: 'home',
+		component: './User/Dashboard', // hoặc component trang chủ của bạn
+	  },
+	  
 
 	// DANH MUC HE THONG
 	// {
