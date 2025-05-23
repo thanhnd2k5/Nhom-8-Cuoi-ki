@@ -1,5 +1,7 @@
 // api.ts
 
+import request from '@/utils/axios';
+
 interface LoginParams {
     phone: string;
     password: string;
@@ -11,18 +13,8 @@ interface LoginParams {
   }
   
   export async function loginApi(data: { phone: string; password: string }): Promise<any> {
-    const response = await fetch('http://localhost:3456/admin/auth/login', {
+    return request('http://localhost:3456/admin/auth/login', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      data,
     });
-  
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData?.message || 'Đăng nhập thất bại');
-    }
-  
-    return response.json();
   }

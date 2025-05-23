@@ -13,7 +13,8 @@
       setLoading(true);
       try {
         const res = await loginApi(values);
-        localStorage.setItem('adminToken', res.data);
+        console.log(res.data);
+        localStorage.setItem('adminToken', JSON.stringify(res.data));
         message.success('Đăng nhập thành công!');
         history.push('/admin');
       } catch (err: any) {
