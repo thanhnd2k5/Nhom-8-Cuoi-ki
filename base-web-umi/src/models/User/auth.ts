@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from '@/services/User/LoginLogout';
+import { loginUser, registerUser } from '@/services/User/auth';
 
 export async function handleLogin(form: { email: string; password: string }) {
   if (!form.email || !form.password) {

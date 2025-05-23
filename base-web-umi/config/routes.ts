@@ -19,12 +19,18 @@
 		path: '/',
 		component: './LandingPage',
 		layout: false, // <--- Dòng này sẽ ẩn sidebar, header, footer ở trang landing
-	  },
+	},
 	{
 		path: '/user/dashboard',
 		name: 'Trang chủ',
 		icon: 'home',
 		component: './User/Dashboard', // hoặc component trang chủ của bạn
+	},
+	{
+		path: '/user/profile',
+		name: 'Hồ sơ cá nhân',
+		icon: 'user',
+		component: './User/Profile',
 	  },
 	  
 
