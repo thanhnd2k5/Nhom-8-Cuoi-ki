@@ -2,13 +2,19 @@
 	{
 		path: '/',
 		component: './LandingPage',
+		
+		
 	},
-	{ 
-		path: '/admin/auth/login',
-		component: './Admin/auth/LoginPage',
-		layout: false,
+	{
+		path: '/user/register',
+		component: './User/Register',
+	},
+	{
+		path: '/user/login',
+		component: './User/Login',
 	},
 	
+
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',
@@ -44,9 +50,6 @@
 		],
 		layout: false,
 		hideInMenu: true,
-	},
-	{
-		path: '/',
 	},
 	{
 		path: '/403',

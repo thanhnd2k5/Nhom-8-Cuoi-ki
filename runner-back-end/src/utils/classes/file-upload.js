@@ -7,7 +7,7 @@ import sharp from 'sharp'
 
 class FileUpload {
     static UPLOAD_FOLDER = 'uploads'
-
+    
     constructor({originalname, mimetype, buffer}) {
         this.originalname = originalname
         this.mimetype = mimetype
