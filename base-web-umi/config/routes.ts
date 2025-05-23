@@ -13,6 +13,7 @@
 		path: '/user/login',
 		component: './User/Login',
 	},
+	
 
 	// DANH MUC HE THONG
 	// {
