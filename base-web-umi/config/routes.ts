@@ -3,7 +3,12 @@
 		path: '/',
 		component: './LandingPage',
 	},
-
+	{ 
+		path: '/admin/auth/login',
+		component: './Admin/auth/LoginPage',
+		layout: false,
+	},
+	
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',

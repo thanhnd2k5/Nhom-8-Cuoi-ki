@@ -20,4 +20,4 @@ export async function logout(req, res) {
 export async function me(req, res) {
     const result = await authService.profileAdmin(req.currentAdmin)
     res.jsonify(result)
-}
+} 
