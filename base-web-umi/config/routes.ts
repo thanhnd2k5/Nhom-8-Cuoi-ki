@@ -7,12 +7,27 @@
 	},
 	{
 		path: '/user/register',
-		component: './User/Register',
+		component: './User/Auth/Register',
 	},
 	{
 		path: '/user/login',
-		component: './User/Login',
+		component: './User/Auth/Login',
 	},
+	{
+		path: '/user/dashboard',
+		component: './User/Dashboard',
+	},
+
+	{
+		path: '/admin',
+		routes: [
+			{
+				path: '/admin/login',
+				component: './Admin/Auth/LoginPage',
+			},
+		],
+	},
+
 	
 
 	// DANH MUC HE THONG

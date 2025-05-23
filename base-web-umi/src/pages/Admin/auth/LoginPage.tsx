@@ -1,9 +1,7 @@
-  // LoginPage.tsx
-
   import React, { useState } from 'react';
   import { Form, Input, Button, message, Card } from 'antd';
   import { history } from 'umi';
-  import { loginApi } from '@/services/admin/api';
+  import { loginApi } from '@/services/admin/Auth/Login';
   import { setToken } from '@/utils/auth';
 
 
@@ -15,7 +13,7 @@
       setLoading(true);
       try {
         const res = await loginApi(values);
-        setToken(res.token);
+        localStorage.setItem('adminToken', res.data);
         message.success('Đăng nhập thành công!');
         history.push('/admin');
       } catch (err: any) {

@@ -1,4 +1,4 @@
-import { getUserProfile, getAdmissionList } from '@/services/User/dashboard';
+import { getUserProfile, getAdmissionList } from '@/services/User/dashoard/dashboard';
 
 export async function fetchDashboardData() {
   const [user, admissions] = await Promise.all([
