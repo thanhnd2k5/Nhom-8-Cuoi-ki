@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../LandingPage.less';
+import { useHistory } from 'umi';
 
 const steps = [
   {
@@ -30,6 +31,10 @@ const steps = [
 ];
 
 const ProcessSection: React.FC = () => {
+  const history = useHistory();
+  const handleRegisterClick = () => {
+    history.push('/User/Register');
+  };
   return (
     <section className={styles.stepsSection}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>

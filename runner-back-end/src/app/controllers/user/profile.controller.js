@@ -7,8 +7,5 @@ export async function getProfile(req, res) {
 
 export async function updateProfile(req, res) {
     const updatedUser = await userService.updateUserProfile(req.currentUser._id, req.body)
-    res.jsonify({
-        message: 'Cập nhật thông tin thành công',
-        user: updatedUser
-    })
+    res.jsonify(updatedUser)
 } 
