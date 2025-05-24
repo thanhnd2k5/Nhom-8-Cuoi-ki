@@ -29,10 +29,27 @@
 						path: '/user/profile',
 						component: './User/ProfilePage',
 					},
+					{
+						path: '/user/applications',
+						name: 'applications',
+						component: './User/ApplicationsPage',
+					},
 					// {
-					// 	path: '/user/applications',
-					// 	component: './User/Applications', // Tạo component này sau
+					// 	path: '/user/applications/:id',
+					// 	name: 'applicationDetail',
+					// 	component: './User/ApplicationDetailPage',
 					// },
+					{
+						path: '/user/applications/new',
+						name: 'newApplication',
+						component: './User/NewApplication/Step1',
+					},
+					{
+						path: '/user/applications/new/step2',
+						name: 'newApplicationStep2',
+						component: './User/NewApplication/Step2',
+					},
+					
 					// {
 					// 	path: '/user/settings',
 					// 	component: './User/Settings', // Tạo component này sau
