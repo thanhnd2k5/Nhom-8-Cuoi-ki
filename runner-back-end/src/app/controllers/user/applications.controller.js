@@ -1,5 +1,6 @@
 import * as ApplicationsService from '@/app/services/applications.service'
 import * as DocumentsService from '@/app/services/documents.service'
+import * as ApplicationsResultService from '@/app/services/application_results.service'
 import { abort } from '@/utils/helpers'
 
 export async function createApplication(req, res) {
@@ -24,10 +25,39 @@ export async function getApplicationById(req, res) {
         abort(404, 'Application not found')
     }
     const documents = await DocumentsService.getDocumentsByApplicationId(req.application._id)
-    res.jsonify({ ...application.toObject(), documents })
+    const applicationResult = await ApplicationsResultService.getApplicationResultByApplicationId(req.application._id)
+    res.jsonify({ ...application.toObject(), documents, applicationResult })
 }
 
 export async function getAllApplicationsByUserId(req, res) {
     const applications = await ApplicationsService.getAllApplicationsByUserId(req.currentUser._id)
     res.jsonify(applications)
+}
+
+export async function createCompleteApplication(req, res) {
+    try {
+        const userId = req.user.id
+        const formData = {
+            applicationData: {
+                universityMajorId: req.body.universityMajorId,
+                admissionMethod: req.body.admissionMethod,
+                subjectCombinationId: req.body.subjectCombinationId
+            },
+            resultData: req.body.resultData,
+            documentsData: req.body.documentsData
+        }
+
+        const result = await ApplicationsService.createCompleteApplication(userId, formData)
+        
+        res.status(201).json({
+            success: true,
+            message: 'Tạo đơn xét tuyển thành công',
+            data: result
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error.message
+        })
+    }
 }
