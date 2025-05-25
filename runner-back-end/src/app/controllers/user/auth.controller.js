@@ -2,6 +2,7 @@ import {abort, getToken} from '@/utils/helpers'
 import * as authService from '@/app/services/auth.service'
 
 export async function login(req, res) {
+    console.log('Login body:', req.body)
     const validLogin = await authService.checkValidLoginUser(req.body)
     
     if (validLogin) {

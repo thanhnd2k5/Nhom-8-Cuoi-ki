@@ -1,4 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { fetchApplications } from '@/models/User/admission';
+
+// Map status cho đồng bộ với Dashboard
+const statusMap = {
+  cho_duyet: 'pending',
+  da_duyet: 'approved',
+  tu_choi: 'rejected',
+};
 
 const statusColor = {
   approved: { color: '#c00', label: 'Đã duyệt' },
@@ -13,27 +21,29 @@ const tabs = [
   { key: 'rejected', label: 'Từ chối' },
 ];
 
-const AdmissionList = ({ admissions }) => {
+const AdmissionList: React.FC = () => {
+  const [applications, setApplications] = useState<any[]>([]);
   const [tab, setTab] = useState('all');
-  const filtered = tab === 'all' ? admissions : admissions.filter(item => item.status === tab);
+
+  useEffect(() => {
+    fetchApplications().then(data => {
+      setApplications(Array.isArray(data) ? data : []);
+    });
+  }, []);
+
+  // Map lại status cho đúng key
+  const mappedApps = applications.map(app => ({
+    ...app,
+    status: statusMap[app.status] || app.status,
+  }));
+
+  const filtered = tab === 'all' ? mappedApps : mappedApps.filter(app => app.status === tab);
 
   return (
-    <div style={{ background: '#f3f4f6', minHeight: 600, padding: 32 }}>
-      <div style={{ maxWidth: 900, margin: '0 auto' }}>
+    <div style={{ background: '#f3f4f6', minHeight: 600, padding: '32px 0' }}>
+      <div>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24 }}>
-          <h2 style={{ fontWeight: 700, fontSize: 24, margin: 0, flex: 1 }}>Hồ sơ xét tuyển</h2>
-          <button style={{
-            background: '#c00',
-            color: '#fff',
-            border: 'none',
-            borderRadius: 6,
-            padding: '8px 24px',
-            fontWeight: 600,
-            fontSize: 16,
-            cursor: 'pointer'
-          }}>
-            + Tạo hồ sơ mới
-          </button>
+          
         </div>
         <div style={{ display: 'flex', gap: 24, marginBottom: 24 }}>
           {tabs.map(t => (
@@ -55,8 +65,8 @@ const AdmissionList = ({ admissions }) => {
         </div>
         <div>
           {filtered.length === 0 && <div style={{ color: '#888', textAlign: 'center', marginTop: 60 }}>Không có hồ sơ nào.</div>}
-          {filtered.map((item) => (
-            <div key={item.id} style={{
+          {filtered.map((app) => (
+            <div key={app._id} style={{
               background: '#fff',
               borderRadius: 8,
               padding: 20,
@@ -64,20 +74,21 @@ const AdmissionList = ({ admissions }) => {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              border: '1px solid #eee'
+              border: '1px solid #eee',
+              boxShadow: 'none'
             }}>
               <div>
-                <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 4 }}>{item.university}</div>
-                <div style={{ color: '#555', marginBottom: 2 }}>Ngành: <b>{item.major}</b></div>
-                <div style={{ color: '#555', marginBottom: 2 }}>Tổ hợp xét tuyển: <b>{item.group}</b></div>
-                <div style={{ color: '#888', fontSize: 14 }}>Ngày nộp: {item.submitDate}</div>
+                <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 4 }}>{app.universityName || app.university}</div>
+                <div style={{ color: '#555', marginBottom: 2 }}>Ngành: <b>{app.majorName || app.major}</b></div>
+                <div style={{ color: '#555', marginBottom: 2 }}>Tổ hợp xét tuyển: <b>{app.subjectCombinationName || app.group}</b></div>
+                <div style={{ color: '#888', fontSize: 14 }}>Ngày nộp: {app.createdAt?.slice(0,10)}</div>
               </div>
               <div style={{ textAlign: 'right', minWidth: 180 }}>
                 <div style={{ color: '#888', fontSize: 15 }}>Tổng điểm</div>
-                <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 8 }}>{item.totalScore}</div>
-                <div style={{ color: '#888', fontSize: 14, marginBottom: 8 }}>Ngày cập nhật: {item.updateDate}</div>
+                <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 8 }}>{app.totalScore || '--'}</div>
+                <div style={{ color: '#888', fontSize: 14, marginBottom: 8 }}>Ngày cập nhật: {app.updatedAt?.slice(0,10) || '--'}</div>
                 <span style={{
-                  background: statusColor[item.status]?.color || '#ccc',
+                  background: statusColor[app.status]?.color || '#ccc',
                   color: '#fff',
                   borderRadius: 6,
                   padding: '4px 14px',
@@ -85,7 +96,7 @@ const AdmissionList = ({ admissions }) => {
                   fontWeight: 600,
                   fontSize: 15
                 }}>
-                  {statusColor[item.status]?.label || item.status}
+                  {statusColor[app.status]?.label || app.status}
                 </span>
                 <button style={{
                   background: '#fff',

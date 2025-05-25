@@ -7,32 +7,37 @@
 	},
 	{
 		path: '/user/register',
-		component: './User/Register',
+		component: './User/LoginLogout/Register',
 		layout: false,
 	},
 	{
 		path: '/user/login',
-		component: './User/Login',
+		component: './User/LoginLogout/Login',
 		layout: false,
 	},
 	{
 		path: '/',
-		component: './LandingPage',
+		component: './LandingPage/index',
 		layout: false, // <--- Dòng này sẽ ẩn sidebar, header, footer ở trang landing
 	},
 	{
 		path: '/user/dashboard',
 		name: 'Trang chủ',
 		icon: 'home',
-		component: './User/Dashboard', // hoặc component trang chủ của bạn
+		component: './User/Dashboard/index', // hoặc component trang chủ của bạn
 	},
 	{
 		path: '/user/profile',
 		name: 'Hồ sơ cá nhân',
 		icon: 'user',
-		component: './User/Profile',
-	  },
-	  
+		component: './User/Profile/index',
+	},
+	{
+		path: '/user/admission',
+		name: 'Hồ sơ xét tuyển',
+		icon: 'user',
+		component: './User/Admission/index',
+	},
 
 	// DANH MUC HE THONG
 	// {

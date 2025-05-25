@@ -3,27 +3,27 @@ import { Form, Input, Select, Radio, Row, Col } from 'antd';
 
 const AcademicInfoForm = ({ form }: { form: any }) => (
   <Form form={form} layout="vertical">
-    <Form.Item name="school" label="Trường THPT">
+    <Form.Item name="highSchoolName" label="Trường THPT">
       <Input />
     </Form.Item>
     <Row gutter={16}>
       <Col span={8}>
-        <Form.Item name="score10" label="Điểm TB lớp 10">
+        <Form.Item name="gpaGrade10" label="Điểm TB lớp 10">
           <Input placeholder="Ví dụ: 8.5" />
         </Form.Item>
       </Col>
       <Col span={8}>
-        <Form.Item name="score11" label="Điểm TB lớp 11">
+        <Form.Item name="gpaGrade11" label="Điểm TB lớp 11">
           <Input placeholder="Ví dụ: 8.7" />
         </Form.Item>
       </Col>
       <Col span={8}>
-        <Form.Item name="score12" label="Điểm TB lớp 12">
+        <Form.Item name="gpaGrade12" label="Điểm TB lớp 12">
           <Input placeholder="Ví dụ: 9.0" />
         </Form.Item>
       </Col>
     </Row>
-    <Form.Item name="gradYear" label="Năm tốt nghiệp">
+    <Form.Item name="graduationYear" label="Năm tốt nghiệp">
       <Select placeholder="Chọn năm tốt nghiệp">
         {Array.from({ length: 10 }, (_, i) => {
           const year = 2018 + i;
@@ -31,7 +31,7 @@ const AcademicInfoForm = ({ form }: { form: any }) => (
         })}
       </Select>
     </Form.Item>
-    <Form.Item name="area" label="Khu vực ưu tiên">
+    <Form.Item name="priorityArea" label="Khu vực ưu tiên">
       <Radio.Group>
         <Radio value="KV1">KV1</Radio>
         <Radio value="KV2">KV2</Radio>
@@ -39,7 +39,7 @@ const AcademicInfoForm = ({ form }: { form: any }) => (
         <Radio value="KV3">KV3</Radio>
       </Radio.Group>
     </Form.Item>
-    <Form.Item name="priority" label="Đối tượng ưu tiên">
+    <Form.Item name="priorityGroup" label="Đối tượng ưu tiên">
       <Radio.Group>
         <Radio value="01">01</Radio>
         <Radio value="02">02</Radio>

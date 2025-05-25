@@ -15,7 +15,7 @@ export async function updateHighSchoolProfile(userId, data) {
     ]
     const updateData = {}
     for (const key of allowedFields) {
-        if (data[key]) updateData[key] = data[key]
+        if (data[key] !== 'undefined') updateData[key] = data[key]
     }
 
     const profile = await HighSchoolProfile.findOneAndUpdate(

@@ -12,3 +12,17 @@ export async function updateUserProfile(data: any) {
     data,
   });
 }
+
+export async function getHighSchoolProfile() {
+  return request('http://localhost:3456/users/high-school-profile', { method: 'GET' });
+}
+
+// Cập nhật thông tin học tập
+export async function updateHighSchoolProfile(data: any) {
+  return request('http://localhost:3456/users/high-school-profile', {
+    method: 'PUT',
+    data,
+  });
+}
+
+

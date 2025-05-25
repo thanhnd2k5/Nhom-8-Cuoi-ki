@@ -6,6 +6,13 @@ import type { IInitialState } from './services/base/typing';
  * */
 export default function access(initialState: IInitialState) {
 	// const scopes = initialState.authorizedPermissions?.find((item) => item.rsname === currentRole)?.scopes;
+	if (!initialState?.authorizedPermissions) {
+		return {
+			accessFilter: () => false,
+			manyAccessFilter: () => false
+		};
+	}
+
 	const scopes = initialState.authorizedPermissions?.map((item) => item.scopes).flat();
 
 	return {

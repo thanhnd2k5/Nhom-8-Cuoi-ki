@@ -5,7 +5,7 @@ import provincesData from '@/assets/vietnam-provinces.json';
 
 const { Option } = Select;
 
-const PersonalInfoForm = ({ form, initialData }: { form: any; initialData: any }) => {
+const PersonalInfoForm = ({ form }: { form: any }) => {
   const [provinces, setProvinces] = useState<{ name: string; districts: { name: string }[] }[]>([]);
   const [districts, setDistricts] = useState<{ name: string }[]>([]);
 
@@ -13,38 +13,6 @@ const PersonalInfoForm = ({ form, initialData }: { form: any; initialData: any }
   useEffect(() => {
     setProvinces(provincesData);
   }, []);
-
-  // Set các trường cơ bản ngay khi initialData thay đổi (KHÔNG chờ provinces)
-  useEffect(() => {
-    if (initialData) {
-      form.setFieldsValue({
-        ...initialData,
-        dob: initialData.dob ? moment(initialData.dob) : null,
-      });
-    }
-  }, [initialData]);
-
-  // Mapping và set lại province/district khi cả initialData và provinces đã có
-  useEffect(() => {
-    if (!initialData || provinces.length === 0) return;
-    let provinceName = initialData.province;
-    const province = provinces.find(p => p.name === provinceName);
-    if (province) {
-      setDistricts(province.districts || []);
-      let districtName = initialData.district;
-      const district = province.districts.find(d => d.name === districtName);
-      form.setFieldsValue({
-        province: province.name,
-        district: district ? district.name : undefined,
-      });
-    } else {
-      setDistricts([]);
-      form.setFieldsValue({
-        province: undefined,
-        district: undefined,
-      });
-    }
-  }, [initialData, provinces]);
 
   // Khi chọn tỉnh, lấy danh sách quận/huyện
   const handleProvinceChange = (provinceName: string) => {
