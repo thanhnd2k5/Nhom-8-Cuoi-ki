@@ -17,7 +17,10 @@ const ProfilePage: React.FC = () => {
         dob: data.dob ? moment(data.dob) : null,
       });
     });
-    fetchHighSchoolProfile().then(data => academicForm.setFieldsValue(data));
+    fetchHighSchoolProfile().then(data => {
+      console.log('Dữ liệu học tập trả về:', data);
+      academicForm.setFieldsValue(data.data);
+    });
   }, []);
 
   const handleSavePersonal = async () => {
@@ -34,10 +37,14 @@ const ProfilePage: React.FC = () => {
   const handleSaveAcademic = async () => {
     try {
       const values = await academicForm.validateFields();
-      await saveHighSchoolProfile(values);
+      const data = {
+        ...values,
+        graduationYear: String(values.graduationYear),
+      };
+      await saveHighSchoolProfile(data);
       message.success('Lưu thông tin học tập thành công!');
       fetchHighSchoolProfile().then(data => academicForm.setFieldsValue(data));
-    } catch {
+    } catch (e) {
       message.error('Vui lòng kiểm tra lại thông tin học tập!');
     }
   };
