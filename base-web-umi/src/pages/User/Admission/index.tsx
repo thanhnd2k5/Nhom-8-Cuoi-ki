@@ -3,6 +3,7 @@ import AdmissionList from './components/AdmissionList';
 import AdmissionForm from './components/AdmissionForm';
 import AdmissionDetail from './components/AdmissionDetail';
 
+
 const AdmissionPage: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);

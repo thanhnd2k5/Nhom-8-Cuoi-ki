@@ -5,15 +5,17 @@ import StepPersonalInfo from './StepPersonalInfo';
 import StepScore from './StepScore';
 import StepUpload from './StepUpload';
 import StepConfirm from './StepConfirm';
-import { fetchProfileData } from '@/models/User/profile';
+import { fetchProfileData, fetchHighSchoolProfile } from '@/models/User/profile';
 
 const AdmissionForm: React.FC = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<any>({});
   const [profile, setProfile] = useState<any>(null);
+  const [academicProfile, setAcademicProfile] = useState<any>({});
 
   useEffect(() => {
     fetchProfileData().then(res => setProfile(res.data || res));
+    fetchHighSchoolProfile().then(res => setAcademicProfile(res.data || res));
   }, []);
 
   const next = (data: any) => {
@@ -30,6 +32,7 @@ const AdmissionForm: React.FC = () => {
         <StepPersonalInfo
           data={formData}
           profile={profile}
+          academicProfile={academicProfile}
           onNext={next}
           onPrev={prev}
         />

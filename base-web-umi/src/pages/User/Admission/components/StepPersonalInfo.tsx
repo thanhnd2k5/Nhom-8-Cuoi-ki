@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 const genderLabel = (gender: string) => {
   if (gender === 'male') return 'Nam';
@@ -10,18 +11,21 @@ const genderLabel = (gender: string) => {
 const StepPersonalInfo = ({
   data,
   profile,
+  academicProfile,
   onNext,
   onPrev,
 }: {
   data: any;
   profile: any;
+  academicProfile: any;
   onNext: (d: any) => void;
   onPrev: () => void;
 }) => {
   if (!profile) return <div>Đang tải thông tin cá nhân...</div>;
 
   // Ưu tiên data (nếu có), fallback sang profile
-  const info = { ...profile, ...data };
+  const info = { ...profile, ...data, ...academicProfile };
+  console.log('info', info);
 
   return (
     <div
@@ -140,7 +144,7 @@ const StepPersonalInfo = ({
           <div style={{ marginBottom: 16 }}>
             <label style={{ fontWeight: 600 }}>Ngày sinh</label>
             <input
-              value={info.dob || ''}
+              value={moment(info.dob).format('DD/MM/YYYY') || ''}
               readOnly
               style={{
                 width: '100%',
@@ -205,7 +209,7 @@ const StepPersonalInfo = ({
             <div style={{ marginBottom: 16 }}>
               <label style={{ fontWeight: 600 }}>Trường THPT</label>
               <input
-                value={info.academic?.school || ''}
+                value={info.highSchoolName || ''}
                 readOnly
                 style={{
                   width: '100%',
@@ -219,7 +223,7 @@ const StepPersonalInfo = ({
             <div style={{ marginBottom: 16 }}>
               <label style={{ fontWeight: 600 }}>Năm tốt nghiệp</label>
               <input
-                value={info.academic?.gradYear || ''}
+                value={info.graduationYear || ''}
                 readOnly
                 style={{
                   width: '100%',
@@ -235,7 +239,7 @@ const StepPersonalInfo = ({
             <div style={{ marginBottom: 16 }}>
               <label style={{ fontWeight: 600 }}>Khu vực ưu tiên</label>
               <input
-                value={info.academic?.area || ''}
+                value={info.priorityArea || ''}
                 readOnly
                 style={{
                   width: '100%',
@@ -249,7 +253,7 @@ const StepPersonalInfo = ({
             <div style={{ marginBottom: 16 }}>
               <label style={{ fontWeight: 600 }}>Đối tượng ưu tiên</label>
               <input
-                value={info.academic?.priority || ''}
+                value={info.priorityGroup || ''}
                 readOnly
                 style={{
                   width: '100%',
