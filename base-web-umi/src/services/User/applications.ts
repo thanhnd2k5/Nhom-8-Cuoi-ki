@@ -1,4 +1,5 @@
 import request from '@/utils/axios';
+import { application } from 'express';
 
 export interface ApplicationResponse {
   status: number;
@@ -34,7 +35,7 @@ export async function getApplications(): Promise<ApplicationResponse> {
 }
 
 export async function getApplicationDetail(id: string) {
-  const response = await request(`http://localhost:3456/users/applications/${id}`, {
+  const response = await request(`http://localhost:3456/users/applications/${applicationId}`, {
     method: 'GET',
   });
   return response.data;
@@ -49,7 +50,7 @@ export async function createApplication(data: any) {
 }
 
 export async function updateApplication(id: string, data: any) {
-  const response = await request(`http://localhost:3456/users/applications/${id}`, {
+  const response = await request(`http://localhost:3456/users/applications/${applicationId}`, {
     method: 'PUT',
     data,
   });
@@ -57,7 +58,7 @@ export async function updateApplication(id: string, data: any) {
 }
 
 export async function deleteApplication(id: string) {
-  const response = await request(`http://localhost:3456/users/applications/${id}`, {
+  const response = await request(`http://localhost:3456/users/applications/${applicationId}`, {
     method: 'DELETE',
   });
   return response.data;
@@ -82,4 +83,11 @@ export async function uploadDocument(file: File) {
     },
   });
   return response.data;
+}
+
+export async function getCompleteApplicationById(applicationId: string) {
+  const response = await request(`http://localhost:3456/users/applications/complete/${applicationId}`, {
+    method: 'GET',
+  });
+  return response.data
 }

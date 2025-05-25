@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, Input, DatePicker, Select, Row, Col, Card, Radio, Button } from 'antd';
+import { Form, Input, DatePicker, Select, Row, Col, Card, Radio, Button, message } from 'antd';
 import { useModel, history } from 'umi';
 import moment from 'moment';
 import { graduationYears, priorityAreas, priorityObjects } from '@/utils/utils';
@@ -183,7 +183,18 @@ const Step3: React.FC = () => {
               <Input placeholder="Nhập trường THPT" />
             </Form.Item>
           </Col>
-          <Col span={12}></Col>
+          <Col span={12}>
+            <Form.Item
+              name="graduationYear"
+              label="Năm tốt nghiệp"
+              rules={[{ required: true, message: 'Vui lòng chọn năm tốt nghiệp' }]}
+            >
+              <Select placeholder="Chọn năm tốt nghiệp">
+                {graduationYears.map((year) => (
+                  <Option key={year} value={year}>{year}</Option>
+                ))}
+              </Select>
+            </Form.Item></Col>
         </Row>
         <Row gutter={16}>
           <Col span={12}>
