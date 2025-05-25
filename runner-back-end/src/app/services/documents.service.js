@@ -4,7 +4,6 @@ import { FileUpload } from '@/utils/classes'
 export async function createDocument(data) {
     // Nếu có file object (multer hoặc FileUpload), lưu file và lấy đường dẫn
     let fileUrl = null
-    console.log('data', data)
     if (data.file) {
         // Nếu là instance của FileUpload (tự custom), dùng save()
         if (data.file.save) {
@@ -17,7 +16,6 @@ export async function createDocument(data) {
     }
     const document = await Document.create({
         applicationId: data.applicationId,
-        type: data.type,
         fileType: data.fileType,
         fileUrl: fileUrl,
     })

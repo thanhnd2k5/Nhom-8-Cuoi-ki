@@ -35,7 +35,6 @@ export async function getAllApplicationsByUserId(req, res) {
 
 export async function createCompleteApplication(req, res) {
     try {
-        console.log('req.body', req.body)
         const applicationData = {
             universityMajorId: req.body.universityMajorId,
             subjectCombinationId: req.body.subjectCombinationId,
