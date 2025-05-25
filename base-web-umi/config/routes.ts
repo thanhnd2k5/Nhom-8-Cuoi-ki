@@ -70,6 +70,13 @@
 						name: 'newApplicationStep6',
 						component: './User/NewApplication/Step6',
 					},
+
+					{
+						path: '/user/applications/:id',
+						name: 'detailApplication',
+						component: './User/DetailApplications',
+
+					}
 					
 					// {
 					// 	path: '/user/settings',
