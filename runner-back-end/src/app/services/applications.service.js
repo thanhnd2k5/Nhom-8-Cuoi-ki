@@ -39,7 +39,7 @@ export async function getAllApplicationsByUserId(userId) {
 }
 
 export async function createCompleteApplication(userId, formData) {
-    const { applicationData, resultData, documentData } = formData
+    const { applicationData, resultData, documentsData } = formData
 
     // 1. Tạo đơn xét tuyển trước
     const application = new Application({
@@ -62,8 +62,8 @@ export async function createCompleteApplication(userId, formData) {
 
     // 3. Tạo tài liệu nếu có
     const createdDocuments = []
-    if (documentData && Array.isArray(documentData)) {
-        for (const document of documentData) {
+    if (documentsData && Array.isArray(documentsData)) {
+        for (const document of documentsData) {
             const createdDocument = await DocumentService.createDocument({
                 ...document,
                 applicationId: application._id
@@ -71,11 +71,11 @@ export async function createCompleteApplication(userId, formData) {
             createdDocuments.push(createdDocument)
         }
     }
-
+    console.log('createdDocuments', createdDocuments)
     // 4.Trả về đơn xét tuyển với kết quả
     return {
         application,
-        result: applicationResult,
+        applicationResult,
         documents: createdDocuments
     }
 }

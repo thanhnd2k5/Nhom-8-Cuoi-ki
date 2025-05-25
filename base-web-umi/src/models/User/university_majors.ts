@@ -15,6 +15,7 @@ export default function useUniversityMajorsModel() {
     const [loading, setLoading] = useState(false);
 
     const fetchUniversityMajors = useCallback(async (universityId: string) => {
+        console.log('universityId', universityId);
         try {
             setLoading(true);
             const response = await getUniversityMajors(universityId);

@@ -602,3 +602,53 @@ export const createTextLinks = (text: string, targetBlank: boolean = true) => {
 		},
 	);
 };
+
+export const graduationYears = ['2025', '2024', '2023', '2022'];
+  
+export const priorityAreas = [
+  { value: 'kv1', label: 'KV1' },
+  { value: 'kv2', label: 'KV2' },
+  { value: 'kv2-nt', label: 'KV2-NT' },
+  { value: 'kv3', label: 'KV3' },
+];
+
+export const priorityObjects = [
+  { value: '01', label: '01' },
+  { value: '02', label: '02' },
+  { value: '03', label: '03' },
+  { value: '04', label: '04' },
+  { value: '05', label: '05' },
+  { value: '06', label: '06' },
+  { value: '07', label: '07' },
+  { value: 'none', label: 'Không' },
+];
+
+export const admissionMethodNames = {
+    'hoc_ba': 'Xét tuyển học bạ',
+    'tot_nghiep': 'Điểm thi THPT Quốc gia',
+    'dgnl': 'Đánh giá năng lực',
+    'tu_duy': 'Đánh giá tư duy'
+};
+
+export const requiredDocumentsByMethod: Record<string, Array<{ type: string; label: string; required: boolean }>> = {
+  hoc_ba: [
+    { type: 'cccd_front', label: 'CCCD mặt trước', required: true },
+    { type: 'cccd_back', label: 'CCCD mặt sau', required: true },
+    { type: 'hoc_ba', label: 'Học bạ THPT', required: true },
+  ],
+  tot_nghiep: [
+    { type: 'cccd_front', label: 'CCCD mặt trước', required: true },
+    { type: 'cccd_back', label: 'CCCD mặt sau', required: true },
+    { type: 'tot_nghiep', label: 'Giấy chứng nhận tốt nghiệp', required: true },
+  ],
+  dgnl: [
+    { type: 'cccd_front', label: 'CCCD mặt trước', required: true },
+    { type: 'cccd_back', label: 'CCCD mặt sau', required: true },
+    { type: 'dgnl', label: 'Kết quả ĐGNL', required: true },
+  ],
+  tu_duy: [
+    { type: 'cccd_front', label: 'CCCD mặt trước', required: true },
+    { type: 'cccd_back', label: 'CCCD mặt sau', required: true },
+    { type: 'tu_duy', label: 'Kết quả Đánh giá tư duy', required: true },
+  ],
+};

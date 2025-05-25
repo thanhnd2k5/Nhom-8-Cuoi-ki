@@ -49,6 +49,27 @@
 						name: 'newApplicationStep2',
 						component: './User/NewApplication/Step2',
 					},
+
+					{
+						path: '/user/applications/new/step3',
+						name: 'newApplicationStep3',
+						component: './User/NewApplication/Step3',
+					},
+					{
+						path: '/user/applications/new/step4',
+						name: 'newApplicationStep4',
+						component: './User/NewApplication/Step4',
+					},
+					{
+						path: '/user/applications/new/step5',
+						name: 'newApplicationStep5',
+						component: './User/NewApplication/Step5',
+					},
+					{
+						path: '/user/applications/new/step6',
+						name: 'newApplicationStep6',
+						component: './User/NewApplication/Step6',
+					},
 					
 					// {
 					// 	path: '/user/settings',
