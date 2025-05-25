@@ -15,7 +15,7 @@ const Document = createModel(
             type: String,
             default: '',
         },
-        file: {
+        fileUrl: {
             type: String,
             default: '',
         },

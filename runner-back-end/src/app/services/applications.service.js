@@ -1,6 +1,7 @@
 import {Application, Document} from '@/models'
 import * as ApplicationResultService from './application_results.service'
 import * as DocumentService from './documents.service'
+import { abort } from '@/utils/helpers'
 
 export async function createApplication(userId, data) {
     const application = await Application.create({ ...data, userId })
@@ -40,8 +41,9 @@ export async function getAllApplicationsByUserId(userId) {
 
 export async function createCompleteApplication(userId, formData) {
     const { applicationData, resultData, documentsData } = formData
+    console.log(formData)
 
-    // 1. Tạo đơn xét tuyển trước
+    // 1. Tạo đơn xét tuyển
     const application = new Application({
         userId,
         universityMajorId: applicationData.universityMajorId,
@@ -65,14 +67,14 @@ export async function createCompleteApplication(userId, formData) {
     if (documentsData && Array.isArray(documentsData)) {
         for (const document of documentsData) {
             const createdDocument = await DocumentService.createDocument({
-                ...document,
-                applicationId: application._id
+                applicationId: application._id,
+                ...document
             })
             createdDocuments.push(createdDocument)
         }
     }
-    console.log('createdDocuments', createdDocuments)
-    // 4.Trả về đơn xét tuyển với kết quả
+
+    // 4. Trả về kết quả
     return {
         application,
         applicationResult,
@@ -80,3 +82,28 @@ export async function createCompleteApplication(userId, formData) {
     }
 }
 
+// Lấy chi tiết đơn xét tuyển (bao gồm kết quả và tài liệu)
+export async function getCompleteApplicationById(applicationId) {
+    // 1. Lấy đơn xét tuyển
+    const application = await Application.findById(applicationId)
+        .populate('userId', 'name email')
+        .populate('universityMajorId')
+        .populate('subjectCombinationId')
+
+    if (!application){
+        abort(404, 'Application not found')
+    }
+
+    // 2. Lấy kết quả xét tuyển
+    const applicationResult = await ApplicationResultService.getApplicationResultByApplicationId(applicationId)
+
+    // 3. Lấy danh sách tài liệu
+    const documents = await Document.find({ applicationId })
+
+    // 4. Trả về đầy đủ
+    return {
+        application,
+        applicationResult,
+        documents
+    }
+}

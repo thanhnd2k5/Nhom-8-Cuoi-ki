@@ -1,12 +1,26 @@
 import { Document } from '@/models'
 import { FileUpload } from '@/utils/classes'
+
 export async function createDocument(data) {
+    // Nếu có file object (multer hoặc FileUpload), lưu file và lấy đường dẫn
+    let fileUrl = null
     console.log('data', data)
     if (data.file) {
-        console.log('data.file', data.file)
-        data.file = await data.file.save()
+        // Nếu là instance của FileUpload (tự custom), dùng save()
+        if (data.file.save) {
+            fileUrl = await data.file.save()
+        }
+        // Nếu là file multer (có .path), lấy path luôn
+        else if (data.file.path) {
+            fileUrl = data.file.path
+        }
     }
-    const document = await Document.create(data)
+    const document = await Document.create({
+        applicationId: data.applicationId,
+        type: data.type,
+        fileType: data.fileType,
+        fileUrl: fileUrl,
+    })
     return document
 }
 
