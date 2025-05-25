@@ -116,9 +116,9 @@ export default () => {
 
       // resultData là object, nên cần stringify
       form.append('resultData', JSON.stringify(formData.resultData));
-
+      
       // documentsData: append từng file
-      (formData.documentsData || []).forEach((doc: any, idx: number) => {
+      formData.documentsData.forEach((doc, idx) => {
         if (doc.file) {
           form.append(`documentsData[${idx}].file`, doc.file, doc.file.name);
         }

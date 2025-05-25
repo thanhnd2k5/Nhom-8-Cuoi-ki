@@ -9,7 +9,6 @@ export async function createApplication(req, res) {
 }
 
 export async function updateApplication(req, res) {
-    console.log(req.body)
     const application = await ApplicationsService.updateApplication(req.application._id, req.currentUser._id, req.body)
     res.jsonify(application)
 }
@@ -37,19 +36,18 @@ export async function getAllApplicationsByUserId(req, res) {
 export async function createCompleteApplication(req, res) {
     try {
         console.log('req.body', req.body)
-        const userId = req.currentUser._id
-        const formData = {
-            applicationData: {
-                universityMajorId: req.body.universityMajorId,
-                admissionMethod: req.body.admissionMethod,
-                subjectCombinationId: req.body.subjectCombinationId
-            },
-            resultData: req.body.resultData,
-            documentsData: req.body.documentsData
+        const applicationData = {
+            universityMajorId: req.body.universityMajorId,
+            subjectCombinationId: req.body.subjectCombinationId,
+            admissionMethod: req.body.admissionMethod,
         }
-
-        const result = await ApplicationsService.createCompleteApplication(userId, formData)
+        const resultData = JSON.parse(req.body.resultData)
+        const documentsData = parseDocumentsData(req)
         
+        const result = await ApplicationsService.createCompleteApplication(
+            req.currentUser._id,
+            { applicationData, resultData, documentsData }
+        )
         res.jsonify(result)
     } catch (error) {
         res.status(400).json({
@@ -57,4 +55,35 @@ export async function createCompleteApplication(req, res) {
             message: error.message
         })
     }
+}
+
+export async function getCompleteApplicationById(req, res) {
+    const applicationId = req.application._id
+    const application = await ApplicationsService.getCompleteApplicationById(applicationId)
+    res.jsonify(application)
+}
+
+function parseDocumentsData(req) {
+    const documentsData = []
+    let idx = 0
+    while (
+        req.body[`documentsData[${idx}].type`] ||
+        req.body[`documentsData[${idx}].fileType`] ||
+        (req.files && req.files.find(f => f.fieldname === `documentsData[${idx}].file`)) ||
+        req.body[`documentsData[${idx}].file`]
+    ) {
+        let fileObj = null
+        if (req.files && req.files.find(f => f.fieldname === `documentsData[${idx}].file`)) {
+            fileObj = req.files.find(f => f.fieldname === `documentsData[${idx}].file`)
+        } else if (req.body[`documentsData[${idx}].file`]) {
+            fileObj = req.body[`documentsData[${idx}].file`]
+        }
+        documentsData.push({
+            type: req.body[`documentsData[${idx}].type`],
+            fileType: req.body[`documentsData[${idx}].fileType`],
+            file: fileObj,
+        })
+        idx++
+    }
+    return documentsData
 }

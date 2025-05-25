@@ -92,10 +92,10 @@ const Step6: React.FC = () => {
             <Button onClick={handleBack}>Quay lại</Button>
             <Button type="primary" loading={submitting} onClick={async () => {
               const success = await handleSubmit();
-              if (success) {
-                // Chuyển sang trang thành công hoặc reset form, v.v.
-                history.push('/user/applications');
-              }
+            //   if (success) {
+            //     // Chuyển sang trang thành công hoặc reset form, v.v.
+            //     history.push('/user/applications');
+            //   }
             }}>
               Gửi hồ sơ
             </Button>
