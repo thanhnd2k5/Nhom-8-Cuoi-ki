@@ -36,7 +36,8 @@ export async function getAllApplicationsByUserId(req, res) {
 
 export async function createCompleteApplication(req, res) {
     try {
-        const userId = req.user.id
+        console.log('req.body', req.body)
+        const userId = req.currentUser._id
         const formData = {
             applicationData: {
                 universityMajorId: req.body.universityMajorId,
@@ -49,11 +50,7 @@ export async function createCompleteApplication(req, res) {
 
         const result = await ApplicationsService.createCompleteApplication(userId, formData)
         
-        res.status(201).json({
-            success: true,
-            message: 'Tạo đơn xét tuyển thành công',
-            data: result
-        })
+        res.jsonify(result)
     } catch (error) {
         res.status(400).json({
             success: false,

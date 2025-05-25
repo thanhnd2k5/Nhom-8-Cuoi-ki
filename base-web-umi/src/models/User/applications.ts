@@ -1,6 +1,7 @@
-import { useState, useCallback } from 'react';
+import { Application } from './applications';
+import { useState, useCallback, useEffect } from 'react';
 import { message } from 'antd';
-import { getApplications, getApplicationDetail } from '@/services/User/applications';
+import { getApplications, getApplicationDetail, createCompleteApplication, uploadDocument } from '@/services/User/applications';
 
 export interface Application {
   _id: string;
@@ -26,11 +27,35 @@ export interface Application {
   updated_at: string;
 }
 
+export interface ApplicationResult {
+  _id: string;
+  method: string;
+  gpaGrade10?: number;
+  gpaGrade11?: number;
+  gpaGrade12?: number;
+  subjectScores?: Record<string, number>;
+  totalScore?: number;
+}
+
+export interface ApplicationDocument {
+  _id: string;
+  type: string;
+  fileUrl: string;
+  fileType: string;
+}
+export interface CompleteApplication {
+  application: Application;
+  resultData: ApplicationResult;
+  documentsData: ApplicationDocument[];
+}
+
 export default () => {
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentApplication, setCurrentApplication] = useState<Application | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [formData, setFormData] = useState<any>({});
 
   // Fetch all applications
   const fetchApplications = useCallback(async () => {
@@ -73,6 +98,53 @@ export default () => {
     }
   }, []);
 
+  // Hàm cập nhật formData
+  const updateFormData = useCallback((data: any) => {
+    setFormData((prev: any) => ({ ...prev, ...data }));
+  }, []);
+
+  // Hàm submit chuẩn
+  const handleSubmit = useCallback(async () => {
+    try {
+      setSubmitting(true);
+
+      // 1. Build FormData
+      const form = new FormData();
+      form.append('universityMajorId', formData.universityMajorId);
+      form.append('admissionMethod', formData.admissionMethod);
+      form.append('subjectCombinationId', formData.subjectCombinationId);
+
+      // resultData là object, nên cần stringify
+      form.append('resultData', JSON.stringify(formData.resultData));
+
+      // documentsData: append từng file
+      (formData.documentsData || []).forEach((doc: any, idx: number) => {
+        if (doc.file) {
+          form.append(`documentsData[${idx}].file`, doc.file, doc.file.name);
+        }
+        form.append(`documentsData[${idx}].type`, doc.type);
+        form.append(`documentsData[${idx}].fileType`, doc.fileType);
+      });
+
+      // 2. Gửi FormData lên backend
+      const response = await createCompleteApplication(form); // API phải nhận FormData
+
+      if (response.success) {
+        message.success('Hồ sơ đã được gửi thành công');
+        await fetchApplications();
+        return true;
+      } else {
+        message.error(response.message || 'Không thể gửi hồ sơ');
+        return false;
+      }
+    } catch (error: any) {
+      message.error(error.message || 'Lỗi khi gửi hồ sơ');
+      return false;
+    } finally {
+      setSubmitting(false);
+    }
+  }, [formData, fetchApplications]);
+
   // Filter applications by status
   const getApplicationsByStatus = useCallback((status: string) => {
     if (status === 'all') return applications;
@@ -100,6 +172,8 @@ export default () => {
     loading,
     currentApplication,
     detailLoading,
+    submitting,
+    formData,
     
     // Actions
     fetchApplications,
@@ -107,5 +181,7 @@ export default () => {
     getApplicationsByStatus,
     getStatusCounts,
     clearCurrentApplication,
+    handleSubmit,
+    updateFormData,
   };
 }; 

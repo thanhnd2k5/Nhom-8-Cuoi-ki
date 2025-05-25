@@ -10,6 +10,7 @@ import {
   Typography,
 } from 'antd';
 import styles from './index.less';
+import { graduationYears, priorityAreas, priorityObjects } from '@/utils/utils';
 
 const { Option } = Select;
 const { Title, Text } = Typography;
@@ -33,26 +34,6 @@ const EducationInfoForm: React.FC<EducationInfoFormProps> = ({
   data,
   onChange,
 }) => {
-  const graduationYears = ['2025', '2024', '2023', '2022'];
-  
-  const priorityAreas = [
-    { value: 'kv1', label: 'KV1' },
-    { value: 'kv2', label: 'KV2' },
-    { value: 'kv2-nt', label: 'KV2-NT' },
-    { value: 'kv3', label: 'KV3' },
-  ];
-
-  const priorityObjects = [
-    { value: '01', label: '01' },
-    { value: '02', label: '02' },
-    { value: '03', label: '03' },
-    { value: '04', label: '04' },
-    { value: '05', label: '05' },
-    { value: '06', label: '06' },
-    { value: '07', label: '07' },
-    { value: 'none', label: 'Không' },
-  ];
-
   return (
     <Card className={styles.educationInfoCard}>
       <Title level={4}>Thông tin học tập</Title>
