@@ -14,7 +14,7 @@ export interface UniversityMajor {
 }
 
 export const getUniversityMajors = async (universityId: string): Promise<UniversityMajor> => {
-    const response = await request.get(`http://localhost:3456/admin/university-majors/${universityId}/majors`);
+    const response = await request.get(`http://localhost:3456/users/university-majors/${universityId}/majors`);
     return response.data;
 };
 

@@ -12,6 +12,6 @@ export interface SubjectCombination {
 }
 
 export const getSubjectCombinations = async (): Promise<SubjectCombination> => {
-    const response = await request.get('http://localhost:3456/admin/subject-combinations');
+    const response = await request.get('http://localhost:3456/users/subject-combinations');
     return response.data;
 };

@@ -12,7 +12,7 @@ interface University {
 }
 
 export const getUniversities = async (): Promise<University> => {
-    const response = await request.get('http://localhost:3456/admin/universities');
+    const response = await request.get('http://localhost:3456/users/universities');
     return response.data;
 };
 
