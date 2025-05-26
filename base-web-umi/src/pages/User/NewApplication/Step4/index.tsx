@@ -33,35 +33,45 @@ const Step4: React.FC = () => {
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
-      if (admissionMethod === 'hoc_ba') {
-        updateFormData({
-          resultData: {
-            method: 'hoc_ba',
-            gpaGrade10: values.gpaGrade10,
-            gpaGrade11: values.gpaGrade11,
-            gpaGrade12: values.gpaGrade12,
-          }
-        });
-      } else if (admissionMethod === 'tot_nghiep') {
-        // Lấy subjectScores động từ tổ hợp
-        const subjectScores: Record<string, number> = {};
-        (selectedCombination?.subjects || []).forEach((subject: string) => {
-          subjectScores[subject] = values[subject];
-        });
-        updateFormData({
-          resultData: {
-            method: 'tot_nghiep',
-            subjectScores,
-          }
-        });
-      } else if (admissionMethod === 'dgnl' || admissionMethod === 'tu_duy') {
-        updateFormData({
-          resultData: {
-            method: admissionMethod,
-            totalScore: values.totalScore,
-          }
-        });
-      }
+      
+      // Thêm profileData vào formData
+      updateFormData({
+        profileData: {
+          name: profileData.name,
+          email: profileData.email,
+          gender: profileData.gender,
+          dob: profileData.dob,
+          avatar: profileData.avatar,
+          cccd: profileData.cccd,
+          phone: profileData.phone,
+          ethnic: profileData.ethnic,
+          province: profileData.province,
+          district: profileData.district,
+          address: profileData.address,
+          highSchoolName: profileData.highSchoolName,
+          graduationYear: profileData.graduationYear,
+          priorityArea: profileData.priorityArea,
+          priorityGroup: profileData.priorityGroup,
+        },
+        resultData: admissionMethod === 'hoc_ba' ? {
+          method: 'hoc_ba',
+          gpaGrade10: values.gpaGrade10,
+          gpaGrade11: values.gpaGrade11,
+          gpaGrade12: values.gpaGrade12,
+        } : admissionMethod === 'tot_nghiep' ? {
+          method: 'tot_nghiep',
+          subjectScores: Object.fromEntries(
+            (selectedCombination?.subjects || []).map((subject: string) => [
+              subject,
+              values[subject]
+            ])
+          ),
+        } : {
+          method: admissionMethod,
+          totalScore: values.totalScore,
+        }
+      });
+      
       history.push('/user/applications/new/step5');
     } catch (error) {
       // validation fail

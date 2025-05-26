@@ -1,7 +1,7 @@
   import React, { useState } from 'react';
   import { Form, Input, Button, message, Card } from 'antd';
   import { history } from 'umi';
-  import { loginApi } from '@/services/admin/Auth/Login';
+  import { loginApi } from '@/services/Admin/Auth/Login';
   import { setToken } from '@/utils/auth';
 
 

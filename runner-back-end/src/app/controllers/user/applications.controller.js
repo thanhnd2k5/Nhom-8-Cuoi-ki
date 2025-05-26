@@ -42,10 +42,11 @@ export async function createCompleteApplication(req, res) {
         }
         const resultData = JSON.parse(req.body.resultData)
         const documentsData = parseDocumentsData(req)
+        const profileData = JSON.parse(req.body.profileData)
         
         const result = await ApplicationsService.createCompleteApplication(
             req.currentUser._id,
-            { applicationData, resultData, documentsData }
+            { applicationData, resultData, documentsData, profileData }
         )
         res.jsonify(result)
     } catch (error) {

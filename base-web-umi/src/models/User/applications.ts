@@ -43,8 +43,28 @@ export interface ApplicationDocument {
   fileUrl: string;
   fileType: string;
 }
+
+export interface ApplicationProfile {
+  name: string;
+  email: string;
+  gender: string;
+  dob: string;
+  avatar: string;
+  cccd: string;
+  phone: string;
+  ethnic: string;
+  province: string;
+  district: string;
+  address: string;
+  highSchoolName: string;
+  graduationYear: number;
+  priorityArea: string;
+  priorityGroup: string;
+}
+
 export interface CompleteApplication {
   application: Application;
+  profile: ApplicationProfile;
   resultData: ApplicationResult;
   documentsData: ApplicationDocument[];
 }
@@ -114,6 +134,9 @@ export default () => {
       form.append('admissionMethod', formData.admissionMethod);
       form.append('subjectCombinationId', formData.subjectCombinationId);
 
+      // Thêm profileData
+      form.append('profileData', JSON.stringify(formData.profileData));
+
       // resultData là object, nên cần stringify
       form.append('resultData', JSON.stringify(formData.resultData));
       
@@ -127,7 +150,7 @@ export default () => {
       });
 
       // 2. Gửi FormData lên backend
-      const response = await createCompleteApplication(form); // API phải nhận FormData
+      const response = await createCompleteApplication(form);
 
       if (response.success) {
         message.success('Hồ sơ đã được gửi thành công');

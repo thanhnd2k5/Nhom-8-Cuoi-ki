@@ -1,6 +1,7 @@
 import {Application, Document} from '@/models'
 import * as ApplicationResultService from './application_results.service'
 import * as DocumentService from './documents.service'
+import * as ApplicationProfileService from './application_profiles.service'
 import { abort } from '@/utils/helpers'
 
 export async function createApplication(userId, data) {
@@ -40,8 +41,7 @@ export async function getAllApplicationsByUserId(userId) {
 }
 
 export async function createCompleteApplication(userId, formData) {
-    const { applicationData, resultData, documentsData } = formData
-    console.log(formData)
+    const { applicationData, resultData, documentsData, profileData } = formData
 
     // 1. Tạo đơn xét tuyển
     const application = new Application({
@@ -53,7 +53,13 @@ export async function createCompleteApplication(userId, formData) {
     })
     await application.save()
 
-    // 2. Tạo kết quả nếu có
+    // 2. Tạo profile
+    const profile = await ApplicationProfileService.createApplicationProfile({
+        applicationId: application._id,
+        ...profileData
+    })
+
+    // 3. Tạo kết quả nếu có
     let applicationResult = null
     if (resultData && resultData.method) {
         applicationResult = await ApplicationResultService.createApplicationResult(
@@ -62,7 +68,7 @@ export async function createCompleteApplication(userId, formData) {
         )
     }
 
-    // 3. Tạo tài liệu nếu có
+    // 4. Tạo tài liệu nếu có
     const createdDocuments = []
     if (documentsData && Array.isArray(documentsData)) {
         for (const document of documentsData) {
@@ -74,9 +80,10 @@ export async function createCompleteApplication(userId, formData) {
         }
     }
 
-    // 4. Trả về kết quả
+    // 5. Trả về kết quả
     return {
         application,
+        profile,
         applicationResult,
         documents: createdDocuments
     }
@@ -94,15 +101,19 @@ export async function getCompleteApplicationById(applicationId) {
         abort(404, 'Application not found')
     }
 
-    // 2. Lấy kết quả xét tuyển
+    // 2. Lấy profile
+    const profile = await ApplicationProfileService.getApplicationProfileByApplicationId(applicationId)
+
+    // 3. Lấy kết quả xét tuyển
     const applicationResult = await ApplicationResultService.getApplicationResultByApplicationId(applicationId)
 
-    // 3. Lấy danh sách tài liệu
+    // 4. Lấy danh sách tài liệu
     const documents = await Document.find({ applicationId })
 
-    // 4. Trả về đầy đủ
+    // 5. Trả về đầy đủ
     return {
         application,
+        profile,
         applicationResult,
         documents
     }
