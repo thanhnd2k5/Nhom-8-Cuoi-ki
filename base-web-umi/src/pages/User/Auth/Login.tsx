@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'umi';
 import { handleLogin } from '@/models/User/auth';
+import { Divider } from 'antd';
+import GoogleLoginButton from '@/components/Google/GoogleLoginButton';
+
 
 const Login: React.FC = () => {
   const history = useHistory();
@@ -48,6 +51,8 @@ const Login: React.FC = () => {
         <div style={{ textAlign: 'center', marginTop: 18, fontSize: 15 }}>
           Chưa có tài khoản? <a href="/User/Register" style={{ color: '#2563eb', fontWeight: 600 }}>Đăng ký</a>
         </div>
+        <Divider>HOẶC TIẾP TỤC VỚI</Divider>
+        <GoogleLoginButton />
       </div>
     </div>
   );

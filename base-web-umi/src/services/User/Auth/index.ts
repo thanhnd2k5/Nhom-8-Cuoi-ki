@@ -23,3 +23,12 @@ export async function loginUser(data: {
     data,
   });
 } 
+
+export async function loginWithGoogle(data: {
+  id_token: string;
+}) {
+  return request('http://localhost:3456/users/auth/login/google', {
+    method: 'POST',
+    data,
+  });
+} 

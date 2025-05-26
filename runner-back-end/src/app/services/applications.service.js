@@ -118,3 +118,29 @@ export async function getCompleteApplicationById(applicationId) {
         documents
     }
 }
+
+export async function updateApplicationStatus(id, status) {
+    const application = await Application.findByIdAndUpdate(
+        id,
+        { status },
+        { new: true }
+    ).populate('userId', 'name email')
+        .populate('universityMajorId')
+        .populate('subjectCombinationId')
+
+    if (!application) {
+        abort(404, 'Application not found')
+    }
+
+    return application
+}
+
+export async function getAllApplications() {
+    const applications = await Application.find()
+        .populate('userId', 'name email')
+        .populate('universityMajorId')
+        .populate('subjectCombinationId')
+        .sort({ createdAt: -1 })
+
+    return applications
+}

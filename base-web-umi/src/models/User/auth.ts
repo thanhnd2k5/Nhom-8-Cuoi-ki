@@ -1,4 +1,5 @@
 import { loginUser, registerUser } from '@/services/User/Auth/index';
+import { setAuthToken } from '@/utils/localStorage'
 
 export async function handleLogin(form: { email: string; password: string }) {
   if (!form.email || !form.password) {
@@ -7,7 +8,7 @@ export async function handleLogin(form: { email: string; password: string }) {
   try {
     const response = await loginUser(form);
     if (response.data && response.data.data && response.data.data) {
-      localStorage.setItem('userToken', JSON.stringify(response.data.data));
+      setAuthToken(response.data.data);
     }
     return { success: 'Đăng nhập thành công!' };
   } catch (err: any) { 

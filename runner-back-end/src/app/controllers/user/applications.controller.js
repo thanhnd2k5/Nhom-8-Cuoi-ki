@@ -1,6 +1,7 @@
 import * as ApplicationsService from '@/app/services/applications.service'
 import * as DocumentsService from '@/app/services/documents.service'
 import * as ApplicationsResultService from '@/app/services/application_results.service'
+import * as MailService from '@/app/services/mail.service'
 import { abort } from '@/utils/helpers'
 
 export async function createApplication(req, res) {
@@ -48,6 +49,11 @@ export async function createCompleteApplication(req, res) {
             req.currentUser._id,
             { applicationData, resultData, documentsData, profileData }
         )
+
+        const dataEmail = await ApplicationsService.getCompleteApplicationById(result.application._id)
+        // Gửi email xác nhận đơn xét tuyển với đầy đủ thông tin
+        await MailService.sendNewApplicationEmail(dataEmail)
+
         res.jsonify(result)
     } catch (error) {
         res.status(400).json({
