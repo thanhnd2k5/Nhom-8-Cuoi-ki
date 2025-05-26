@@ -1,24 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchUniversities, fetchMajors, fetchSubjectCombinations } from '@/models/User/admission';
 
-// Giả lập dữ liệu, sau này lấy từ API hoặc file JSON
-const universities = [
-  { id: '1', name: 'Đại học Bách Khoa Hà Nội', majors: [
-    { id: 'm1', name: 'Khoa học máy tính', groups: ['A00', 'A01'] },
-    { id: 'm2', name: 'Kỹ thuật điện', groups: ['A00', 'A02'] },
-  ]},
-  { id: '2', name: 'Đại học Quốc gia Hà Nội', majors: [
-    { id: 'm3', name: 'Công nghệ thông tin', groups: ['A01', 'D01'] },
-  ]},
-  // ... các trường khác
-];
+interface University {
+  id: string;
+  name: string;
+}
+interface Major {
+  id: string;
+  name: string;
+  universityId: string;
+}
+interface Combination {
+  id: string;
+  name: string;
+  majorId: string;
+}
 
 const StepSchoolMajor = ({ onNext, onPrev }: { onNext: (data: any) => void, onPrev: () => void }) => {
   const [universityId, setUniversityId] = useState('');
   const [majorId, setMajorId] = useState('');
   const [group, setGroup] = useState('');
+  const [universities, setUniversities] = useState<University[]>([]);
+  const [majors, setMajors] = useState<Major[]>([]);
+  const [combinations, setCombinations] = useState<Combination[]>([]);
+
+  useEffect(() => {
+    fetchUniversities().then(setUniversities);
+    fetchMajors().then(setMajors);
+    fetchSubjectCombinations().then(setCombinations);
+  }, []);
+
+  // Lọc ngành theo trường đã chọn
+  const filteredMajors = majors.filter(m => m.universityId === universityId);
+  // Lọc tổ hợp theo ngành đã chọn
+  const filteredCombinations = combinations.filter(c => c.majorId === majorId);
 
   const selectedUniversity = universities.find(u => u.id === universityId);
-  const selectedMajor = selectedUniversity?.majors.find(m => m.id === majorId);
+  const selectedMajor = majors.find(m => m.id === majorId);
 
   return (
     <div style={{
@@ -54,7 +72,7 @@ const StepSchoolMajor = ({ onNext, onPrev }: { onNext: (data: any) => void, onPr
           disabled={!universityId}
         >
           <option value="">Vui lòng chọn trường đại học trước</option>
-          {selectedUniversity?.majors.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
+          {filteredMajors.map(m => <option key={m.id} value={m.id}>{m.name}</option>)}
         </select>
       </div>
       <div style={{ marginBottom: 18 }}>
@@ -68,7 +86,7 @@ const StepSchoolMajor = ({ onNext, onPrev }: { onNext: (data: any) => void, onPr
           disabled={!majorId}
         >
           <option value="">Vui lòng chọn ngành học trước</option>
-          {selectedMajor?.groups.map(g => <option key={g} value={g}>{g}</option>)}
+          {filteredCombinations.map(g => <option key={g.id} value={g.name}>{g.name}</option>)}
         </select>
       </div>
       <div style={{ marginTop: 32, textAlign: 'right' }}>

@@ -10,3 +10,5 @@ export async function getUserProfile() {
 export async function getAdmissionList() {
   return request('http://localhost:3456/users/applications', { method: 'GET' });
 }
+
+

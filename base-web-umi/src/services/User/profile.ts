@@ -13,6 +13,7 @@ export async function updateUserProfile(data: any) {
   });
 }
 
+// Lấy thông tin học tập
 export async function getHighSchoolProfile() {
   return request('http://localhost:3456/users/high-school-profile', { method: 'GET' });
 }

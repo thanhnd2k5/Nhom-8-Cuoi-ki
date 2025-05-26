@@ -7,9 +7,9 @@ export async function fetchDashboardData() {
   ]);
   
   // Tính toán số lượng hồ sơ theo trạng thái
-  const admissionsArray = Array.isArray(admissions)
-  ? admissions
-  : (admissions?.data && Array.isArray(admissions.data) ? admissions.data : []);
+  const admissionsArray = Array.isArray(admissions?.data?.data)
+    ? admissions.data.data
+    : [];
 
   const stats = {
     created: admissionsArray.length,

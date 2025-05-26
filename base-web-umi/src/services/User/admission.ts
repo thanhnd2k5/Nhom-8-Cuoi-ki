@@ -24,3 +24,18 @@ export async function updateApplication(id: string, data: any) {
 export async function deleteApplication(id: string) {
   return request(`http://localhost:3456/users/applications/${id}`, { method: 'DELETE' });
 }
+
+// Lấy danh sách trường đại học
+export async function getUniversities() {
+  return request('http://localhost:3456/admin/universities', { method: 'GET' });
+}
+
+// Lấy danh sách ngành theo trường
+export async function getUniversityMajors() {
+  return request('http://localhost:3456/admin/university-majors', { method: 'GET' });
+}
+
+// Lấy danh sách tổ hợp môn
+export async function getSubjectCombinations() {
+  return request('http://localhost:3456/admin/subject-combinations', { method: 'GET' });
+}

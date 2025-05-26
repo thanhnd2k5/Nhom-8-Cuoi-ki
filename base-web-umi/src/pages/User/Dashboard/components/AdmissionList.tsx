@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchMajors, fetchSubjectCombinations } from '@/models/User/admission';
+import moment from 'moment';
 
 const statusColor = {
   approved: { color: '#c00', label: 'Đã duyệt' },
@@ -13,9 +15,47 @@ const tabs = [
   { key: 'rejected', label: 'Từ chối' },
 ];
 
+const statusMap = {
+  pending: 'cho_duyet',
+  approved: 'da_duyet',
+  rejected: 'tu_choi',
+};
+
 const AdmissionList = ({ admissions }) => {
   const [tab, setTab] = useState('all');
-  const filtered = tab === 'all' ? admissions : admissions.filter(item => item.status === tab);
+  const [majors, setMajors] = useState([]);
+  const [combinations, setCombinations] = useState([]);
+
+  useEffect(() => {
+    fetchMajors().then(data => {
+      setMajors(data);
+      console.log('Majors loaded:', data);
+    });
+    fetchSubjectCombinations().then(data => {
+      setCombinations(data);
+    });
+  }, []);
+
+  const getMajorName = (id) => {
+    const major = majors.find(m => m.id === id || m._id === id);
+    return major ? major.name : '---';
+  };
+
+  const getCombinationName = (id) => {
+    const comb = combinations.find(c => c.id === id || c._id === id);
+    return comb ? comb.name : '---';
+  };
+
+  const getTotalScore = (score) => {
+    return score ? score : '---';
+  };
+
+  const filtered = tab === 'all'
+    ? admissions
+    : admissions.filter(item => item.status === statusMap[tab]);
+
+  
+
 
   return (
     <div style={{ background: '#f3f4f6', minHeight: 600, padding: 32 }}>
@@ -68,14 +108,13 @@ const AdmissionList = ({ admissions }) => {
             }}>
               <div>
                 <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 4 }}>{item.university}</div>
-                <div style={{ color: '#555', marginBottom: 2 }}>Ngành: <b>{item.major}</b></div>
-                <div style={{ color: '#555', marginBottom: 2 }}>Tổ hợp xét tuyển: <b>{item.group}</b></div>
-                <div style={{ color: '#888', fontSize: 14 }}>Ngày nộp: {item.submitDate}</div>
+                <div style={{ color: '#555', marginBottom: 2 }}>Ngành: <b>{getMajorName(item.universityMajorId)}</b></div>
+                <div style={{ color: '#555', marginBottom: 2 }}>Tổ hợp xét tuyển: <b>{getCombinationName(item.subjectCombinationId)}</b></div>
+                <div style={{ color: '#888', fontSize: 14 }}>Ngày nộp: {item.created_at ? moment(item.created_at).format('DD/MM/YYYY') : '---'}</div>
               </div>
               <div style={{ textAlign: 'right', minWidth: 180 }}>
-                <div style={{ color: '#888', fontSize: 15 }}>Tổng điểm</div>
-                <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 8 }}>{item.totalScore}</div>
-                <div style={{ color: '#888', fontSize: 14, marginBottom: 8 }}>Ngày cập nhật: {item.updateDate}</div>
+                <div style={{ color: '#888', fontSize: 15 }}>Tổng điểm: <b>{getTotalScore(item.totalScore)}</b></div>
+                <div style={{ color: '#888', fontSize: 14, marginBottom: 8 }}>Ngày cập nhật: {item.updated_at ? moment(item.updated_at).format('DD/MM/YYYY') : '---'}</div>
                 <span style={{
                   background: statusColor[item.status]?.color || '#ccc',
                   color: '#fff',

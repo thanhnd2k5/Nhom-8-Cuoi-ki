@@ -26,3 +26,21 @@ export async function editApplication(id: string, data: any) {
 export async function removeApplication(id: string) {
   return service.deleteApplication(id);
 }
+
+// Lấy danh sách trường đại học
+export async function fetchUniversities() {
+  const res = await service.getUniversities();
+  return res.data || [];
+}
+
+// Lấy danh sách ngành
+export async function fetchMajors() {
+  const res = await service.getUniversityMajors();
+  return res.data || [];
+}
+
+// Lấy danh sách tổ hợp môn
+export async function fetchSubjectCombinations() {
+  const res = await service.getSubjectCombinations();
+  return res.data || [];
+}
