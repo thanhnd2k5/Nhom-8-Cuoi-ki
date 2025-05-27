@@ -3,7 +3,7 @@
   import React, { useState } from 'react';
   import { Form, Input, Button, message, Card } from 'antd';
   import { history } from 'umi';
-  import { loginApi } from '@/services/admin/api';
+  import { loginApi } from '@/services/admin/login';
   import { setToken } from '@/utils/auth';
 
 
@@ -17,7 +17,7 @@
         const res = await loginApi(values);
         setToken(res.token);
         message.success('Đăng nhập thành công!');
-        history.push('/admin');
+        history.push('/admin/dashboard');
       } catch (err: any) {
         message.error(err.message || 'Đăng nhập thất bại');
       } finally {

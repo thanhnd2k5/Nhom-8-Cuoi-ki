@@ -1,4 +1,6 @@
-﻿export default [
+﻿import component from "@/locales/en-US/component";
+
+export default [
 	{
 		path: '/',
 		component: './LandingPage',
@@ -8,7 +10,11 @@
 		component: './Admin/auth/LoginPage',
 		layout: false,
 	},
-	
+	{ 
+		path: '/admin/dashboard',
+		component: './Admin/Dashboard/index',
+
+	},	
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',

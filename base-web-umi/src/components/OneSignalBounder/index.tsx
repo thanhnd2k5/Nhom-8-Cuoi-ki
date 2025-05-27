@@ -12,7 +12,11 @@ const OneSignalBounder = (props: { children: React.ReactNode }) => {
 	// let iframe: HTMLIFrameElement | null = null;
 
 	const getUserIdOnesignal = async () => {
-		if (!!oneSignalClient) {
+		// Chỉ chạy trên domain chính thức
+		if (
+			!!oneSignalClient &&
+			window.location.hostname === 'sinhvien.hvpnvn.edu.vn'
+		) {
 			await OneSignal.init({
 				appId: oneSignalClient,
 			});
