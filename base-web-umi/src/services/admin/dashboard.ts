@@ -12,7 +12,7 @@ export async function getAllUniversities() {
 
 // Lấy danh sách ngành đại học (nếu có API tổng ngành)
 export async function getAllMajors() {
-  return request('http://localhost:3456/admin/university-majors/682ce3e00a7c208669a7781d/majors', { method: 'GET' }); // hoặc vòng qua các trường
+  return request('http://localhost:3456/admin/university-majors', { method: 'GET' }); // hoặc vòng qua các trường
 }
 
 // Lấy danh sách tổ hợp môn
