@@ -4,17 +4,27 @@ export default [
 	{
 		path: '/',
 		component: './LandingPage',
+		
+		
 	},
-	{ 
-		path: '/admin/auth/login',
-		component: './Admin/auth/LoginPage',
-		layout: false,
+	{
+		path: '/user/register',
+		component: './User/Register',
 	},
+	{
+		path: '/user/login',
+		component: './User/Login',
+	},
+<<<<<<< HEAD
 	{ 
 		path: '/admin/dashboard',
 		component: './Admin/Dashboard/index',
 
 	},	
+=======
+	
+
+>>>>>>> 4afd5aea3918128c730372083cd85c0ee88c52e0
 	// DANH MUC HE THONG
 	// {
 	// 	name: 'DanhMuc',
@@ -50,9 +60,6 @@ export default [
 		],
 		layout: false,
 		hideInMenu: true,
-	},
-	{
-		path: '/',
 	},
 	{
 		path: '/403',
