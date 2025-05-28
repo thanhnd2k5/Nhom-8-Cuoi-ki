@@ -3,7 +3,7 @@
   import React, { useState } from 'react';
   import { Form, Input, Button, message, Card } from 'antd';
   import { history } from 'umi';
-  import { loginApi } from '@/services/admin/login';
+  import { loginApi } from '@/services/admin/api';
   import { setToken } from '@/utils/auth';
 
 
