@@ -24,6 +24,16 @@ export async function loginUser(data: {
   });
 } 
 
+export async function logoutUser(data: {
+  email: string;
+  password: string;
+}) {
+  return request('http://localhost:3456/users/auth/logout', {
+    method: 'POST',
+    data,
+  });
+} 
+
 export async function loginWithGoogle(data: {
   id_token: string;
 }) {

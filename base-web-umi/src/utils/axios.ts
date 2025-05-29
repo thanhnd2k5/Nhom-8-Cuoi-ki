@@ -47,8 +47,7 @@ axios.interceptors.request.use(
 				const adminTokenData = JSON.parse(localStorage.getItem('adminToken') || '{}');
 				token = adminTokenData.access_token || adminTokenData.token; // Hoặc bất kỳ key nào bạn dùng để lưu token admin
 			} else if (url.includes('/users/')) {
-				const userTokenData = JSON.parse(localStorage.getItem('userToken') || '{}');
-				token = userTokenData.access_token || userTokenData.token; // Hoặc bất kỳ key nào bạn dùng để lưu token user
+				token = localStorage.getItem('userToken');
 			}
 			// Nếu không xác định được hoặc là request public không cần token, có thể không gán token
 			// Hoặc bạn có thể có một token mặc định nếu cần

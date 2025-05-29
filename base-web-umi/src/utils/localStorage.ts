@@ -5,8 +5,8 @@ export const removeAuthToken = () => {
     return localStorage.removeItem(AUTH_TOKEN_STORE_KEY);
 }
 
-export const setAuthToken = (tokenObj: any) => {
-    return localStorage.setItem(AUTH_TOKEN_STORE_KEY, JSON.stringify(tokenObj));
+export const setAuthToken = (token: string) => {
+    return localStorage.setItem(AUTH_TOKEN_STORE_KEY, token);
 };
 
 export const getAuthToken = () => {

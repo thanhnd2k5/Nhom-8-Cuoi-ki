@@ -1,5 +1,5 @@
-import { loginUser, registerUser } from '@/services/User/Auth/index';
-import { setAuthToken } from '@/utils/localStorage'
+import { loginUser, registerUser, logoutUser } from '@/services/User/Auth/index';
+import { removeAuthToken, setAuthToken } from '@/utils/localStorage'
 
 export async function handleLogin(form: { email: string; password: string }) {
   if (!form.email || !form.password) {
@@ -8,7 +8,7 @@ export async function handleLogin(form: { email: string; password: string }) {
   try {
     const response = await loginUser(form);
     if (response.data && response.data.data && response.data.data) {
-      setAuthToken(response.data.data);
+      setAuthToken(response.data.data.access_token);
     }
     return { success: 'Đăng nhập thành công!' };
   } catch (err: any) { 
@@ -25,5 +25,14 @@ export async function handleRegister(form: { email: string; password: string; na
     return { success: 'Đăng ký thành công!' };
   } catch (err: any) {
     return { error: err?.message || 'Đăng ký thất bại!' };
+  }
+}
+
+export async function handleLogout() {
+  try {
+    await logoutUser({});
+    removeAuthToken();
+  } catch (err) {
+    console.error('Đăng xuất thất bại:', err);
   }
 }

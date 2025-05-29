@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Form, Input, Card, Row, Col, Button } from 'antd';
 import { useModel, history } from 'umi';
 import NewApplicationLayout from '../NewApplicationLayout';
+import { getPriorityScore } from '@/utils/priorityScore';
 
 const subjectList = ['Toán', 'Lý', 'Hóa']; // Có thể lấy động từ tổ hợp nếu muốn
 
@@ -12,11 +13,10 @@ const Step4: React.FC = () => {
   const { formData, updateFormData } = useModel('User.applications');
 
   const admissionMethod = formData.admissionMethod;
-  console.log(admissionMethod);
 
   useEffect(() => {
     fetchUniversityMajors(formData.university)
-}, []);
+  }, []);
 
   // 1. Tìm ngành học
   const selectedMajor = universityMajors.find(m => m._id === formData?.universityMajorId);
@@ -33,45 +33,61 @@ const Step4: React.FC = () => {
   const handleSubmit = async () => {
     try {
       const values = await form.validateFields();
-      
-      // Thêm profileData vào formData
-      updateFormData({
-        profileData: {
-          name: profileData.name,
-          email: profileData.email,
-          gender: profileData.gender,
-          dob: profileData.dob,
-          avatar: profileData.avatar,
-          cccd: profileData.cccd,
-          phone: profileData.phone,
-          ethnic: profileData.ethnic,
-          province: profileData.province,
-          district: profileData.district,
-          address: profileData.address,
-          highSchoolName: profileData.highSchoolName,
-          graduationYear: profileData.graduationYear,
+      const priorityScore = getPriorityScore(profileData.priorityArea, profileData.priorityGroup);
+
+      let resultData: any = {};
+
+      if (admissionMethod === 'tot_nghiep') {
+        // Lấy điểm từng môn
+        const subjectScores = Object.fromEntries(
+          (selectedCombination?.subjects || []).map((subject: string) => [
+            subject,
+            values[subject]
+          ])
+        );
+        // Tổng điểm 3 môn
+        const baseScore = Object.values(subjectScores).reduce((sum, val) => sum + Number(val), 0);
+        // Tổng điểm đã cộng ưu tiên
+        const totalScore = baseScore + priorityScore;
+
+        resultData = {
+          method: 'tot_nghiep',
+          subjectScores,
+          baseScore,
           priorityArea: profileData.priorityArea,
           priorityGroup: profileData.priorityGroup,
-        },
-        resultData: admissionMethod === 'hoc_ba' ? {
+          priorityScore,
+          totalScore,
+        };
+      } else if (admissionMethod === 'hoc_ba') {
+        // Lấy điểm GPA 10, 11, 12
+        const gpaGrade10 = values.gpaGrade10;
+        const gpaGrade11 = values.gpaGrade11;
+        const gpaGrade12 = values.gpaGrade12;
+        const totalScore = gpaGrade10 + gpaGrade11 + gpaGrade12;
+
+        resultData = {
           method: 'hoc_ba',
-          gpaGrade10: values.gpaGrade10,
-          gpaGrade11: values.gpaGrade11,
-          gpaGrade12: values.gpaGrade12,
-        } : admissionMethod === 'tot_nghiep' ? {
-          method: 'tot_nghiep',
-          subjectScores: Object.fromEntries(
-            (selectedCombination?.subjects || []).map((subject: string) => [
-              subject,
-              values[subject]
-            ])
-          ),
-        } : {
+          gpaGrade10,
+          gpaGrade11,
+          gpaGrade12,
+          priorityArea: profileData.priorityArea,
+          priorityGroup: profileData.priorityGroup,
+          totalScore,
+        };
+      } else {
+        // Các phương thức khác
+        resultData = {
           method: admissionMethod,
           totalScore: values.totalScore,
-        }
+        };
+      }
+
+      updateFormData({
+        profileData: { ...profileData },
+        resultData,
       });
-      
+
       history.push('/user/applications/new/step5');
     } catch (error) {
       // validation fail
@@ -86,40 +102,37 @@ const Step4: React.FC = () => {
         <Col span={8}>
           <Form.Item
             name="gpaGrade10"
-            label="Điểm trung bình lớp 10"
+            label="Điểm GPA 10"
             rules={[
-              { required: true, message: 'Vui lòng nhập điểm' },
+              { required: true, message: 'Vui lòng nhập điểm GPA 10' },
               { type: 'number', min: 0, max: 10, message: 'Điểm phải từ 0 đến 10' }
             ]}
-            initialValue={profileData?.gpaGrade10}
           >
-            <Input type="number" step="0.1" placeholder="Nhập điểm" />
+            <Input type="number" step="0.1" placeholder="Nhập điểm GPA 10" />
           </Form.Item>
         </Col>
         <Col span={8}>
           <Form.Item
             name="gpaGrade11"
-            label="Điểm trung bình lớp 11"
+            label="Điểm GPA 11"
             rules={[
-              { required: true, message: 'Vui lòng nhập điểm' },
+              { required: true, message: 'Vui lòng nhập điểm GPA 11' },
               { type: 'number', min: 0, max: 10, message: 'Điểm phải từ 0 đến 10' }
             ]}
-            initialValue={profileData?.gpaGrade11}
           >
-            <Input type="number" step="0.1" placeholder="Nhập điểm" />
+            <Input type="number" step="0.1" placeholder="Nhập điểm GPA 11" />
           </Form.Item>
         </Col>
         <Col span={8}>
           <Form.Item
             name="gpaGrade12"
-            label="Điểm trung bình lớp 12"
+            label="Điểm GPA 12"
             rules={[
-              { required: true, message: 'Vui lòng nhập điểm' },
+              { required: true, message: 'Vui lòng nhập điểm GPA 12' },
               { type: 'number', min: 0, max: 10, message: 'Điểm phải từ 0 đến 10' }
             ]}
-            initialValue={profileData?.gpaGrade12}
           >
-            <Input type="number" step="0.1" placeholder="Nhập điểm" />
+            <Input type="number" step="0.1" placeholder="Nhập điểm GPA 12" />
           </Form.Item>
         </Col>
       </Row>

@@ -121,6 +121,7 @@ export default () => {
   // Hàm cập nhật formData
   const updateFormData = useCallback((data: any) => {
     setFormData((prev: any) => ({ ...prev, ...data }));
+    console.log('formData cập nhật:', formData);
   }, []);
 
   // Hàm submit chuẩn
