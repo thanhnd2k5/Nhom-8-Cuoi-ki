@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@ant-design/charts": "^2.3.0",
-    "cross-env": "^7.0.3"
-  }
-}
