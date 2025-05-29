@@ -1,7 +1,10 @@
-﻿export default [
+﻿import { layout } from "@/app";
+
+export default [
 	{
 		path: '/',
 		component: './LandingPage',
+		layout: false,
 	},
 	{
 		path: '/user',
@@ -88,16 +91,36 @@
 	},
 	{
 		path: '/admin',
+		layout: false,
 		routes: [
+			// Routes không dùng layout (Auth pages)
 			{
 				path: '/admin/login',
 				component: './Admin/Auth/LoginPage',
 			},
+			// Routes sử dụng AdminLayout
 			{
-				path: '/admin/Statistics',
-				component: './Admin/Statistics',
-			
-			}
+				path: '/admin',
+				component: '@/layouts/AdminLayout',
+				routes: [
+					// {
+					// 	path: '/admin/dashboard',
+					// 	component: './Admin/Dashboard',
+					// },
+					{
+						path: '/admin/statistics',
+						component: './Admin/Statistics',
+					},
+					// {
+					// 	path: '/admin/users',
+					// 	component: './Admin/Users',
+					// },
+					// {
+					// 	path: '/admin/settings',
+					// 	component: './Admin/Settings',
+					// },
+				],
+			},
 		],
 	},
 

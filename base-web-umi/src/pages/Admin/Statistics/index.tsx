@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Card, Row, Col, Spin } from 'antd';
+import { Card, Row, Col, Spin, Typography } from 'antd';
 import { useModel } from 'umi';
 import OverviewCards from './components/OverviewCards';
 import UniversityChart from './components/UniversityChart';
@@ -7,6 +7,8 @@ import StatusChart from './components/StatusChart';
 import TimelineChart from './components/TimelineChart';
 import ComparisonTable from './components/ComparisonTable';
 import styles from './index.less';
+
+const { Title } = Typography;
 
 const StatisticsPage: React.FC = () => {
   const {
@@ -43,34 +45,61 @@ const StatisticsPage: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Thống kê hồ sơ đăng ký</h1>
-      
-      <OverviewCards />
+      <div className={styles.pageHeader}>
+        <Title level={2}>Thống kê hồ sơ đăng ký</Title>
+        <p className={styles.pageDescription}>
+          Tổng quan về tình hình đăng ký xét tuyển đại học
+        </p>
+      </div>
 
-      <Row gutter={[16, 16]}>
-        <Col xs={24} lg={12}>
-          <Card title="Thống kê theo trường đại học">
-            <UniversityChart />
-          </Card>
-        </Col>
-      </Row>
+      <div className={styles.overviewSection}>
+        <OverviewCards />
+      </div>
 
-      <Row gutter={[16, 16]}>
-        <Col xs={24} lg={12}>
-          <Card title="Thống kê theo trạng thái">
-            <StatusChart />
-          </Card>
-        </Col>
-        <Col xs={24} lg={12}>
-          <Card title="Thống kê theo thời gian">
-            <TimelineChart />
-          </Card>
-        </Col>
-      </Row>
+      <div className={styles.chartsSection}>
+        <Row gutter={[24, 24]}>
+          <Col xs={24} lg={12}>
+            <Card 
+              title="Thống kê theo trường đại học" 
+              className={styles.chartCard}
+              bordered={false}
+            >
+              <UniversityChart />
+            </Card>
+          </Col>
+          <Col xs={24} lg={12}>
+            <Card 
+              title="Thống kê theo trạng thái" 
+              className={styles.chartCard}
+              bordered={false}
+            >
+              <StatusChart />
+            </Card>
+          </Col>
+        </Row>
 
-      <Card title="So sánh giữa các trường đại học">
-        <ComparisonTable />
-      </Card>
+        <Row gutter={[24, 24]} className={styles.timelineRow}>
+          <Col span={24}>
+            <Card 
+              title="Thống kê theo thời gian" 
+              className={styles.chartCard}
+              bordered={false}
+            >
+              <TimelineChart />
+            </Card>
+          </Col>
+        </Row>
+      </div>
+
+      <div className={styles.comparisonSection}>
+        <Card 
+          title="So sánh giữa các trường đại học" 
+          className={styles.comparisonCard}
+          bordered={false}
+        >
+          <ComparisonTable />
+        </Card>
+      </div>
     </div>
   );
 };
