@@ -14,7 +14,7 @@
       try {
         const res = await loginApi(values);
         console.log(res.data);
-        setAuthTokenAdmin(res.data.token)
+        setAuthTokenAdmin(res.data.data.access_token)
         message.success('Đăng nhập thành công!');
         history.push('/admin');
       } catch (err: any) {
