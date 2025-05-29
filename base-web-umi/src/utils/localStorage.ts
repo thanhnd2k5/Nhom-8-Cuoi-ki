@@ -1,5 +1,5 @@
 const AUTH_TOKEN_STORE_KEY = 'userToken';
-const AUTH_TOKEN_ADMIN_STORE_KEY = 'token_admin';
+const AUTH_TOKEN_ADMIN_STORE_KEY = 'adminToken';
 
 export const removeAuthToken = () => {
     return localStorage.removeItem(AUTH_TOKEN_STORE_KEY);

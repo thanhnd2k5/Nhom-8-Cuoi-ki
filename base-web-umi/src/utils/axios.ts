@@ -44,10 +44,10 @@ axios.interceptors.request.use(
 			// và user API có prefix là /users/
 			// Bạn cần điều chỉnh logic này cho phù hợp với cấu trúc API của mình
 			if (url.includes('/admin/')) {
-				const adminTokenData = JSON.parse(localStorage.getItem('adminToken') || '{}');
+				const adminTokenData = localStorage.getItem('adminToken') || '{}';
 				token = adminTokenData
 			} else if (url.includes('/users/')) {
-				const userTokenData = JSON.parse(localStorage.getItem('userToken') || '{}');
+				const userTokenData = localStorage.getItem('userToken') || '{}';
 				token = userTokenData
 			}
 			// Nếu không xác định được hoặc là request public không cần token, có thể không gán token
