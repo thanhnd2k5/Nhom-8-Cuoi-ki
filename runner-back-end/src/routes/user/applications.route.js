@@ -35,4 +35,13 @@ router.get('/',
     asyncHandler(ApplicationsController.getAllApplicationsByUserId)
 )
 
+router.post('/complete',
+    asyncHandler(ApplicationsController.createCompleteApplication)
+)
+
+router.get('/complete/:applicationId',
+    asyncHandler(checkApplicationExists),
+    asyncHandler(ApplicationsController.getCompleteApplicationById)
+)
+
 export default router 

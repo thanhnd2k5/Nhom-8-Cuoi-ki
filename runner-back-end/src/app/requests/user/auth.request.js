@@ -22,3 +22,6 @@ export const register = Joi.object({
     password: Joi.string().required().label('Mật khẩu')
 }) 
 
+export const loginGoogle = Joi.object({
+    id_token: Joi.string().required().label('Mã thông tin đăng nhập Google'),
+})

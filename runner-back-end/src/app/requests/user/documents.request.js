@@ -12,7 +12,7 @@ const MAX_UPLOAD_SIZE = parseInt(process.env.MAX_UPLOAD_SIZE, 10) || 10
 export const createDocumentSchema = Joi.object({
     applicationId: Joi.string().required(),
     type: Joi.string().required(),
-    fileUrl: Joi.alternatives().try(
+    file: Joi.alternatives().try(
         Joi.object({
             originalname: Joi.string().trim().required().label('Tên file'),
             mimetype: Joi.valid(...Object.keys(MIME_TYPE))
@@ -35,7 +35,7 @@ export const createDocumentSchema = Joi.object({
 
 export const updateDocumentSchema = Joi.object({
     type: Joi.string(),
-    fileUrl: Joi.alternatives().try(
+    file: Joi.alternatives().try(
         Joi.object({
             originalname: Joi.string().trim().required().label('Tên file'),
             mimetype: Joi.valid(...Object.keys(MIME_TYPE))

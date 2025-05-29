@@ -25,4 +25,10 @@ authRouter.post(
     asyncHandler(authController.logout)
 )
 
+authRouter.post(
+    '/login/google',
+    asyncHandler(validate(authRequest.loginGoogle)),
+    asyncHandler(authController.loginWithGoogle)
+)
+
 export default authRouter 

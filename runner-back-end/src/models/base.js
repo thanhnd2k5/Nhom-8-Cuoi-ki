@@ -77,3 +77,9 @@ export const NOTIFICATION_TYPE = {
     APPLICATION_STATUS_UPDATE: 'application_status_update',
     APPLICATION_RESULT_UPDATE: 'application_result_update',
 }
+
+export const STATUS_APPLICATION = {
+    PENDING: 'cho_duyet',
+    APPROVED: 'da_duyet',
+    REJECTED: 'tu_choi'
+}
