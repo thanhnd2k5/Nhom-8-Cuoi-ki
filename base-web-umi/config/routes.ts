@@ -93,6 +93,11 @@
 				path: '/admin/login',
 				component: './Admin/Auth/LoginPage',
 			},
+			{
+				path: '/admin/Statistics',
+				component: './Admin/Statistics',
+			
+			}
 		],
 	},
 
