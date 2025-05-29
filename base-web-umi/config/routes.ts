@@ -1,6 +1,4 @@
-﻿import { layout } from "@/app";
-
-export default [
+﻿export default [
 	{
 		path: '/',
 		component: './LandingPage',
@@ -110,6 +108,10 @@ export default [
 					{
 						path: '/admin/statistics',
 						component: './Admin/Statistics',
+					},
+					{
+						path: '/admin/university',
+						component: './Admin/University',
 					},
 					// {
 					// 	path: '/admin/users',
