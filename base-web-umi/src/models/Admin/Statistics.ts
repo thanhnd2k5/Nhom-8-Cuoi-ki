@@ -8,7 +8,7 @@ import {
   getStatisticsByMonth,
   getStatisticsByYear,
   getStatisticsBetweenUniversities,
-} from '@/services/Admin/Statistics';
+} from '@/services/RenameAdmin/Statistics';
 
 export interface UniversityStatistics {
   universityName: string;
