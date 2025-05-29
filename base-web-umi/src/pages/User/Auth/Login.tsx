@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'umi';
 import { handleLogin } from '@/models/User/auth';
+import { Divider } from 'antd';
+import GoogleLoginButton from '@/components/Google/GoogleLoginButton';
+
 
 const Login: React.FC = () => {
   const history = useHistory();
@@ -19,6 +22,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     setError('');
     setSuccess('');
+    console.log(form);
     const result = await handleLogin(form);
     if (result.error) setError(result.error);
     if (result.success) {
@@ -42,11 +46,13 @@ const Login: React.FC = () => {
           </div>
           {error && <div style={{ color: '#ef4444', background: '#fee2e2', borderRadius: 8, padding: '10px 0', textAlign: 'center', marginBottom: 14, fontWeight: 600 }}>{error}</div>}
           {success && <div style={{ color: '#22c55e', background: '#dcfce7', borderRadius: 8, padding: '10px 0', textAlign: 'center', marginBottom: 14, fontWeight: 600 }}>{success}</div>}
-          <button type="submit" style={{ width: '100%', padding: 14, background: '#2563eb', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 700, fontSize: 18, marginTop: 8, boxShadow: '0 2px 8px #dbeafe', transition: 'background 0.2s' }}>Đăng nhập</button>
+          <button onClick={handleSubmit} style={{ width: '100%', padding: 14, background: '#2563eb', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 700, fontSize: 18, marginTop: 8, boxShadow: '0 2px 8px #dbeafe', transition: 'background 0.2s' }}>Đăng nhập</button>
         </form>
         <div style={{ textAlign: 'center', marginTop: 18, fontSize: 15 }}>
           Chưa có tài khoản? <a href="/User/Register" style={{ color: '#2563eb', fontWeight: 600 }}>Đăng ký</a>
         </div>
+        <Divider>HOẶC TIẾP TỤC VỚI</Divider>
+        <GoogleLoginButton />
       </div>
     </div>
   );

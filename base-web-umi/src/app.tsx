@@ -15,7 +15,11 @@ import NotFoundContent from './pages/exception/404';
 import type { IInitialState } from './services/base/typing';
 import './styles/global.less';
 import { currentRole } from './utils/ip';
+<<<<<<< HEAD
 import { getUserProfile } from '@/services/User/dashboard';
+=======
+import { GoogleOAuthProvider } from '@react-oauth/google';
+>>>>>>> bf180bb94302da4806e0d4ac718d6aa7d83945d6
 
 /**  loading */
 export const initialStateConfig = {
@@ -125,3 +129,12 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 		...initialState?.settings,
 	};
 };
+
+const clientId = '473675566946-euvvenvj225pjd43f7evfahjsic8f62n.apps.googleusercontent.com';
+export function rootContainer(container: React.ReactNode) {
+  return (
+    <GoogleOAuthProvider clientId={clientId}>
+      {container}
+    </GoogleOAuthProvider>
+  );
+}

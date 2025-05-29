@@ -1,4 +1,4 @@
-import { getUserProfile, getAdmissionList } from '@/services/User/dashboard';
+import { getUserProfile, getAdmissionList } from '@/services/User/dashoard/dashboard';
 
 export async function fetchDashboardData() {
   const [user, admissions] = await Promise.all([
@@ -15,7 +15,6 @@ export async function fetchDashboardData() {
     created: admissionsArray.length,
     pending: admissionsArray.filter((a: any) => a.status === 'pending').length,
     approved: admissionsArray.filter((a: any) => a.status === 'approved').length,
-    notifications: 3, // Nếu có API thông báo thì lấy từ API, tạm hardcode
   };
   return { user, admissions:admissionsArray, stats };
 }

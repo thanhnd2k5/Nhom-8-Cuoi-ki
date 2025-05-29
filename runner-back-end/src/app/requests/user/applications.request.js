@@ -1,18 +1,15 @@
 import Joi from 'joi'
-
+import { ADMISSION_METHOD } from '@/models/base'
 export const createApplicationSchema = Joi.object({
-    userId: Joi.string().required(),
-    universityId: Joi.string().required(),
-    majorId: Joi.string().required(),
+    universityMajorId: Joi.string().required(),
     subjectCombinationId: Joi.string(),
-    admissionMethod: Joi.string(),
+    admissionMethod: Joi.string().valid(...Object.values(ADMISSION_METHOD)),
     status: Joi.string()
 })
 
 export const updateApplicationSchema = Joi.object({
-    universityId: Joi.string(),
-    majorId: Joi.string(),
+    universityMajorId: Joi.string(),
     subjectCombinationId: Joi.string(),
-    admissionMethod: Joi.string(),
+    admissionMethod: Joi.string().valid(...Object.values(ADMISSION_METHOD)),
     status: Joi.string()
 }) 

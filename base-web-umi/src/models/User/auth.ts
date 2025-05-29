@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import { loginUser, registerUser } from '@/services/User/auth';
+=======
+import { loginUser, registerUser, logoutUser } from '@/services/User/Auth/index';
+import { removeAuthToken, setAuthToken } from '@/utils/localStorage'
+>>>>>>> bf180bb94302da4806e0d4ac718d6aa7d83945d6
 
 export async function handleLogin(form: { email: string; password: string }) {
   if (!form.email || !form.password) {
@@ -6,8 +11,8 @@ export async function handleLogin(form: { email: string; password: string }) {
   }
   try {
     const response = await loginUser(form);
-    if (response.data && response.data.data && response.data.data.access_token) {
-      localStorage.setItem('userToken', response.data.data.access_token);
+    if (response.data && response.data.data && response.data.data) {
+      setAuthToken(response.data.data.access_token);
     }
     return { success: 'Đăng nhập thành công!' };
   } catch (err: any) { 
@@ -24,5 +29,14 @@ export async function handleRegister(form: { email: string; password: string; na
     return { success: 'Đăng ký thành công!' };
   } catch (err: any) {
     return { error: err?.message || 'Đăng ký thất bại!' };
+  }
+}
+
+export async function handleLogout() {
+  try {
+    await logoutUser({});
+    removeAuthToken();
+  } catch (err) {
+    console.error('Đăng xuất thất bại:', err);
   }
 }

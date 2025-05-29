@@ -32,10 +32,6 @@ const StatsBox = ({ stats }: { stats: any }) => (
       <div>Đã duyệt</div>
       <div style={numStyle}>{stats.approved}</div>
     </div>
-    <div style={boxStyle}>
-      <div>Thông báo mới</div>
-      <div style={numStyle}>{stats.notifications}</div>
-    </div>
   </div>
 );
 

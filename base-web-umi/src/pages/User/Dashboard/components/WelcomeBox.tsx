@@ -14,4 +14,8 @@ const WelcomeBox = ({ name }: { name: string }) => (
   </h2>
 );
 
+<<<<<<< HEAD
 export default WelcomeBox;
+=======
+export default WelcomeBox;
+>>>>>>> bf180bb94302da4806e0d4ac718d6aa7d83945d6

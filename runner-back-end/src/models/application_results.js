@@ -10,10 +10,12 @@ const ApplicationResult = createModel(
             ref: 'Application',
             required: true,
         },
+        //phương thức học bạ, tốt nghiệp, tư duy, dgnl
         method: {
             type: String,
             default: '',
         },
+        // chỉ dùng cho phương thức học bạ 
         gpaGrade10: {
             type: Number,
             default: 0,
@@ -26,10 +28,12 @@ const ApplicationResult = createModel(
             type: Number,
             default: 0,
         },
+        // chỉ dùng cho phương thức tốt nghiệp
         subjectScores: {
             type: Object,
             default: {},
         },
+        // chỉ dùng cho phương thức tư duy, dgnl
         totalScore: {
             type: Number,
             default: 0,
