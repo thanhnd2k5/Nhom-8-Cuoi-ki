@@ -8,7 +8,7 @@ export async function handleLogin(form: { email: string; password: string }) {
   try {
     const response = await loginUser(form);
     if (response.data && response.data.data && response.data.data) {
-      setAuthToken(response.data.data);
+      setAuthToken(response.data.data.token);
     }
     return { success: 'Đăng nhập thành công!' };
   } catch (err: any) { 
