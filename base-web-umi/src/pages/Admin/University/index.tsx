@@ -5,7 +5,7 @@ import UniversityTable from './components/UniversityTable';
 import UniversityForm from './components/UniversityForm';
 import UniversityDetailModal from './components/UniversityDetailModal';
 import { University } from '@/models/Admin/University';
-import { useModel } from 'umi';
+import { useModel, history } from 'umi';
 import styles from './index.less';
 
 const UniversityPage: React.FC = () => {
@@ -56,6 +56,10 @@ const UniversityPage: React.FC = () => {
     setShowDetail(true);
   };
 
+  const handleManageMajors = (id: string) => {
+    history.push(`/admin/university/${id}/majors`);
+  };
+
   const handleFormSubmit = async (values: any) => {
     if (editingUniversity) {
       await updateUniversityItem(editingUniversity._id, values);
@@ -81,6 +85,7 @@ const UniversityPage: React.FC = () => {
           onEdit={handleEdit}
           onDelete={handleDelete}
           onViewDetail={handleViewDetail}
+          onManageMajors={handleManageMajors}
         />
       </Card>
 

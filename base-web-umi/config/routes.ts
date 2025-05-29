@@ -113,6 +113,14 @@
 						path: '/admin/university',
 						component: './Admin/University',
 					},
+					{
+						path: '/admin/majors',
+						component: './Admin/Majors',
+					},
+					{
+						path: '/admin/subject-combinations',
+						component: './Admin/SubjectCombinations',
+					},
 					// {
 					// 	path: '/admin/users',
 					// 	component: './Admin/Users',

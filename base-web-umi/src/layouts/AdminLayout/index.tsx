@@ -44,6 +44,11 @@ const AdminLayout: React.FC = ({ children }) => {
       label: <Link to="/admin/university">Quản lý trường đại học</Link>,
     },
     {
+      key: '/admin/subject-combinations',
+      icon: <FileTextOutlined />,
+      label: <Link to="/admin/subject-combinations">Quản lý tổ hợp môn</Link>,
+    },
+    {
       key: '/admin/settings',
       icon: <SettingOutlined />,
       label: <Link to="/admin/settings">Cài đặt</Link>,
