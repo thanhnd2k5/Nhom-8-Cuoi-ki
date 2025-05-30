@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'umi';
 import { handleLogin } from '@/models/User/auth';
 import { Divider } from 'antd';
@@ -13,6 +13,13 @@ const Login: React.FC = () => {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  useEffect(() => {
+    const token = localStorage.getItem('userToken');
+    if (token) {
+      history.replace('/User/Dashboard');
+    }
+  }, [history]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
