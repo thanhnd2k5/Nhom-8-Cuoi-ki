@@ -16,6 +16,7 @@ import {
   FileTextOutlined,
 } from '@ant-design/icons';
 import styles from './index.less';
+import { handleLogout } from '@/models/User/auth';
 
 const { Header, Sider, Content, Footer } = Layout;
 const { Text } = Typography;
@@ -36,9 +37,8 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
     return 'dashboard';
   };
 
-  const handleLogout = () => {
-    // Xử lý đăng xuất
-    localStorage.removeItem('userToken');
+  const handleLogoutClick = async () => {
+    await handleLogout();
     window.location.href = '/user/login';
   };
 
@@ -58,7 +58,7 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
               shape="circle" 
               icon={<LogoutOutlined />} 
               aria-label="Đăng xuất"
-              onClick={handleLogout}
+              onClick={handleLogoutClick}
             />
           </Space>
         </div>

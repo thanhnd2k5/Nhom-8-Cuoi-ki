@@ -47,8 +47,7 @@ axios.interceptors.request.use(
 				const adminTokenData = localStorage.getItem('adminToken') || '{}';
 				token = adminTokenData
 			} else if (url.includes('/users/')) {
-				const userTokenData = localStorage.getItem('userToken') || '{}';
-				token = userTokenData
+				token = localStorage.getItem('userToken');
 			}
 			// Nếu không xác định được hoặc là request public không cần token, có thể không gán token
 			// Hoặc bạn có thể có một token mặc định nếu cần

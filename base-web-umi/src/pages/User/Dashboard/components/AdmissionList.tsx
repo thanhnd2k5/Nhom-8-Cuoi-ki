@@ -1,41 +1,141 @@
-import React from 'react';
+import React, { useState } from 'react';
+import moment from 'moment';
 
-const statusColor = {
-  approved: { color: '#22c55e', label: 'Đã duyệt' },
-  pending: { color: '#eab308', label: 'Đang xét duyệt' },
-  rejected: { color: '#ef4444', label: 'Từ chối' },
+const tabs = [
+  { key: 'all', label: 'Tất cả' },
+  { key: 'pending', label: 'Chờ duyệt' },
+  { key: 'approved', label: 'Đã duyệt' },
+  { key: 'rejected', label: 'Từ chối' },
+];
+
+const statusMap = {
+  pending: 'cho_duyet',
+  approved: 'da_duyet',
+  rejected: 'tu_choi',
 };
 
-const AdmissionList = ({ admissions }: { admissions: any[] }) => (
-  <div style={{ background: '#fff', borderRadius: 12, padding: 24 }}>
-    <h3 style={{ fontWeight: 700, fontSize: 20 }}>Hồ sơ xét tuyển của bạn</h3>
-    <div>
-      {admissions.map((item) => (
-        <div key={item.id} style={{
-          border: '1px solid #eee', borderRadius: 10, padding: 16, marginBottom: 12,
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center'
-        }}>
-          <div>
-            <div style={{ fontWeight: 700 }}>{item.university}</div>
-            <div>Ngành: {item.major}</div>
-            <div>Tổ hợp: {item.group}</div>
-          </div>
-          <div style={{ textAlign: 'right' }}>
-            <span style={{
-              background: statusColor[item.status]?.color || '#ccc',
-              color: '#fff', borderRadius: 8, padding: '4px 12px', marginRight: 8
-            }}>
-              {statusColor[item.status]?.label || item.status}
-            </span>
-            <button style={{
-              background: '#2563eb', color: '#fff', border: 'none', borderRadius: 8,
-              padding: '8px 18px', fontWeight: 600, cursor: 'pointer'
-            }}>Xem chi tiết</button>
-          </div>
+const statusLabelMap = {
+  cho_duyet: { color: '#eab308', label: 'Chờ duyệt' },
+  da_duyet: { color: '#c00', label: 'Đã duyệt' },
+  tu_choi: { color: '#888', label: 'Từ chối' },
+};
+
+const AdmissionList = ({ admissions, universityMajors, subjectCombinations }) => {
+  const [tab, setTab] = useState('all');
+
+  // Map id sang tên ngành
+  const getMajorName = (universityMajorId) => {
+    if (!universityMajorId) return '---';
+    if (typeof universityMajorId === 'object') {
+      return universityMajorId.name || '---';
+    }
+    const major = universityMajors.find(m => m._id === universityMajorId);
+    return major ? major.name : '---';
+  };
+
+  // Map id sang tên tổ hợp môn
+  const getCombinationName = (subjectCombinationId) => {
+    if (!subjectCombinationId) return '---';
+    if (typeof subjectCombinationId === 'object') {
+      return subjectCombinationId.code || '---';
+    }
+    const comb = subjectCombinations.find(c => c._id === subjectCombinationId);
+    return comb ? comb.code : '---';
+  };
+
+  
+
+  const filtered = tab === 'all'
+    ? admissions
+    : admissions.filter(item => item.status === statusMap[tab]);
+
+  return (
+    <div style={{ background: '#f3f4f6', minHeight: 600, padding: 32 }}>
+      <div style={{ maxWidth: 900, margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24 }}>
+          <h2 style={{ fontWeight: 700, fontSize: 24, margin: 0, flex: 1 }}>Hồ sơ xét tuyển</h2>
+          
         </div>
-      ))}
+        <div style={{ display: 'flex', gap: 24, marginBottom: 24 }}>
+          {tabs.map(t => (
+            <div
+              key={t.key}
+              onClick={() => setTab(t.key)}
+              style={{
+                fontWeight: 600,
+                fontSize: 16,
+                color: tab === t.key ? '#c00' : '#222',
+                borderBottom: tab === t.key ? '3px solid #c00' : '3px solid transparent',
+                paddingBottom: 6,
+                cursor: 'pointer'
+              }}
+            >
+              {t.label}
+            </div>
+          ))}
+        </div>
+        <div>
+          {filtered.length === 0 && <div style={{ color: '#888', textAlign: 'center', marginTop: 60 }}>Không có hồ sơ nào.</div>}
+          {filtered.map((item) => (
+            console.log('Admission item render:', item),
+            <div key={item.id || item._id} style={{
+              background: '#fff',
+              borderRadius: 8,
+              padding: 20,
+              marginBottom: 18,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              border: '1px solid #eee'
+            }}>
+              <div>
+                <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 4 }}>{item.university}</div>
+                <div style={{ color: '#555', marginBottom: 2 }}>Ngành: <b>{getMajorName(item.universityMajorId)}</b></div>
+                <div style={{ color: '#555', marginBottom: 2 }}>Tổ hợp xét tuyển: <b>{getCombinationName(item.subjectCombinationId)}</b></div>
+                <div style={{ color: '#888', fontSize: 14 }}>
+                  Ngày nộp: {item.created_at ? moment(item.created_at).format('DD/MM/YYYY') : '---'}
+                </div>
+                <div style={{ color: '#888', fontSize: 14 }}>
+                  Ngày cập nhật: {item.updated_at ? moment(item.updated_at).format('DD/MM/YYYY') : '---'}
+                </div>
+              </div>
+              <div style={{ textAlign: 'right', minWidth: 180 }}>
+                <span style={{
+                  background: statusLabelMap[item.status]?.color || '#ccc',
+                  color: '#fff',
+                  borderRadius: 6,
+                  padding: '4px 14px',
+                  marginRight: 8,
+                  fontWeight: 600,
+                  fontSize: 15
+                }}>
+                  {statusLabelMap[item.status]?.label || item.status}
+                </span>
+                <button
+                  style={{
+                    background: '#fff',
+                    color: '#c00',
+                    border: '1.5px solid #c00',
+                    borderRadius: 6,
+                    padding: '6px 16px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    marginLeft: 8,
+                    fontSize: 15
+                  }}
+                  onClick={() => {
+                    window.location.href = `/user/applications/${item._id || item.id}`;
+                  }}
+                >
+                  Xem chi tiết
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default AdmissionList;

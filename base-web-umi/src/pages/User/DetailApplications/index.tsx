@@ -47,7 +47,12 @@ const DetailApplicationsPage: React.FC = () => {
       />
       <ApplicationInfoCard application={application} statusMap={statusMap} />
       <div className="section">
-        <ApplicationScoresCard scores={application.scores} priority={application.priority} />
+      <ApplicationScoresCard
+          scores={application.scores}
+          totalScore={application.totalScore}
+          method={application.method}
+          priority={application.priority}
+      />
       </div>
       <div className="section">
         <ApplicationDocumentsCard documents={application.documents} />

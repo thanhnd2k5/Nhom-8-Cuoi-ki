@@ -42,7 +42,17 @@ export default () => {
   const getNormalizedData = useCallback(() => {
     if (!state.data) return null;
 
-    const { application, applicationResult, documents } = state.data;
+    const { application, applicationResult, documents, profile } = state.data;
+    const isHocBa = (applicationResult?.method || application?.admissionMethod) === 'hoc_ba';
+    let totalScore = applicationResult?.totalScore;
+
+    if (isHocBa) {
+      // Nếu totalScore là 0 hoặc undefined, tự tính lại
+      const g10 = applicationResult?.gpaGrade10 || 0;
+      const g11 = applicationResult?.gpaGrade11 || 0;
+      const g12 = applicationResult?.gpaGrade12 || 0;
+      totalScore = g10 + g11 + g12;
+    }
 
     return {
       university: application.universityMajorId.name,
@@ -54,15 +64,16 @@ export default () => {
         updated: new Date(application.updated_at).toLocaleString(),
       },
       scores: {
-        ...(applicationResult.gpaGrade10 && { 'GPA 10': applicationResult.gpaGrade10 }),
-        ...(applicationResult.gpaGrade11 && { 'GPA 11': applicationResult.gpaGrade11 }),
-        ...(applicationResult.gpaGrade12 && { 'GPA 12': applicationResult.gpaGrade12 }),
-        ...(applicationResult.totalScore && { 'Tổng': applicationResult.totalScore }),
+        ...(applicationResult.gpaGrade10 !== undefined && { 'GPA 10': applicationResult.gpaGrade10 }),
+        ...(applicationResult.gpaGrade11 !== undefined && { 'GPA 11': applicationResult.gpaGrade11 }),
+        ...(applicationResult.gpaGrade12 !== undefined && { 'GPA 12': applicationResult.gpaGrade12 }),
       },
-      priority: { 
-        area: '', 
-        group: '', 
-        score: 0 
+      totalScore,
+      method: applicationResult?.method || application?.admissionMethod || '',
+      priority: {
+        area: profile?.priorityArea || '',
+        group: profile?.priorityGroup || '',
+        score: applicationResult?.priorityScore || 0,
       },
       documents: documents.map(doc => ({
         name: doc.fileUrl.split('/').pop() || '',
