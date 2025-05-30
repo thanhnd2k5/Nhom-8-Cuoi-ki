@@ -10,20 +10,17 @@ export async function getOne(req, res) {
     if (!university) {
         return res.status(404).json({ success: false, message: 'Không tìm thấy trường đại học' })
     }
-    res.json({ success: true, data: university })
+    res.jsonify(university)
 }
 
 export async function create(req, res) {
     const university = await universityService.createUniversity(req.body)
-    res.status(201).json({ success: true, data: university })
+    res.status(201).jsonify(university)
 }
 
 export async function update(req, res) {
     const university = await universityService.updateUniversity(req.university._id, req.body)
-    if (!university) {
-        return res.status(404).json({ success: false, message: 'Không tìm thấy trường đại học' })
-    }
-    res.json({ success: true, data: university })
+    res.jsonify(university)
 }
 
 export async function remove(req, res) {
@@ -31,5 +28,5 @@ export async function remove(req, res) {
     if (!university) {
         return res.status(404).json({ success: false, message: 'Không tìm thấy trường đại học' })
     }
-    res.json({ success: true, message: 'Xoá thành công' })
+    res.jsonify({ message: 'Xoá thành công' })
 }

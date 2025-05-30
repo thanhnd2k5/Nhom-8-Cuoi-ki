@@ -114,8 +114,8 @@
 						component: './Admin/University',
 					},
 					{
-						path: '/admin/majors',
-						component: './Admin/Majors',
+						path: '/admin/university/:universityId',
+						component: './Admin/University/Detail',
 					},
 					{
 						path: '/admin/subject-combinations',

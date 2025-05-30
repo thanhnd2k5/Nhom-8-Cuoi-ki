@@ -26,7 +26,7 @@ const Step2Page: React.FC = () => {
   const { formData, updateFormData } = useModel('User.applications');
 
   // Check if current method needs subject combination
-  const needsSubjectCombination = ['hoc_ba', 'tot_nghiep'].includes(admissionMethod);
+  const needsSubjectCombination = ['tot_nghiep'].includes(admissionMethod);
 
   useEffect(() => {
     // Fetch universities on component mount

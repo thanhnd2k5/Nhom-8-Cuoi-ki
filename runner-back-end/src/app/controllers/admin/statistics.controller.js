@@ -1,106 +1,66 @@
-import * as statisticsService from '@/app/services/statistics.service'
+import * as StatisticsService from '@/app/services/statistics.service'
+import { abort } from '@/utils/helpers'
+
 
 export async function getStatisticsByUniversity(req, res) {
     try {
-        const statistics = await statisticsService.getStatisticsByUniversity()
-        return res.status(200).json({
-            success: true,
-            data: statistics
-        })
+        const statistics = await StatisticsService.getStatisticsByUniversity()
+        res.jsonify(statistics)
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
+        abort(error, res)
     }
 }
 
 export async function getStatisticsByMajor(req, res) {
     try {
-        const statistics = await statisticsService.getStatisticsByMajor()
-        return res.status(200).json({
-            success: true,
-            data: statistics
-        })
+        const statistics = await StatisticsService.getStatisticsByMajor()
+        res.jsonify(statistics)
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
+        abort(error, res)
     }
 }
 
 export async function getStatisticsByStatus(req, res) {
     try {
-        const statistics = await statisticsService.getStatisticsByStatus()
-        return res.status(200).json({
-            success: true,
-            data: statistics
-        })
+        const statistics = await StatisticsService.getStatisticsByStatus()
+        res.jsonify(statistics)
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
+        abort(error, res)
     }
 }
 
 export async function getStatisticsByDate(req, res) {
     try {
-        const statistics = await statisticsService.getStatisticsByDate()
-        return res.status(200).json({
-            success: true,
-            data: statistics
-        })
+        const statistics = await StatisticsService.getStatisticsByDate()
+        res.jsonify(statistics)
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
+        abort(error, res)
     }
 }
 
 export async function getStatisticsByMonth(req, res) {
     try {
-        const statistics = await statisticsService.getStatisticsByMonth()
-        return res.status(200).json({
-            success: true,
-            data: statistics
-        })
+        const statistics = await StatisticsService.getStatisticsByMonth()
+        res.jsonify(statistics)
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
+        abort(error, res)
     }
 }
 
 export async function getStatisticsByYear(req, res) {
     try {
-        const statistics = await statisticsService.getStatisticsByYear()
-        return res.status(200).json({
-            success: true,
-            data: statistics
-        })
+        const statistics = await StatisticsService.getStatisticsByYear()
+        res.jsonify(statistics)
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
+        abort(error, res)
     }
 }
 
 export async function getStatisticsBetweenUniversities(req, res) {
     try {
-        const statistics = await statisticsService.getStatisticsBetweenUniversities()
-        return res.status(200).json({
-            success: true,
-            data: statistics
-        })
+        const statistics = await StatisticsService.getStatisticsBetweenUniversities()
+        res.jsonify(statistics)
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
+        abort(error, res)
     }
 }
