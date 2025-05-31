@@ -121,6 +121,10 @@
 						path: '/admin/subject-combinations',
 						component: './Admin/SubjectCombinations',
 					},
+					{
+						path: '/admin/applications/:id',
+						component: './Admin/DetailApplications',
+					}
 					// {
 					// 	path: '/admin/users',
 					// 	component: './Admin/Users',

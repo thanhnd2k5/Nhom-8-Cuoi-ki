@@ -1,8 +1,8 @@
 import React from 'react';
-import { Table, Button, Space, Tag, Modal, message } from 'antd';
+import { Table, Button, Space, Tag, Modal } from 'antd';
 import { CheckOutlined, CloseOutlined, EyeOutlined } from '@ant-design/icons';
 import { Application } from '@/services/Admin/Applications';
-import ApplicationDetailModal from './ApplicationDetailModal';
+import { useHistory } from 'umi';
 import styles from './index.less';
 
 interface ApplicationListProps {
@@ -20,12 +20,10 @@ const ApplicationList: React.FC<ApplicationListProps> = ({
   onApprove,
   onReject,
 }) => {
-  const [selectedApplication, setSelectedApplication] = React.useState<Application | null>(null);
-  const [showDetail, setShowDetail] = React.useState(false);
+  const history = useHistory();
 
   const handleViewDetail = (application: Application) => {
-    setSelectedApplication(application);
-    setShowDetail(true);
+    history.push(`/admin/applications/${application._id}`);
   };
 
   const handleApprove = (id: string) => {
@@ -155,12 +153,6 @@ const ApplicationList: React.FC<ApplicationListProps> = ({
         dataSource={applications}
         loading={loading}
         rowKey="_id"
-      />
-
-      <ApplicationDetailModal
-        visible={showDetail}
-        onCancel={() => setShowDetail(false)}
-        application={selectedApplication}
       />
     </div>
   );

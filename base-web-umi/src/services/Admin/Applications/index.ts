@@ -55,3 +55,10 @@ export async function updateApplicationStatus(applicationId: string, data: Updat
   const response = await axios.patch<ApplicationsResponse>(`http://localhost:3456/admin/applications/${applicationId}/status`, data);
   return response.data;
 } 
+
+export async function getCompleteApplicationById(applicationId: string) {
+  const response = await request(`http://localhost:3456/users/applications/complete/${applicationId}`, {
+    method: 'GET',
+  });
+  return response.data
+}

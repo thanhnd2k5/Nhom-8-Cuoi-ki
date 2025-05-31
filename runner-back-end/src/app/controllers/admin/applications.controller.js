@@ -41,3 +41,9 @@ export async function getApplicationsByUniversity(req, res) {
         abort(error, res)
     }
 }
+
+export async function getCompleteApplicationById(req, res) {
+    const applicationId = req.application._id
+    const application = await ApplicationsService.getCompleteApplicationById(applicationId)
+    res.jsonify(application)
+}

@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { message } from 'antd';
-import { getCompleteApplicationById } from '@/services/User/applications';
+import { getCompleteApplicationById } from '@/services/Admin/Applications';
 import { ApplicationDetailResponse, NormalizedApplication } from '@/pages/User/DetailApplications/types';
 import { getPriorityScore } from '@/utils/priorityScore';
 

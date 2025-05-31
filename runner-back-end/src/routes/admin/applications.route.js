@@ -22,4 +22,9 @@ router.patch(
     asyncHandler(validate(aplicationsRequest.updateStatusApplicationSchema)),
     asyncHandler(ApplicationsController.updateApplicationStatus))
 
+router.get('/complete/:applicationId',
+    asyncHandler(checkApplicationExists),
+    asyncHandler(ApplicationsController.getCompleteApplicationById)
+)
+
 export default router 

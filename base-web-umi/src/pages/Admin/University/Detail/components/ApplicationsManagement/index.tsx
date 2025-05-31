@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Tabs, Badge, Space } from 'antd';
-import { useModel, useParams,  } from 'umi';
+import { useModel, useParams } from 'umi';
 import ApplicationList from './ApplicationList';
-import ApplicationDetail from './ApplicationDetail';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -21,7 +20,6 @@ const ApplicationsManagement: React.FC = () => {
   }, []);
 
   const [activeTab, setActiveTab] = useState('cho_duyet');
-  const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
 
   // Đếm số lượng đơn theo trạng thái
   const getApplicationCount = (status: string) => {
@@ -30,10 +28,6 @@ const ApplicationsManagement: React.FC = () => {
 
   const handleTabChange = (key: string) => {
     setActiveTab(key);
-  };
-
-  const handleViewDetail = (application: Application) => {
-    setSelectedApplication(application);
   };
 
   return (
@@ -49,20 +43,13 @@ const ApplicationsManagement: React.FC = () => {
             }
             key="cho_duyet"
           >
-            {selectedApplication ? (
-              <ApplicationDetail 
-                application={selectedApplication} 
-                onBack={() => setSelectedApplication(null)} 
-              />
-            ) : (
-              <ApplicationList
-                status="cho_duyet"
-                applications={applications.filter(app => app.status === 'cho_duyet')}
-                loading={loading}
-                onApprove={updateStatus}
-                onReject={updateStatus}
-              />
-            )}
+            <ApplicationList
+              status="cho_duyet"
+              applications={applications.filter(app => app.status === 'cho_duyet')}
+              loading={loading}
+              onApprove={updateStatus}
+              onReject={updateStatus}
+            />
           </TabPane>
 
           <TabPane
