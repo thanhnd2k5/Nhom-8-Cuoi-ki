@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Button, Space, Tag, Modal, message } from 'antd';
 import { CheckOutlined, CloseOutlined, EyeOutlined } from '@ant-design/icons';
-import { Application } from '@/models/Admin/Applications';
+import { Application } from '@/services/Admin/Applications';
 import ApplicationDetailModal from './ApplicationDetailModal';
 import styles from './index.less';
 
@@ -9,8 +9,8 @@ interface ApplicationListProps {
   status: string;
   applications: Application[];
   loading: boolean;
-  onApprove?: (id: string) => Promise<void>;
-  onReject?: (id: string) => Promise<void>;
+  onApprove?: (id: string, data: any) => Promise<void>;
+  onReject?: (id: string, data: any) => Promise<void>;
 }
 
 const ApplicationList: React.FC<ApplicationListProps> = ({
@@ -37,7 +37,7 @@ const ApplicationList: React.FC<ApplicationListProps> = ({
       cancelText: 'Hủy',
       onOk: async () => {
         if (onApprove) {
-          await onApprove(id);
+          await onApprove(id, { status: 'da_duyet' });
         }
       },
     });
@@ -52,7 +52,7 @@ const ApplicationList: React.FC<ApplicationListProps> = ({
       cancelText: 'Hủy',
       onOk: async () => {
         if (onReject) {
-          await onReject(id);
+          await onReject(id, { status: 'tu_choi' });
         }
       },
     });
@@ -60,10 +60,10 @@ const ApplicationList: React.FC<ApplicationListProps> = ({
 
   const getStatusTag = (status: string) => {
     const statusConfig = {
-      pending: { color: 'warning', text: 'Chờ duyệt' },
-      approved: { color: 'success', text: 'Đã duyệt' },
-      rejected: { color: 'error', text: 'Đã từ chối' },
-      enrolled: { color: 'processing', text: 'Đã nhập học' },
+      cho_duyet: { color: 'warning', text: 'Chờ duyệt' },
+      da_duyet: { color: 'success', text: 'Đã duyệt' },
+      tu_choi: { color: 'error', text: 'Đã từ chối' },
+      da_nhap_hoc: { color: 'processing', text: 'Đã nhập học' },
     };
     const config = statusConfig[status as keyof typeof statusConfig];
     return <Tag color={config.color}>{config.text}</Tag>;
@@ -71,30 +71,41 @@ const ApplicationList: React.FC<ApplicationListProps> = ({
 
   const columns = [
     {
-      title: 'Mã hồ sơ',
-      dataIndex: 'code',
-      key: 'code',
+      title: 'Họ và tên',
+      dataIndex: ['userId', 'name'],
+      key: 'name',
     },
     {
-      title: 'Họ và tên',
-      dataIndex: 'full_name',
-      key: 'full_name',
+      title: 'Email',
+      dataIndex: ['userId', 'email'],
+      key: 'email',
     },
     {
       title: 'Ngành đăng ký',
-      dataIndex: 'major',
+      dataIndex: ['universityMajorId', 'name'],
       key: 'major',
-      render: (major: any) => major?.name,
+    },
+    {
+      title: 'Mã ngành',
+      dataIndex: ['universityMajorId', 'code'],
+      key: 'majorCode',
     },
     {
       title: 'Phương thức xét tuyển',
-      dataIndex: 'admission_method',
-      key: 'admission_method',
+      dataIndex: 'admissionMethod',
+      key: 'admissionMethod',
+      render: (method: string) => {
+        const methodMap: { [key: string]: string } = {
+          hoc_ba: 'Học bạ',
+          diem_thi: 'Điểm thi',
+        };
+        return methodMap[method] || method;
+      },
     },
     {
-      title: 'Điểm xét tuyển',
-      dataIndex: 'score',
-      key: 'score',
+      title: 'Tổ hợp môn',
+      dataIndex: ['subjectCombinationId', 'code'],
+      key: 'subjectCombination',
     },
     {
       title: 'Trạng thái',
@@ -114,7 +125,7 @@ const ApplicationList: React.FC<ApplicationListProps> = ({
           >
             Chi tiết
           </Button>
-          {status === 'pending' && (
+          {status === 'cho_duyet' && (
             <>
               <Button
                 type="primary"

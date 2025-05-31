@@ -3,6 +3,7 @@ import { Card, Tabs, Breadcrumb } from 'antd';
 import { useParams, history } from 'umi';
 import { useModel } from 'umi';
 import MajorsManagement from './components/MajorsManagement';
+import ApplicationsManagement from './components/ApplicationsManagement';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -36,7 +37,7 @@ const UniversityDetailPage: React.FC = () => {
             <MajorsManagement />
           </TabPane>
           <TabPane tab="Quản lý đơn xét tuyển" key="applications">
-            {/* Component quản lý đơn xét tuyển sẽ được thêm vào đây */}
+            <ApplicationsManagement />
           </TabPane>
           <TabPane tab="Thống kê" key="statistics">
             {/* Component thống kê sẽ được thêm vào đây */}

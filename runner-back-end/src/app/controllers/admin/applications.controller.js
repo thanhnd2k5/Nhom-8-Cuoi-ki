@@ -30,3 +30,14 @@ export async function getAllApplications(req, res) {
         abort(error, res)
     }
 }
+
+// Lấy đơn xét tuyển theo trường
+export async function getApplicationsByUniversity(req, res) {
+    try {
+        const universityId = req.university._id
+        const applications = await ApplicationsService.getApplicationsByUniversity(universityId)
+        res.jsonify(applications)
+    } catch (error) {
+        abort(error, res)
+    }
+}

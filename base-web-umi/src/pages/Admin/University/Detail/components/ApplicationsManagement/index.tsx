@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Tabs, Badge, Space } from 'antd';
-import { useModel } from 'umi';
+import { useModel, useParams,  } from 'umi';
 import ApplicationList from './ApplicationList';
+import ApplicationDetail from './ApplicationDetail';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -11,12 +12,16 @@ const ApplicationsManagement: React.FC = () => {
   const {
     applications,
     loading,
-    fetchApplications,
-    approveApplication,
-    rejectApplication,
+    fetchApplicationsByUniversity,
+    updateStatus,
   } = useModel('Admin.Applications');
 
-  const [activeTab, setActiveTab] = useState('pending');
+  useEffect(() => {
+    fetchApplicationsByUniversity(universityId);
+  }, []);
+
+  const [activeTab, setActiveTab] = useState('cho_duyet');
+  const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
 
   // Đếm số lượng đơn theo trạng thái
   const getApplicationCount = (status: string) => {
@@ -27,6 +32,10 @@ const ApplicationsManagement: React.FC = () => {
     setActiveTab(key);
   };
 
+  const handleViewDetail = (application: Application) => {
+    setSelectedApplication(application);
+  };
+
   return (
     <div className={styles.container}>
       <Card>
@@ -35,32 +44,39 @@ const ApplicationsManagement: React.FC = () => {
             tab={
               <Space>
                 Chờ duyệt
-                <Badge count={getApplicationCount('pending')} style={{ backgroundColor: '#faad14' }} />
+                <Badge count={getApplicationCount('cho_duyet')} style={{ backgroundColor: '#faad14' }} />
               </Space>
             }
-            key="pending"
+            key="cho_duyet"
           >
-            <ApplicationList
-              status="pending"
-              applications={applications.filter(app => app.status === 'pending')}
-              loading={loading}
-              onApprove={approveApplication}
-              onReject={rejectApplication}
-            />
+            {selectedApplication ? (
+              <ApplicationDetail 
+                application={selectedApplication} 
+                onBack={() => setSelectedApplication(null)} 
+              />
+            ) : (
+              <ApplicationList
+                status="cho_duyet"
+                applications={applications.filter(app => app.status === 'cho_duyet')}
+                loading={loading}
+                onApprove={updateStatus}
+                onReject={updateStatus}
+              />
+            )}
           </TabPane>
 
           <TabPane
             tab={
               <Space>
                 Đã duyệt
-                <Badge count={getApplicationCount('approved')} style={{ backgroundColor: '#52c41a' }} />
+                <Badge count={getApplicationCount('da_duyet')} style={{ backgroundColor: '#52c41a' }} />
               </Space>
             }
-            key="approved"
+            key="da_duyet"
           >
             <ApplicationList
-              status="approved"
-              applications={applications.filter(app => app.status === 'approved')}
+              status="da_duyet"
+              applications={applications.filter(app => app.status === 'da_duyet')}
               loading={loading}
             />
           </TabPane>
@@ -69,14 +85,14 @@ const ApplicationsManagement: React.FC = () => {
             tab={
               <Space>
                 Đã từ chối
-                <Badge count={getApplicationCount('rejected')} style={{ backgroundColor: '#ff4d4f' }} />
+                <Badge count={getApplicationCount('tu_choi')} style={{ backgroundColor: '#ff4d4f' }} />
               </Space>
             }
-            key="rejected"
+            key="tu_choi"
           >
             <ApplicationList
-              status="rejected"
-              applications={applications.filter(app => app.status === 'rejected')}
+              status="tu_choi"
+              applications={applications.filter(app => app.status === 'tu_choi')}
               loading={loading}
             />
           </TabPane>
@@ -85,14 +101,14 @@ const ApplicationsManagement: React.FC = () => {
             tab={
               <Space>
                 Đã nhập học
-                <Badge count={getApplicationCount('enrolled')} style={{ backgroundColor: '#1890ff' }} />
+                <Badge count={getApplicationCount('da_nhap_hoc')} style={{ backgroundColor: '#1890ff' }} />
               </Space>
             }
-            key="enrolled"
+            key="da_nhap_hoc"
           >
             <ApplicationList
-              status="enrolled"
-              applications={applications.filter(app => app.status === 'enrolled')}
+              status="da_nhap_hoc"
+              applications={applications.filter(app => app.status === 'da_nhap_hoc')}
               loading={loading}
             />
           </TabPane>
