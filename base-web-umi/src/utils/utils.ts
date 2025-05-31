@@ -652,3 +652,21 @@ export const requiredDocumentsByMethod: Record<string, Array<{ type: string; lab
     { type: 'tu_duy', label: 'Kết quả Đánh giá tư duy', required: true },
   ],
 };
+
+export const areaMap: Record<string, string> = {
+  'KV1': 'Khu vực 1',
+  'KV2-NT': 'Khu vực 2 nông thôn',
+  'KV2': 'Khu vực 2',
+  'KV3': 'Khu vực 3',
+};
+
+export const groupMap: Record<string, string> = {
+  '01': 'Đối tượng 1',
+  '02': 'Đối tượng 2',
+  '03': 'Đối tượng 3',
+  '04': 'Đối tượng 4',
+  '05': 'Đối tượng 5',
+  '06': 'Đối tượng 6',
+  '07': 'Đối tượng 7',
+  'khac': 'Không thuộc đối tượng ưu tiên',
+};
