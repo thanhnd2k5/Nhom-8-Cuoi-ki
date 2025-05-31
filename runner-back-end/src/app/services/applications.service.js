@@ -1,4 +1,4 @@
-import {Application, Document} from '@/models'
+import {Application, Document, University} from '@/models'
 import * as ApplicationResultService from './application_results.service'
 import * as DocumentService from './documents.service'
 import * as ApplicationProfileService from './application_profiles.service'
@@ -96,10 +96,17 @@ export async function getCompleteApplicationById(applicationId) {
         .populate('userId', 'name email')
         .populate('universityMajorId')
         .populate('subjectCombinationId')
+        .lean()
+
 
     if (!application){
         abort(404, 'Application not found')
     }
+
+    // 2. Lấy tên trường đại học và gán vào application
+    const university = await University.findById(application.universityMajorId.university_id).lean()
+    application.universityMajorId.university = university.name
+
 
     // 2. Lấy profile
     const profile = await ApplicationProfileService.getApplicationProfileByApplicationId(applicationId)

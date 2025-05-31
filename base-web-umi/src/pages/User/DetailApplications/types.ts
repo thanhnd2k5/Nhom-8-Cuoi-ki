@@ -55,7 +55,64 @@ export interface ApplicationDocument {
 }
 
 export interface ApplicationDetailResponse {
-  application: Application;
-  applicationResult: ApplicationResult;
-  documents: ApplicationDocument[];
+  application: {
+    id: string;
+    status: string;
+    universityMajorId: {
+      university: string;
+      name: string;
+    };
+    subjectCombinationId: {
+      code: string;
+    };
+    admissionMethod: string;
+    created_at: string;
+    updated_at: string;
+  };
+  applicationResult: {
+    method: string;
+    totalScore: number;
+    gpaGrade10?: number;
+    gpaGrade11?: number;
+    gpaGrade12?: number;
+  };
+  documents: Array<{
+    fileUrl: string;
+    fileType: string;
+  }>;
+  profile: {
+    name: string;
+    email: string;
+    phone: string;
+    priorityArea?: string;
+    priorityGroup?: string;
+  };
+}
+
+export interface NormalizedApplication {
+  name: string;
+  email: string;
+  phone: string;
+  university: string;
+  major: string;
+  combination?: string;
+  status: string;
+  dates: {
+    submitted: string;
+    updated: string;
+  };
+  scores: Record<string, number>;
+  totalScore: number;
+  method: string;
+  priority: {
+    area: string;
+    group: string;
+    score: number;
+  };
+  documents: {
+    name: string;
+    type: string;
+    size: string;
+    url: string;
+  }[];
 } 
