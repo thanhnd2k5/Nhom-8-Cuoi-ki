@@ -36,6 +36,8 @@ const DetailApplicationsPage: React.FC = () => {
   if (error) return <div className="error-message">{error}</div>;
   
   const application = getNormalizedData();
+  console.log(application);
+
   if (!application) return null;
 
   return (
@@ -47,7 +49,12 @@ const DetailApplicationsPage: React.FC = () => {
       />
       <ApplicationInfoCard application={application} statusMap={statusMap} />
       <div className="section">
-        <ApplicationScoresCard scores={application.scores} priority={application.priority} />
+        <ApplicationScoresCard
+          scores={application.scores}
+          totalScore={application.totalScore}
+          method={application.method}
+          priority={application.priority}
+        />
       </div>
       <div className="section">
         <ApplicationDocumentsCard documents={application.documents} />

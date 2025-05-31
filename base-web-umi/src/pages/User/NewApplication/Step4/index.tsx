@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Card, Row, Col, Button } from 'antd';
+import { Form, Card, Row, Col, Button, InputNumber } from 'antd';
 import { useModel, history } from 'umi';
 import NewApplicationLayout from '../NewApplicationLayout';
-
-const subjectList = ['Toán', 'Lý', 'Hóa']; // Có thể lấy động từ tổ hợp nếu muốn
 
 const Step4: React.FC = () => {
   const [form] = Form.useForm();
@@ -93,7 +91,7 @@ const Step4: React.FC = () => {
             ]}
             initialValue={profileData?.gpaGrade10}
           >
-            <Input type="number" step="0.1" placeholder="Nhập điểm" />
+            <InputNumber step={0.1} min={0} max={10} style={{ width: '100%' }} placeholder="Nhập điểm" />
           </Form.Item>
         </Col>
         <Col span={8}>
@@ -106,7 +104,7 @@ const Step4: React.FC = () => {
             ]}
             initialValue={profileData?.gpaGrade11}
           >
-            <Input type="number" step="0.1" placeholder="Nhập điểm" />
+            <InputNumber step={0.1} min={0} max={10} style={{ width: '100%' }} placeholder="Nhập điểm" />
           </Form.Item>
         </Col>
         <Col span={8}>
@@ -119,7 +117,7 @@ const Step4: React.FC = () => {
             ]}
             initialValue={profileData?.gpaGrade12}
           >
-            <Input type="number" step="0.1" placeholder="Nhập điểm" />
+            <InputNumber step={0.1} min={0} max={10} style={{ width: '100%' }} placeholder="Nhập điểm" />
           </Form.Item>
         </Col>
       </Row>
@@ -137,7 +135,7 @@ const Step4: React.FC = () => {
                 { type: 'number', min: 0, max: 10, message: 'Điểm phải từ 0 đến 10' }
               ]}
             >
-              <Input type="number" step="0.1" placeholder={`Nhập điểm ${subject}`} />
+              <InputNumber step={0.1} min={0} max={10} style={{ width: '100%' }} placeholder={`Nhập điểm ${subject}`} />
             </Form.Item>
           </Col>
         ))}
@@ -155,7 +153,7 @@ const Step4: React.FC = () => {
               { type: 'number', min: 0, max: 1200, message: 'Điểm phải hợp lệ' }
             ]}
           >
-            <Input type="number" step="0.1" placeholder="Nhập tổng điểm" />
+            <InputNumber step={0.1} min={0} max={1200} style={{ width: '100%' }} placeholder="Nhập tổng điểm" />
           </Form.Item>
         </Col>
       </Row>

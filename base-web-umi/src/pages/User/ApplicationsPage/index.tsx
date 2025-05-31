@@ -21,7 +21,7 @@ const { TabPane } = Tabs;
 
 // Define status and method types
 type StatusType = 'cho_duyet' | 'da_duyet' | 'tu_choi';
-type AdmissionMethodType = 'dgnl' | 'thpt' | 'hoc_ba';
+type AdmissionMethodType = 'dgnl' | 'tu_duy' | 'tot_nghiep' | 'hoc_ba';
 
 const ApplicationsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('all');
@@ -54,7 +54,8 @@ const ApplicationsPage: React.FC = () => {
   const getAdmissionMethodText = (method: string) => {
     const methodMap: Record<AdmissionMethodType, string> = {
       'dgnl': 'Đánh giá năng lực',
-      'thpt': 'Thi THPT Quốc gia',
+      'tu_duy': 'Đánh giá tư duy',
+      'tot_nghiep': 'Thi THPT Quốc gia',
       'hoc_ba': 'Xét học bạ',
     };
     return methodMap[method as AdmissionMethodType] || method;
@@ -68,61 +69,125 @@ const ApplicationsPage: React.FC = () => {
     history.push('/user/applications/new');
   };
 
-  const renderApplicationCard = (application: Application) => (
-    <Card key={application._id} className={styles.applicationCard}>
-      <div className={styles.cardHeader}>
-        <div className={styles.cardTitle}>
-          <Title level={4}>{application.universityMajorId.name}</Title>
-          <Text type="secondary">Mã ngành: {application.universityMajorId.code}</Text>
-        </div>
-        <div className={styles.cardStatus}>
-          {getStatusBadge(application.status)}
-        </div>
-      </div>
-      
-      <div className={styles.cardContent}>
+  const renderApplicationCard = (application: Application) => {
+    // Hiển thị điểm theo phương thức
+    let resultFields = null;
+    const resultData = application.resultData || {};
+    
+    if (resultData.method === 'hoc_ba') {
+      resultFields = (
         <Row gutter={[16, 8]}>
-          <Col xs={24} md={12}>
+          <Col xs={24} md={8}>
             <div className={styles.infoItem}>
-              <Text type="secondary">Tổ hợp xét tuyển</Text>
-              <Text strong>
-                {application.subjectCombinationId.code} ({application.subjectCombinationId.subjects.join(', ')})
-              </Text>
+              <Text type="secondary">Điểm TB lớp 10</Text>
+              <Text strong>{resultData.gpaGrade10}</Text>
             </div>
           </Col>
-          <Col xs={24} md={12}>
+          <Col xs={24} md={8}>
             <div className={styles.infoItem}>
-              <Text type="secondary">Phương thức xét tuyển</Text>
-              <Text strong>{getAdmissionMethodText(application.admissionMethod)}</Text>
+              <Text type="secondary">Điểm TB lớp 11</Text>
+              <Text strong>{resultData.gpaGrade11}</Text>
             </div>
           </Col>
-          <Col xs={24} md={12}>
+          <Col xs={24} md={8}>
             <div className={styles.infoItem}>
-              <Text type="secondary">Ngày nộp</Text>
-              <Text>{moment(application.created_at).format('DD/MM/YYYY')}</Text>
-            </div>
-          </Col>
-          <Col xs={24} md={12}>
-            <div className={styles.infoItem}>
-              <Text type="secondary">Ngày cập nhật</Text>
-              <Text>{moment(application.updated_at).format('DD/MM/YYYY')}</Text>
+              <Text type="secondary">Điểm TB lớp 12</Text>
+              <Text strong>{resultData.gpaGrade12}</Text>
             </div>
           </Col>
         </Row>
-        
-        <div className={styles.cardActions}>
-          <Button 
-            type="primary" 
-            ghost 
-            icon={<EyeOutlined />}
-            onClick={() => handleViewDetail(application._id)}
-          >
-            Xem chi tiết
-          </Button>
+      );
+    } else if (resultData.method === 'tot_nghiep' && resultData.subjectScores) {
+      resultFields = (
+        <Row gutter={[16, 8]}>
+          {Object.entries(resultData.subjectScores).map(([subject, score]) => (
+            <Col xs={24} md={8} key={subject}>
+              <div className={styles.infoItem}>
+                <Text type="secondary">Điểm {subject}</Text>
+                <Text strong>{score}</Text>
+              </div>
+            </Col>
+          ))}
+        </Row>
+      );
+    } else if (resultData.method === 'dgnl' || resultData.method === 'tu_duy') {
+      resultFields = (
+        <Row gutter={[16, 8]}>
+          <Col xs={24} md={8}>
+            <div className={styles.infoItem}>
+              <Text type="secondary">Tổng điểm</Text>
+              <Text strong>{resultData.totalScore}</Text>
+            </div>
+          </Col>
+        </Row>
+      );
+    }
+
+    return (
+      <Card key={application._id} className={styles.applicationCard}>
+        <div className={styles.cardHeader}>
+          <div className={styles.cardTitle}>
+            <Title level={4}>{application.universityMajorId.name}</Title>
+            <Text type="secondary">Mã ngành: {application.universityMajorId.code}</Text>
+          </div>
+          <div className={styles.cardStatus}>
+            {getStatusBadge(application.status)}
+          </div>
         </div>
-      </div>
-    </Card>
-  );
+        
+        <div className={styles.cardContent}>
+          <Row gutter={[16, 8]}>
+            <Col xs={24} md={12}>
+              <div className={styles.infoItem}>
+                <Text type="secondary">Phương thức xét tuyển</Text>
+                <Text strong>{getAdmissionMethodText(application.admissionMethod)}</Text>
+              </div>
+            </Col>
+            {/* Chỉ hiển thị tổ hợp môn khi là phương thức thi THPTQG */}
+            {application.admissionMethod === 'tot_nghiep' && (
+              <Col xs={24} md={12}>
+                <div className={styles.infoItem}>
+                  <Text type="secondary">Tổ hợp xét tuyển</Text>
+                  <Text strong>
+                    {application.subjectCombinationId.code} ({application.subjectCombinationId.subjects.join(', ')})
+                  </Text>
+                </div>
+              </Col>
+            )}
+          </Row>
+
+          {/* Hiển thị điểm theo phương thức */}
+          {resultFields}
+          
+          <Row gutter={[16, 8]}>
+            <Col xs={24} md={12}>
+              <div className={styles.infoItem}>
+                <Text type="secondary">Ngày nộp</Text>
+                <Text>{moment(application.created_at).format('DD/MM/YYYY')}</Text>
+              </div>
+            </Col>
+            <Col xs={24} md={12}>
+              <div className={styles.infoItem}>
+                <Text type="secondary">Ngày cập nhật</Text>
+                <Text>{moment(application.updated_at).format('DD/MM/YYYY')}</Text>
+              </div>
+            </Col>
+          </Row>
+          
+          <div className={styles.cardActions}>
+            <Button 
+              type="primary" 
+              ghost 
+              icon={<EyeOutlined />}
+              onClick={() => handleViewDetail(application._id)}
+            >
+              Xem chi tiết
+            </Button>
+          </div>
+        </div>
+      </Card>
+    );
+  };
 
   const renderTabContent = (status: string) => {
     const filteredApplications = getApplicationsByStatus(status);
