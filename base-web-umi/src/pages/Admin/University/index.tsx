@@ -52,12 +52,7 @@ const UniversityPage: React.FC = () => {
   };
 
   const handleViewDetail = async (id: string) => {
-    await fetchUniversityDetail(id);
-    setShowDetail(true);
-  };
-
-  const handleManageMajors = (id: string) => {
-    history.push(`/admin/university/${id}/majors`);
+    history.push(`/admin/university/${id}`);
   };
 
   const handleFormSubmit = async (values: any) => {
@@ -85,7 +80,6 @@ const UniversityPage: React.FC = () => {
           onEdit={handleEdit}
           onDelete={handleDelete}
           onViewDetail={handleViewDetail}
-          onManageMajors={handleManageMajors}
         />
       </Card>
 
@@ -94,12 +88,6 @@ const UniversityPage: React.FC = () => {
         onCancel={() => setShowForm(false)}
         onSubmit={handleFormSubmit}
         initialValues={editingUniversity}
-      />
-
-      <UniversityDetailModal
-        visible={showDetail}
-        onCancel={() => setShowDetail(false)}
-        university={universityDetail}
       />
     </div>
   );

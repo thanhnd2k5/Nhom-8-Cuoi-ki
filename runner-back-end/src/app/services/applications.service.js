@@ -151,3 +151,18 @@ export async function getAllApplications() {
 
     return applications
 }
+
+// Lấy đơn xét tuyển theo trường
+export async function getApplicationsByUniversity(universityId) {
+    const applications = await Application.find()
+        .populate({
+            path: 'universityMajorId',
+            match: { university_id: universityId }
+        })
+        .populate('userId', 'name email')
+        .populate('subjectCombinationId')
+        .sort({ createdAt: -1 })
+
+    // Lọc ra các đơn có universityMajorId khác null (tức là match với universityId)
+    return applications.filter(app => app.universityMajorId !== null)
+}

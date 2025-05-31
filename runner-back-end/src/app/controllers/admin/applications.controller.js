@@ -27,9 +27,23 @@ export async function getAllApplications(req, res) {
         const applications = await ApplicationsService.getAllApplications()
         res.jsonify(applications)
     } catch (error) {
-        res.status(error.status || 500).json({
-            success: false,
-            message: error.message
-        })
+        abort(error, res)
     }
+}
+
+// Lấy đơn xét tuyển theo trường
+export async function getApplicationsByUniversity(req, res) {
+    try {
+        const universityId = req.university._id
+        const applications = await ApplicationsService.getApplicationsByUniversity(universityId)
+        res.jsonify(applications)
+    } catch (error) {
+        abort(error, res)
+    }
+}
+
+export async function getCompleteApplicationById(req, res) {
+    const applicationId = req.application._id
+    const application = await ApplicationsService.getCompleteApplicationById(applicationId)
+    res.jsonify(application)
 }
