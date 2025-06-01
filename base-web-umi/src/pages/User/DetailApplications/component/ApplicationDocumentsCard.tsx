@@ -1,26 +1,47 @@
 import React, { useState } from 'react';
-import { Card, Button, Modal, Image } from 'antd';
-import { DownloadOutlined, FileTextOutlined, EyeOutlined } from '@ant-design/icons';
+import { Card, Button, Modal, Image, Typography, Space, Empty, Tooltip } from 'antd';
+import {
+  DownloadOutlined,
+  EyeOutlined,
+  FileImageOutlined, // Generic image
+  FilePdfOutlined,   // PDF
+  FileWordOutlined,  // Word
+  FileExcelOutlined, // Excel
+  FileZipOutlined,   // Zip/Archive
+  FileTextOutlined,  // Default text/unknown
+  PaperClipOutlined, // Title icon
+} from '@ant-design/icons';
+import './ApplicationDocumentsCard.less';
 
-interface Props {
-  documents: Array<{ 
-    name: string; 
-    type: string;
-    url: string;
-  }>;
+
+const { Text, Link: AntLink } = Typography; // AntLink for semantic links if needed
+
+interface Document {
+  name: string;
+  type: string; // MIME type e.g., 'image/jpeg', 'application/pdf'
+  url: string;
 }
 
-const ApplicationDocumentsCard: React.FC<Props> = ({ documents }) => {
+interface Props {
+  documents: Array<Document>;
+  title?: string; // Make title customizable
+}
+
+const ApplicationDocumentsCard: React.FC<Props> = ({
+  documents,
+  title = "Giấy tờ minh chứng",
+}) => {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewUrl, setPreviewUrl] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
 
-  const handlePreview = (url: string) => {
-    setPreviewUrl(url);
+  const handlePreview = (doc: Document) => {
+    setPreviewUrl(doc.url);
+    setPreviewTitle(doc.name); // Use document name for modal title
     setPreviewVisible(true);
   };
 
   const handleDownload = (url: string, fileName: string) => {
-    // Tạo một thẻ a ẩn để download
     const link = document.createElement('a');
     link.href = url;
     link.download = fileName;
@@ -29,56 +50,102 @@ const ApplicationDocumentsCard: React.FC<Props> = ({ documents }) => {
     document.body.removeChild(link);
   };
 
-  const isImageFile = (type: string) => {
+  const isImageFile = (type: string): boolean => {
     return type.startsWith('image/');
   };
 
-  return (
-    <Card title="Giấy tờ minh chứng" className="info-card">
-      <div className="documents-list">
-        {documents.map((doc, idx) => (
-          <div className="document-item" key={idx}>
-            <FileTextOutlined className="doc-icon" />
-            <div className="doc-info">
-              <div className="doc-name">{doc.name}</div>
-              <div className="doc-meta">{doc.type}</div>
-            </div>
-            <div className="document-actions">
-              {isImageFile(doc.type) && (
-                <Button 
-                  icon={<EyeOutlined />} 
-                  size="small" 
-                  type="link"
-                  onClick={() => handlePreview(doc.url)}
-                >
-                  Xem trước
-                </Button>
-              )}
-              <Button 
-                icon={<DownloadOutlined />} 
-                size="small" 
-                type="link"
-                onClick={() => handleDownload(doc.url, doc.name)}
-              >
-                Tải xuống
-              </Button>
-            </div>
-          </div>
-        ))}
-      </div>
+  const getFileIcon = (doc: Document, size: string = '48px') => {
+    const iconStyle = { fontSize: size, marginRight: 8 };
 
-      {/* Modal xem trước ảnh */}
+    if (isImageFile(doc.type)) {
+      return (
+        <Image
+          src={doc.url}
+          alt={doc.name}
+          width={parseInt(size)}
+          height={parseInt(size)}
+          style={{ objectFit: 'cover', borderRadius: '4px', cursor: 'pointer' }}
+          preview={false} // Disable default antd preview on small image, we use our modal
+          onClick={() => handlePreview(doc)}
+        />
+      );
+    }
+    if (doc.type.includes('pdf')) {
+      return <FilePdfOutlined style={{ ...iconStyle, color: '#FF5733' }} />;
+    }
+    if (doc.type.includes('word')) {
+      return <FileWordOutlined style={{ ...iconStyle, color: '#2B579A' }} />;
+    }
+    if (doc.type.includes('excel') || doc.type.includes('spreadsheet')) {
+      return <FileExcelOutlined style={{ ...iconStyle, color: '#1D6F42' }} />;
+    }
+    if (doc.type.includes('zip') || doc.type.includes('archive') || doc.type.includes('rar')) {
+      return <FileZipOutlined style={{ ...iconStyle, color: '#FFC300' }} />;
+    }
+    return <FileTextOutlined style={{ ...iconStyle, color: '#595959' }} />;
+  };
+
+  return (
+    <Card title={<Space><PaperClipOutlined /> {title}</Space>} className="info-card application-documents-card">
+      {documents && documents.length > 0 ? (
+        <div className="documents-list">
+          {documents.map((doc, idx) => (
+            <div className="document-item" key={idx}>
+              <div className="document-thumbnail">
+                {getFileIcon(doc)}
+              </div>
+              <div className="document-info">
+                <Tooltip title={doc.name}>
+                  <Text strong className="doc-name" ellipsis>
+                    {doc.name}
+                  </Text>
+                </Tooltip>
+              </div>
+              <Space className="document-actions" size="small">
+                {isImageFile(doc.type) && (
+                  <Tooltip title="Xem trước">
+                    <Button
+                      icon={<EyeOutlined />}
+                      type="text" // Use text for less emphasis, more icon-like
+                      shape="circle"
+                      onClick={() => handlePreview(doc)}
+                    />
+                  </Tooltip>
+                )}
+                <Tooltip title="Tải xuống">
+                  <Button
+                    icon={<DownloadOutlined />}
+                    type="text"
+                    shape="circle"
+                    onClick={() => handleDownload(doc.url, doc.name)}
+                  />
+                </Tooltip>
+              </Space>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <Empty description="Không có tài liệu nào" />
+      )}
+
       <Modal
-        visible={previewVisible}
+        visible={previewVisible} // 'visible' is deprecated, use 'open'
+        title={previewTitle}
         footer={null}
         onCancel={() => setPreviewVisible(false)}
         width="80%"
         centered
+        destroyOnClose // Good for performance if many images
       >
         <Image
-          alt="Preview"
-          style={{ width: '100%' }}
+          alt={previewTitle}
+          style={{ width: '100%', maxHeight: '80vh', objectFit: 'contain' }}
           src={previewUrl}
+          // Enable default Ant Design Image preview features within the modal
+          preview={{
+            visible: false, // This refers to the small preview icon on the <Image> itself, not the modal
+            src: previewUrl, // Ensure the modal preview group uses the correct src
+          }}
         />
       </Modal>
     </Card>
