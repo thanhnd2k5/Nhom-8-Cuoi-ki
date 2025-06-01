@@ -75,6 +75,7 @@ export interface ApplicationDetailResponse {
     gpaGrade10?: number;
     gpaGrade11?: number;
     gpaGrade12?: number;
+    subjectScores: Record<string, number>;
   };
   documents: Array<{
     fileUrl: string;
@@ -102,6 +103,7 @@ export interface NormalizedApplication {
     updated: string;
   };
   scores: Record<string, number>;
+  subjectScores: Record<string, number>;
   totalScore: number;
   method: string;
   priority: {

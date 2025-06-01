@@ -100,7 +100,7 @@ export function processResultData(resultData) {
             processedData.totalScore = 0
             break
 
-        case 'thpt':
+        case 'tot_nghiep':
             processedData.subjectScores = resultData.subjectScores || {}
             processedData.gpaGrade10 = 0
             processedData.gpaGrade11 = 0

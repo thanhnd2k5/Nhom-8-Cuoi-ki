@@ -50,7 +50,8 @@ const ApplicationsManagement: React.FC = () => {
         const methodMap: { [key: string]: string } = {
           tot_nghiep: 'Tốt nghiệp THPT',
           hoc_ba: 'Học bạ',
-          xet_tuyen: 'Xét tuyển',
+          dgnl: 'Đánh giá năng lực',
+          tu_duy: 'Đánh giá tư duy',
         };
         return methodMap[method] || method;
       },

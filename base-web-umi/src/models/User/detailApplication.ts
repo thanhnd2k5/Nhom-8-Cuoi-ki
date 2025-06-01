@@ -60,10 +60,13 @@ export default () => {
       const g11 = applicationResult?.gpaGrade11 || 0;
       const g12 = applicationResult?.gpaGrade12 || 0;
       totalScore = g10 + g11 + g12;
+    } else if (method === 'Điểm thi THPT Quốc gia') {
+      // Tính tổng điểm cho phương thức tot_nghiep
+      totalScore = Object.values(applicationResult.subjectScores || {}).reduce((sum, score) => sum + score, 0);
     }
-
+    
     const priorityScore = getPriorityScore(profile?.priorityArea, profile?.priorityGroup);
-
+    
     const normalizedData: NormalizedApplication = {
       name: profile?.name || '',
       email: profile?.email || '',
@@ -80,11 +83,12 @@ export default () => {
         ...(applicationResult.gpaGrade11 !== undefined && { 'GPA 11': applicationResult.gpaGrade11 }),
         ...(applicationResult.gpaGrade12 !== undefined && { 'GPA 12': applicationResult.gpaGrade12 }),
       },
+      subjectScores: applicationResult.subjectScores,
       totalScore,
       method,
       priority: {
-        area: profile?.priorityArea || '',
-        group: profile?.priorityGroup || '',
+        area: profile?.priorityArea || 'none',
+        group: profile?.priorityGroup || 'none',
         score: priorityScore,
       },
       documents: documents.map(doc => ({

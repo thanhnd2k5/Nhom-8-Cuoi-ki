@@ -16,6 +16,7 @@ export async function createDocument(data) {
     }
     const document = await Document.create({
         applicationId: data.applicationId,
+        type: data.type,
         fileType: data.fileType,
         fileUrl: fileUrl,
     })

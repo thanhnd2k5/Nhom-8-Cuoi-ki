@@ -3,6 +3,11 @@ import { Form, Card, Row, Col, Button, InputNumber } from 'antd';
 import { useModel, history } from 'umi';
 import NewApplicationLayout from '../NewApplicationLayout';
 
+interface SubjectCombination {
+  _id: string;
+  subjects: string[];
+}
+
 const Step4: React.FC = () => {
   const [form] = Form.useForm();
   const { profileData } = useModel('User.profile');
@@ -10,7 +15,6 @@ const Step4: React.FC = () => {
   const { formData, updateFormData } = useModel('User.applications');
 
   const admissionMethod = formData.admissionMethod;
-  console.log(admissionMethod);
 
   useEffect(() => {
     fetchUniversityMajors(formData.university)
@@ -32,24 +36,23 @@ const Step4: React.FC = () => {
     try {
       const values = await form.validateFields();
       
-      // Thêm profileData vào formData
       updateFormData({
         profileData: {
-          name: profileData.name,
-          email: profileData.email,
-          gender: profileData.gender,
-          dob: profileData.dob,
-          avatar: profileData.avatar,
-          cccd: profileData.cccd,
-          phone: profileData.phone,
-          ethnic: profileData.ethnic,
-          province: profileData.province,
-          district: profileData.district,
-          address: profileData.address,
-          highSchoolName: profileData.highSchoolName,
-          graduationYear: profileData.graduationYear,
-          priorityArea: profileData.priorityArea,
-          priorityGroup: profileData.priorityGroup,
+          name: profileData?.name,
+          email: profileData?.email,
+          gender: profileData?.gender,
+          dob: profileData?.dob,
+          avatar: profileData?.avatar,
+          cccd: profileData?.cccd,
+          phone: profileData?.phone,
+          ethnic: profileData?.ethnic,
+          province: profileData?.province,
+          district: profileData?.district,
+          address: profileData?.address,
+          highSchoolName: profileData?.highSchoolName,
+          graduationYear: profileData?.graduationYear,
+          priorityArea: profileData?.priorityArea,
+          priorityGroup: profileData?.priorityGroup,
         },
         resultData: admissionMethod === 'hoc_ba' ? {
           method: 'hoc_ba',
@@ -58,12 +61,10 @@ const Step4: React.FC = () => {
           gpaGrade12: values.gpaGrade12,
         } : admissionMethod === 'tot_nghiep' ? {
           method: 'tot_nghiep',
-          subjectScores: Object.fromEntries(
-            (selectedCombination?.subjects || []).map((subject: string) => [
-              subject,
-              values[subject]
-            ])
-          ),
+          subjectScores: selectedCombination?.subjects?.reduce((acc: Record<string, number>, subject: string) => {
+            acc[subject] = values[subject];
+            return acc;
+          }, {}) || {},
         } : {
           method: admissionMethod,
           totalScore: values.totalScore,

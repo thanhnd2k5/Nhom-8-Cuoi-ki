@@ -623,12 +623,16 @@ export const priorityObjects = [
   { value: 'none', label: 'Không' },
 ];
 
-export const admissionMethodNames = {
+export const admissionMethodNames: Record<string, string> = {
     'hoc_ba': 'Xét tuyển học bạ',
     'tot_nghiep': 'Điểm thi THPT Quốc gia',
     'dgnl': 'Đánh giá năng lực',
     'tu_duy': 'Đánh giá tư duy'
 };
+
+export function getAdmissionMethodLabel(method: string): string {
+	return admissionMethodNames[method] || method;
+}
 
 export const requiredDocumentsByMethod: Record<string, Array<{ type: string; label: string; required: boolean }>> = {
   hoc_ba: [
@@ -654,10 +658,10 @@ export const requiredDocumentsByMethod: Record<string, Array<{ type: string; lab
 };
 
 export const areaMap: Record<string, string> = {
-  'KV1': 'Khu vực 1',
-  'KV2-NT': 'Khu vực 2 nông thôn',
-  'KV2': 'Khu vực 2',
-  'KV3': 'Khu vực 3',
+  'kv1': 'Khu vực 1',
+  'kv2-nt': 'Khu vực 2 nông thôn',
+  'kv2': 'Khu vực 2',
+  'kv3': 'Khu vực 3',
 };
 
 export const groupMap: Record<string, string> = {
@@ -668,5 +672,5 @@ export const groupMap: Record<string, string> = {
   '05': 'Đối tượng 5',
   '06': 'Đối tượng 6',
   '07': 'Đối tượng 7',
-  'khac': 'Không thuộc đối tượng ưu tiên',
+  'none': 'Không thuộc đối tượng ưu tiên',
 };

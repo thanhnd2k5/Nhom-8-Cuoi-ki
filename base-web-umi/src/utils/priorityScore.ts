@@ -2,10 +2,10 @@
 
 // Bảng điểm cộng theo khu vực
 const areaScoreMap: Record<string, number> = {
-    'KV1': 0.75,
-    'KV2-NT': 0.5,
-    'KV2': 0.25,
-    'KV3': 0,
+    'kv1': 0.75,
+    'kv2-nt': 0.5,
+    'kv2': 0.25,
+    'kv3': 0,
   };
   
   // Bảng điểm cộng theo đối tượng
@@ -17,7 +17,7 @@ const areaScoreMap: Record<string, number> = {
     '05': 1,
     '06': 1,
     '07': 1,
-    'khac': 0,
+    'none': 0,
   };
   
   export function getPriorityScore(priorityArea?: string, priorityGroup?: string): number {

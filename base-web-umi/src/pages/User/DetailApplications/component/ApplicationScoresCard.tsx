@@ -5,6 +5,7 @@ import './ApplicationScoresCard.less';
 
 interface ApplicationScoresCardProps {
   scores: Record<string, number>;
+  subjectScores: Record<string, number>;
   totalScore: number;
   method: string;
   priority: {
@@ -16,6 +17,7 @@ interface ApplicationScoresCardProps {
 
 const ApplicationScoresCard: React.FC<ApplicationScoresCardProps> = ({
   scores,
+  subjectScores,
   totalScore,
   method,
   priority,
@@ -33,7 +35,7 @@ const ApplicationScoresCard: React.FC<ApplicationScoresCardProps> = ({
   } else if (method === 'Điểm thi THPT Quốc gia') {
     resultFields = (
       <>
-        {Object.entries(scores).map(([subject, score]) => (
+        {Object.entries(subjectScores).map(([subject, score]) => (
           <Descriptions.Item label={`Điểm ${subject}`} key={subject}>
             {score?.toFixed(2)}
           </Descriptions.Item>

@@ -5,6 +5,7 @@ import { useModel, useParams } from 'umi';
 import { UniversityMajors } from '@/models/Admin/UniversityMajors';
 import MajorForm from './MajorForm';
 import styles from './index.less';
+import { getAdmissionMethodLabel } from '@/utils/utils';
 
 const MajorsManagement: React.FC = () => {
   const { universityId } = useParams<{ universityId: string }>();
@@ -75,15 +76,7 @@ const MajorsManagement: React.FC = () => {
       title: 'Phương thức xét tuyển',
       dataIndex: 'admission_methods',
       key: 'admission_methods',
-      render: (methods: string[]) => (
-        <Space>
-          {methods.map((method) => (
-            <Tag key={method} color="blue">
-              {method}
-            </Tag>
-          ))}
-        </Space>
-      ),
+      render: (method: string) => getAdmissionMethodLabel(method),
     },
     {
       title: 'Tổ hợp môn',

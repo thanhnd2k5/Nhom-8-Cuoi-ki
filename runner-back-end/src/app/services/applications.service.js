@@ -110,7 +110,7 @@ export async function getCompleteApplicationById(applicationId) {
 
     // 2. Lấy profile
     const profile = await ApplicationProfileService.getApplicationProfileByApplicationId(applicationId)
-
+    console.log(profile)
     // 3. Lấy kết quả xét tuyển
     const applicationResult = await ApplicationResultService.getApplicationResultByApplicationId(applicationId)
 

@@ -4,6 +4,7 @@ import { CheckOutlined, CloseOutlined, EyeOutlined } from '@ant-design/icons';
 import { Application } from '@/services/Admin/Applications';
 import { useHistory } from 'umi';
 import styles from './index.less';
+import { getAdmissionMethodLabel } from '@/utils/utils';
 
 interface ApplicationListProps {
   status: string;
@@ -92,13 +93,7 @@ const ApplicationList: React.FC<ApplicationListProps> = ({
       title: 'Phương thức xét tuyển',
       dataIndex: 'admissionMethod',
       key: 'admissionMethod',
-      render: (method: string) => {
-        const methodMap: { [key: string]: string } = {
-          hoc_ba: 'Học bạ',
-          diem_thi: 'Điểm thi',
-        };
-        return methodMap[method] || method;
-      },
+      render: (method: string) => getAdmissionMethodLabel(method),
     },
     {
       title: 'Tổ hợp môn',
