@@ -3,6 +3,7 @@ import { message } from 'antd';
 import { getCompleteApplicationById } from '@/services/User/applications';
 import { ApplicationDetailResponse, NormalizedApplication } from '@/pages/User/DetailApplications/types';
 import { getPriorityScore } from '@/utils/priorityScore';
+import { getDocumentTypeLabel } from '@/utils/utils';
 
 export interface DetailApplicationState {
   data: ApplicationDetailResponse | null;
@@ -49,7 +50,6 @@ export default () => {
   // Chuẩn hóa data cho UI
   const getNormalizedData = useCallback((): NormalizedApplication | null => {
     if (!state.data) return null;
-    console.log(state.data);
     const { application, applicationResult, documents, profile } = state.data;
     const method = methodMap[applicationResult?.method || application?.admissionMethod || ''];
     const isHocBa = method === 'Xét tuyển học bạ';
@@ -83,7 +83,7 @@ export default () => {
         ...(applicationResult.gpaGrade11 !== undefined && { 'GPA 11': applicationResult.gpaGrade11 }),
         ...(applicationResult.gpaGrade12 !== undefined && { 'GPA 12': applicationResult.gpaGrade12 }),
       },
-      subjectScores: applicationResult.subjectScores,
+      subjectScores: applicationResult.subjectScores || {},
       totalScore,
       method,
       priority: {
@@ -92,10 +92,9 @@ export default () => {
         score: priorityScore,
       },
       documents: documents.map(doc => ({
-        name: doc.fileUrl.split('/').pop() || '',
+        name: getDocumentTypeLabel(doc.type),
         type: doc.fileType,
-        size: '0 KB',
-        url: doc.fileUrl
+        url: `http://localhost:3456/static/${doc.fileUrl}`
       }))
     };
 

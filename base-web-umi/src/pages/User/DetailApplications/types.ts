@@ -78,6 +78,7 @@ export interface ApplicationDetailResponse {
     subjectScores: Record<string, number>;
   };
   documents: Array<{
+    type: string;
     fileUrl: string;
     fileType: string;
   }>;
@@ -114,7 +115,6 @@ export interface NormalizedApplication {
   documents: {
     name: string;
     type: string;
-    size: string;
     url: string;
   }[];
 } 

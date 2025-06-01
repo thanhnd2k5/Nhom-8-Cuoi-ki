@@ -674,3 +674,17 @@ export const groupMap: Record<string, string> = {
   '07': 'Đối tượng 7',
   'none': 'Không thuộc đối tượng ưu tiên',
 };
+
+export const documentTypes: Record<string, string> = {
+	'cccd_front': 'CCCD mặt trước',
+	'cccd_back': 'CCCD mặt sau',
+	'hoc_ba': 'Học bạ THPT',
+	'tot_nghiep': 'Giấy chứng nhận tốt nghiệp',
+	'dgnl': 'Kết quả ĐGNL',
+	'tu_duy': 'Kết quả Đánh giá tư duy',
+};
+
+export function getDocumentTypeLabel(type: string): string {
+	return documentTypes[type] || type;
+}
+
