@@ -612,7 +612,7 @@ export const priorityAreas = [
   { value: 'kv3', label: 'KV3' },
 ];
 
-export const priorityObjects = [
+export const priorityGroups = [
   { value: '01', label: '01' },
   { value: '02', label: '02' },
   { value: '03', label: '03' },
@@ -620,7 +620,7 @@ export const priorityObjects = [
   { value: '05', label: '05' },
   { value: '06', label: '06' },
   { value: '07', label: '07' },
-  { value: 'none', label: 'Không' },
+  { value: 'none', label: 'Không thuộc đối tượng ưu tiên' },
 ];
 
 export const admissionMethodNames: Record<string, string> = {

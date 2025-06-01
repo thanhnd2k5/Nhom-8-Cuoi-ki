@@ -10,7 +10,7 @@ import {
   Typography,
 } from 'antd';
 import styles from './index.less';
-import { graduationYears, priorityAreas, priorityObjects } from '@/utils/utils';
+import { graduationYears, priorityAreas, priorityGroups } from '@/utils/utils';
 
 const { Option } = Select;
 const { Title, Text } = Typography;
@@ -107,7 +107,7 @@ const EducationInfoForm: React.FC<EducationInfoFormProps> = ({
             value={data.priorityArea}
             onChange={(e) => onChange('priorityArea', e.target.value)}
           >
-            {priorityAreas.map(area => (
+            {priorityAreas.map((area: any) => (
               <Radio key={area.value} value={area.value}>{area.label}</Radio>
             ))}
           </Radio.Group>
@@ -119,7 +119,7 @@ const EducationInfoForm: React.FC<EducationInfoFormProps> = ({
             onChange={(e) => onChange('priorityObject', e.target.value)}
             className={styles.priorityObjectGroup}
           >
-            {priorityObjects.map(obj => (
+            {priorityGroups.map((obj: any) => (
               <Radio key={obj.value} value={obj.value}>{obj.label}</Radio>
             ))}
           </Radio.Group>

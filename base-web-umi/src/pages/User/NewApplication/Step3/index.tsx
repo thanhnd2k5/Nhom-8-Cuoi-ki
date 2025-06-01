@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Form, Input, DatePicker, Select, Row, Col, Card, Radio, Button, message } from 'antd';
 import { useModel, history } from 'umi';
 import moment from 'moment';
-import { graduationYears, priorityAreas, priorityObjects } from '@/utils/utils';
+import { graduationYears, priorityAreas, priorityGroups } from '@/utils/utils';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import NewApplicationLayout from '../NewApplicationLayout';
@@ -11,6 +11,7 @@ const { Option } = Select;
 
 const Step3: React.FC = () => {
   const { profileData, fetchProfile } = useModel('User.profile');
+  const { formData, updateFormData } = useModel('User.applications');
   const [form] = Form.useForm();
 
   // Set initial values from profile data
@@ -43,7 +44,27 @@ const Step3: React.FC = () => {
     history.goBack();
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    const values = await form.validateFields();
+    updateFormData({
+      profileData: {
+        name: values.name,
+        email: values.email,
+        gender: values.gender,
+        dob: values.dob,
+        cccd: values.cccd,
+        phone: values.phone,
+        ethnic: values.ethnic,
+        province: values.province,
+        district: values.district,
+        address: values.address,
+        priorityArea: values.priorityArea,
+        priorityGroup: values.priorityGroup,
+        graduationYear: values.graduationYear,
+        school: values.school,
+      }
+    });
+
     history.push('/user/applications/new/step4');
   };
 
@@ -214,12 +235,12 @@ const Step3: React.FC = () => {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              name="priorityObject"
+              name="priorityGroup"
               label="Đối tượng ưu tiên"
               rules={[{ required: true, message: 'Vui lòng chọn đối tượng ưu tiên' }]}
             >
               <Radio.Group>
-                {priorityObjects.map((object) => (
+                {priorityGroups.map((object) => (
                   <Radio key={object.value} value={object.value}>{object.label}</Radio>
                 ))}
               </Radio.Group>

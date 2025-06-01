@@ -37,23 +37,6 @@ const Step4: React.FC = () => {
       const values = await form.validateFields();
       
       updateFormData({
-        profileData: {
-          name: profileData?.name,
-          email: profileData?.email,
-          gender: profileData?.gender,
-          dob: profileData?.dob,
-          avatar: profileData?.avatar,
-          cccd: profileData?.cccd,
-          phone: profileData?.phone,
-          ethnic: profileData?.ethnic,
-          province: profileData?.province,
-          district: profileData?.district,
-          address: profileData?.address,
-          highSchoolName: profileData?.highSchoolName,
-          graduationYear: profileData?.graduationYear,
-          priorityArea: profileData?.priorityArea,
-          priorityGroup: profileData?.priorityGroup,
-        },
         resultData: admissionMethod === 'hoc_ba' ? {
           method: 'hoc_ba',
           gpaGrade10: values.gpaGrade10,
