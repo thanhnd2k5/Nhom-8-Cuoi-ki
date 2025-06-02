@@ -25,3 +25,22 @@ export async function deleteUniversity(id) {
     const university = await University.findByIdAndDelete(id)
     return university
 }
+
+export async function getUniversitiesByAdmissionMethod(admissionMethod) {
+    const universities = await University.aggregate([
+        {
+            $lookup: {
+                from: 'university_majors',
+                localField: '_id',
+                foreignField: 'university_id',
+                as: 'majors'
+            }
+        },
+        {
+            $match: {
+                'majors.admission_methods': admissionMethod
+            }
+        }
+    ])
+    return universities
+}
