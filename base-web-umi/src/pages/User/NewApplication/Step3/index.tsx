@@ -31,7 +31,7 @@ const Step3: React.FC = () => {
         school: profileData.highSchoolName,
         graduationYear: profileData.graduationYear,
         priorityArea: profileData.priorityArea,
-        priorityObject: profileData.priorityGroup,
+        priorityGroup: profileData.priorityGroup,
       });
     }
   }, [profileData, form]);
