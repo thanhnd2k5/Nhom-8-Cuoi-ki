@@ -47,3 +47,24 @@ export async function getCompleteApplicationById(req, res) {
     const application = await ApplicationsService.getCompleteApplicationById(applicationId)
     res.jsonify(application)
 }
+
+export async function searchApplications(req, res) {
+    try {
+        const filters = {
+            universityName: req.query.universityName,
+            applicationCode: req.query.applicationCode,
+            status: req.query.status,
+            admissionMethod: req.query.admissionMethod,
+            startDate: req.query.startDate,
+            endDate: req.query.endDate
+        }
+
+        const applications = await ApplicationsService.searchAllApplications(filters)
+        res.jsonify(applications)
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error.message
+        })
+    }
+}

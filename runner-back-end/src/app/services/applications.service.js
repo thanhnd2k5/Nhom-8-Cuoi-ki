@@ -1,4 +1,4 @@
-import {Application, Document, University} from '@/models'
+import {Application, Document, University, UniversityMajors} from '@/models'
 import * as ApplicationResultService from './application_results.service'
 import * as DocumentService from './documents.service'
 import * as ApplicationProfileService from './application_profiles.service'
@@ -165,4 +165,103 @@ export async function getApplicationsByUniversity(universityId) {
 
     // Lọc ra các đơn có universityMajorId khác null (tức là match với universityId)
     return applications.filter(app => app.universityMajorId !== null)
+}
+
+// Tìm kiếm cho user (chỉ tìm trong đơn của user đó)
+export async function searchUserApplications(userId, filters) {
+    const query = { userId }
+    
+    if (filters.universityName) {
+        const universities = await University.find({
+            name: { $regex: filters.universityName, $options: 'i' }
+        })
+        
+        if (universities.length > 0) {
+            const universityIds = universities.map(u => u._id)
+            query['universityMajorId'] = {
+                $in: await UniversityMajors.find({
+                    university_id: { $in: universityIds }
+                }).distinct('_id')
+            }
+        }
+    }
+    
+    if (filters.applicationCode) {
+        query.applicationCode = filters.applicationCode
+    }
+    if (filters.status) {
+        query.status = filters.status
+    }
+    if (filters.admissionMethod) {
+        query.admissionMethod = filters.admissionMethod
+    }
+    if (filters.startDate && filters.endDate) {
+        query.created_at = {
+            $gte: new Date(filters.startDate),
+            $lte: new Date(filters.endDate)
+        }
+    }
+
+    const applications = await Application.find(query)
+        .populate({
+            path: 'universityMajorId',
+            populate: {
+                path: 'university_id',
+                model: 'University'
+            }
+        })
+        .populate('subjectCombinationId')
+        .sort({ created_at: -1 })
+
+    return applications
+}
+
+// Tìm kiếm cho admin (tìm tất cả đơn)
+export async function searchAllApplications(filters) {
+    const query = {}
+    
+    if (filters.universityName) {
+        const universities = await University.find({
+            name: { $regex: filters.universityName, $options: 'i' }
+        })
+        
+        if (universities.length > 0) {
+            const universityIds = universities.map(u => u._id)
+            query['universityMajorId'] = {
+                $in: await UniversityMajors.find({
+                    university_id: { $in: universityIds }
+                }).distinct('_id')
+            }
+        }
+    }
+    
+    if (filters.applicationCode) {
+        query.applicationCode = filters.applicationCode
+    }
+    if (filters.status) {
+        query.status = filters.status
+    }
+    if (filters.admissionMethod) {
+        query.admissionMethod = filters.admissionMethod
+    }
+    if (filters.startDate && filters.endDate) {
+        query.created_at = {
+            $gte: new Date(filters.startDate),
+            $lte: new Date(filters.endDate)
+        }
+    }
+
+    const applications = await Application.find(query)
+        .populate('userId', 'name email')
+        .populate({
+            path: 'universityMajorId',
+            populate: {
+                path: 'university_id',
+                model: 'University'
+            }
+        })
+        .populate('subjectCombinationId')
+        .sort({ created_at: -1 })
+
+    return applications
 }

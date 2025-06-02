@@ -1,0 +1,118 @@
+.applicationCard {
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-bottom: 16px;
+  
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: #1890ff;
+  }
+
+  .ant-card-body {
+    padding: 20px;
+  }
+
+  .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+
+    .cardTitle {
+      flex: 1;
+      
+      h4 {
+        margin: 0 0 4px 0;
+        color: #262626;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      .ant-typography {
+        color: #8c8c8c;
+        font-size: 14px;
+      }
+    }
+
+    .cardStatus {
+      .ant-badge {
+        .ant-badge-status-dot {
+          width: 8px;
+          height: 8px;
+        }
+        
+        .ant-badge-status-text {
+          font-weight: 500;
+          margin-left: 8px;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+  }
+
+  .cardContent {
+    .infoItem {
+      margin-bottom: 8px;
+      
+      .ant-typography:first-child {
+        display: block;
+        font-size: 12px;
+        color: #8c8c8c;
+        margin-bottom: 2px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .ant-typography:last-child {
+        display: block;
+        font-size: 14px;
+        color: #262626;
+      }
+    }
+
+    .cardActions {
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: flex-end;
+
+      .ant-btn {
+        border-radius: 6px;
+        font-weight: 500;
+        
+        &:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
+        }
+      }
+    }
+  }
+}
+
+// Status badge colors
+.ant-badge-status-success {
+  .ant-badge-status-dot {
+    background-color: #52c41a;
+  }
+}
+
+.ant-badge-status-warning {
+  .ant-badge-status-dot {
+    background-color: #faad14;
+  }
+}
+
+.ant-badge-status-error {
+  .ant-badge-status-dot {
+    background-color: #ff4d4f;
+  }
+} 
