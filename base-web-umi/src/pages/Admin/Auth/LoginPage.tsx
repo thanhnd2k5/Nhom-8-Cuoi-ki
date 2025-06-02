@@ -1,8 +1,8 @@
   import React, { useState } from 'react';
   import { Form, Input, Button, message, Card } from 'antd';
   import { history } from 'umi';
-  import { loginApi } from '@/services/admin/Auth/Login';
-  import { setToken } from '@/utils/auth';
+  import { loginApi } from '@/services/Admin/Auth/Login';
+  import { setAuthTokenAdmin } from '@/utils/localStorage';
 
 
   const LoginPage: React.FC = () => {
@@ -14,7 +14,7 @@
       try {
         const res = await loginApi(values);
         console.log(res.data);
-        localStorage.setItem('adminToken', JSON.stringify(res.data));
+        setAuthTokenAdmin(res.data.data.access_token)
         message.success('Đăng nhập thành công!');
         history.push('/admin');
       } catch (err: any) {

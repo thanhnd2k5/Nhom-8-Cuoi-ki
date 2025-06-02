@@ -24,3 +24,9 @@ export async function logout(req, res) {
     await authService.blockToken(token)
     res.jsonify('Đăng xuất thành công.')
 }
+
+export async function loginWithGoogle(req, res) {
+    const { id_token } = req.body
+    const result = await authService.handleLoginWithGoogle(id_token)
+    res.jsonify(result)
+}

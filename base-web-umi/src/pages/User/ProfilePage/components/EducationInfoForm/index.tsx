@@ -10,6 +10,7 @@ import {
   Typography,
 } from 'antd';
 import styles from './index.less';
+import { graduationYears, priorityAreas, priorityGroups } from '@/utils/utils';
 
 const { Option } = Select;
 const { Title, Text } = Typography;
@@ -33,26 +34,6 @@ const EducationInfoForm: React.FC<EducationInfoFormProps> = ({
   data,
   onChange,
 }) => {
-  const graduationYears = ['2025', '2024', '2023', '2022'];
-  
-  const priorityAreas = [
-    { value: 'kv1', label: 'KV1' },
-    { value: 'kv2', label: 'KV2' },
-    { value: 'kv2-nt', label: 'KV2-NT' },
-    { value: 'kv3', label: 'KV3' },
-  ];
-
-  const priorityObjects = [
-    { value: '01', label: '01' },
-    { value: '02', label: '02' },
-    { value: '03', label: '03' },
-    { value: '04', label: '04' },
-    { value: '05', label: '05' },
-    { value: '06', label: '06' },
-    { value: '07', label: '07' },
-    { value: 'none', label: 'Không' },
-  ];
-
   return (
     <Card className={styles.educationInfoCard}>
       <Title level={4}>Thông tin học tập</Title>
@@ -126,7 +107,7 @@ const EducationInfoForm: React.FC<EducationInfoFormProps> = ({
             value={data.priorityArea}
             onChange={(e) => onChange('priorityArea', e.target.value)}
           >
-            {priorityAreas.map(area => (
+            {priorityAreas.map((area: any) => (
               <Radio key={area.value} value={area.value}>{area.label}</Radio>
             ))}
           </Radio.Group>
@@ -138,7 +119,7 @@ const EducationInfoForm: React.FC<EducationInfoFormProps> = ({
             onChange={(e) => onChange('priorityObject', e.target.value)}
             className={styles.priorityObjectGroup}
           >
-            {priorityObjects.map(obj => (
+            {priorityGroups.map((obj: any) => (
               <Radio key={obj.value} value={obj.value}>{obj.label}</Radio>
             ))}
           </Radio.Group>

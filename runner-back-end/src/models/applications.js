@@ -11,7 +11,7 @@ const Application = createModel(
         },
         universityMajorId: {
             type: Schema.Types.ObjectId,
-            ref: 'UniversityMajor',
+            ref: 'UniversityMajors',
             required: true,
         },
         admissionMethod: {

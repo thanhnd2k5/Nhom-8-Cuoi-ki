@@ -103,7 +103,7 @@ const ProfilePage: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    // Prepare data for API calls - KHÔNG bao gồm email vì nó sẽ được thêm tự động trong model
+    // Prepare data for API calls
     const personalData = {
       name: formData.fullName,
       gender: formData.gender,
@@ -111,10 +111,9 @@ const ProfilePage: React.FC = () => {
       cccd: formData.idNumber,
       phone: formData.phone,
       ethnic: formData.ethnic,
-      province: formData.province,
-      district: formData.district,
+      province: formData.province, // Gửi ID của province
+      district: formData.district, // Gửi ID của district
       address: formData.address,
-      // email sẽ được thêm tự động trong model
     };
 
     const educationData = {
@@ -127,7 +126,11 @@ const ProfilePage: React.FC = () => {
       priorityGroup: formData.priorityObject,
     };
 
-    await saveProfile(personalData, educationData);
+    const success = await saveProfile(personalData, educationData);
+    
+    if (success) {
+      console.log('Profile saved successfully');
+    }
   };
 
   // Extract personal info from formData

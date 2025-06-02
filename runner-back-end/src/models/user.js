@@ -12,6 +12,8 @@ const User = createModel(
         email: {
             type: String,
             lowercase: true,
+            required: true,
+            unique: true,
         },
         gender: {
             type: String,

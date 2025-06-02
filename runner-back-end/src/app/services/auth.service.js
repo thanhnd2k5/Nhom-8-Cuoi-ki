@@ -1,8 +1,11 @@
 import moment from 'moment'
 import jwt from 'jsonwebtoken'
+import {OAuth2Client} from 'google-auth-library'
 import {cache, LOGIN_EXPIRE_IN, TOKEN_TYPE, VALIDATE_EMAIL_REGEX} from '@/configs'
 import {abort, generateToken} from '@/utils/helpers'
 import {Admin, Permission, STATUS_ACCOUNT, User} from '@/models'
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
 export const tokenBlocklist = cache.create('token-block-list')
 
@@ -97,4 +100,31 @@ export async function registerUser(userData) {
     const user = await User.create(userData)
         
     return user
+}
+
+export async function handleLoginWithGoogle(id_token) {
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken: id_token,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        })
+        const payload = ticket.getPayload()
+        const {email, name, picture} = payload
+
+        let user = await User.findOne({email})
+        if (!user) {
+            user = await User.create({
+                name,
+                email,
+                avatar: picture,
+                password: Math.random().toString(36).slice(-8),
+                status: STATUS_ACCOUNT.ACTIVE,
+            })
+        }
+
+        return authTokenUser(user)
+    } catch (error) {
+        abort(400, 'Đăng nhập thất bại.')
+    }
+
 }

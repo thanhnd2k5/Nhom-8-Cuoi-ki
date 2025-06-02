@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Card,
   Input,
@@ -9,7 +9,9 @@ import {
   Col,
   Form,
   Typography,
+  Spin,
 } from 'antd';
+import { useModel } from 'umi';
 import moment from 'moment';
 import styles from './index.less';
 
@@ -40,30 +42,39 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
   onChange,
   onDateChange,
 }) => {
-  const provinces = [
-    { value: 'hanoi', label: 'Hà Nội' },
-    { value: 'hcm', label: 'TP. Hồ Chí Minh' },
-    { value: 'danang', label: 'Đà Nẵng' },
-    { value: 'other', label: 'Khác' },
-  ];
+  const { 
+    provinces, 
+    loading: loadingProvinces, 
+    fetchProvinces, 
+    fetchDistricts, 
+    getDistrictsByProvince,
+    isLoadingDistricts 
+  } = useModel('Location.index');
 
-  const districts = {
-    hanoi: [
-      { value: 'caugiay', label: 'Cầu Giấy' },
-      { value: 'hoankiem', label: 'Hoàn Kiếm' },
-      { value: 'dongda', label: 'Đống Đa' },
-    ],
-    hcm: [
-      { value: 'quan1', label: 'Quận 1' },
-      { value: 'quan2', label: 'Quận 2' },
-      { value: 'quan3', label: 'Quận 3' },
-    ],
-    danang: [
-      { value: 'haiChau', label: 'Hải Châu' },
-      { value: 'camLe', label: 'Cẩm Lệ' },
-      { value: 'thanhKhe', label: 'Thanh Khê' },
-    ],
+  // Load provinces on component mount
+  useEffect(() => {
+    fetchProvinces();
+  }, [fetchProvinces]);
+
+  // Load districts when province changes
+  useEffect(() => {
+    if (data.province) {
+      fetchDistricts(data.province);
+    }
+  }, [data.province, fetchDistricts]);
+
+  const handleProvinceChange = (value: string) => {
+    onChange('province', value);
+    onChange('district', ''); // Reset district when province changes
+    
+    // Fetch districts for the selected province
+    if (value) {
+      fetchDistricts(value);
+    }
   };
+
+  const currentDistricts = getDistrictsByProvince(data.province);
+  const isDistrictsLoading = isLoadingDistricts(data.province);
 
   return (
     <Card className={styles.personalInfoCard}>
@@ -162,14 +173,18 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
             <Form.Item label="Tỉnh/Thành phố">
               <Select
                 value={data.province}
-                onChange={(value) => {
-                  onChange('province', value);
-                  onChange('district', ''); // Reset district when province changes
-                }}
+                onChange={handleProvinceChange}
                 placeholder="Chọn tỉnh/thành phố"
+                loading={loadingProvinces}
+                showSearch
+                filterOption={(input, option) =>
+                  (option?.children as string)?.toLowerCase().includes(input.toLowerCase())
+                }
               >
-                {provinces.map(p => (
-                  <Option key={p.value} value={p.value}>{p.label}</Option>
+                {provinces.map(province => (
+                  <Option key={province.id} value={province.id}>
+                    {province.name}
+                  </Option>
                 ))}
               </Select>
             </Form.Item>
@@ -180,10 +195,26 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                 value={data.district}
                 onChange={(value) => onChange('district', value)}
                 placeholder="Chọn quận/huyện"
-                disabled={!data.province || !districts[data.province as keyof typeof districts]}
+                disabled={!data.province}
+                loading={isDistrictsLoading}
+                showSearch
+                filterOption={(input, option) =>
+                  (option?.children as string)?.toLowerCase().includes(input.toLowerCase())
+                }
+                notFoundContent={
+                  !data.province ? (
+                    'Vui lòng chọn tỉnh/thành phố trước'
+                  ) : isDistrictsLoading ? (
+                    <Spin size="small" />
+                  ) : (
+                    'Không tìm thấy dữ liệu'
+                  )
+                }
               >
-                {(districts[data.province as keyof typeof districts] || []).map(d => (
-                  <Option key={d.value} value={d.value}>{d.label}</Option>
+                {currentDistricts.map(district => (
+                  <Option key={district.id} value={district.id}>
+                    {district.name}
+                  </Option>
                 ))}
               </Select>
             </Form.Item>

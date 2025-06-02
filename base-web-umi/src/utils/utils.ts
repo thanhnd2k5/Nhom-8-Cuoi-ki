@@ -602,3 +602,89 @@ export const createTextLinks = (text: string, targetBlank: boolean = true) => {
 		},
 	);
 };
+
+export const graduationYears = ['2025', '2024', '2023', '2022'];
+  
+export const priorityAreas = [
+  { value: 'kv1', label: 'KV1' },
+  { value: 'kv2', label: 'KV2' },
+  { value: 'kv2-nt', label: 'KV2-NT' },
+  { value: 'kv3', label: 'KV3' },
+];
+
+export const priorityGroups = [
+  { value: '01', label: '01' },
+  { value: '02', label: '02' },
+  { value: '03', label: '03' },
+  { value: '04', label: '04' },
+  { value: '05', label: '05' },
+  { value: '06', label: '06' },
+  { value: '07', label: '07' },
+  { value: 'none', label: 'Không thuộc đối tượng ưu tiên' },
+];
+
+export const admissionMethodNames: Record<string, string> = {
+    'hoc_ba': 'Xét tuyển học bạ',
+    'tot_nghiep': 'Điểm thi THPT Quốc gia',
+    'dgnl': 'Đánh giá năng lực',
+    'tu_duy': 'Đánh giá tư duy'
+};
+
+export function getAdmissionMethodLabel(method: string): string {
+	return admissionMethodNames[method] || method;
+}
+
+export const requiredDocumentsByMethod: Record<string, Array<{ type: string; label: string; required: boolean }>> = {
+  hoc_ba: [
+    { type: 'cccd_front', label: 'CCCD mặt trước', required: true },
+    { type: 'cccd_back', label: 'CCCD mặt sau', required: true },
+    { type: 'hoc_ba', label: 'Học bạ THPT', required: true },
+  ],
+  tot_nghiep: [
+    { type: 'cccd_front', label: 'CCCD mặt trước', required: true },
+    { type: 'cccd_back', label: 'CCCD mặt sau', required: true },
+    { type: 'tot_nghiep', label: 'Giấy chứng nhận tốt nghiệp', required: true },
+  ],
+  dgnl: [
+    { type: 'cccd_front', label: 'CCCD mặt trước', required: true },
+    { type: 'cccd_back', label: 'CCCD mặt sau', required: true },
+    { type: 'dgnl', label: 'Kết quả ĐGNL', required: true },
+  ],
+  tu_duy: [
+    { type: 'cccd_front', label: 'CCCD mặt trước', required: true },
+    { type: 'cccd_back', label: 'CCCD mặt sau', required: true },
+    { type: 'tu_duy', label: 'Kết quả Đánh giá tư duy', required: true },
+  ],
+};
+
+export const areaMap: Record<string, string> = {
+  'kv1': 'Khu vực 1',
+  'kv2-nt': 'Khu vực 2 nông thôn',
+  'kv2': 'Khu vực 2',
+  'kv3': 'Khu vực 3',
+};
+
+export const groupMap: Record<string, string> = {
+  '01': 'Đối tượng 1',
+  '02': 'Đối tượng 2',
+  '03': 'Đối tượng 3',
+  '04': 'Đối tượng 4',
+  '05': 'Đối tượng 5',
+  '06': 'Đối tượng 6',
+  '07': 'Đối tượng 7',
+  'none': 'Không thuộc đối tượng ưu tiên',
+};
+
+export const documentTypes: Record<string, string> = {
+	'cccd_front': 'CCCD mặt trước',
+	'cccd_back': 'CCCD mặt sau',
+	'hoc_ba': 'Học bạ THPT',
+	'tot_nghiep': 'Giấy chứng nhận tốt nghiệp',
+	'dgnl': 'Kết quả ĐGNL',
+	'tu_duy': 'Kết quả Đánh giá tư duy',
+};
+
+export function getDocumentTypeLabel(type: string): string {
+	return documentTypes[type] || type;
+}
+

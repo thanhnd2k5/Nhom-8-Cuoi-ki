@@ -2,6 +2,7 @@
 	{
 		path: '/',
 		component: './LandingPage',
+		layout: false,
 	},
 	{
 		path: '/user',
@@ -29,10 +30,55 @@
 						path: '/user/profile',
 						component: './User/ProfilePage',
 					},
+					{
+						path: '/user/applications',
+						name: 'applications',
+						component: './User/ApplicationsPage',
+					},
 					// {
-					// 	path: '/user/applications',
-					// 	component: './User/Applications', // Tạo component này sau
+					// 	path: '/user/applications/:id',
+					// 	name: 'applicationDetail',
+					// 	component: './User/ApplicationDetailPage',
 					// },
+					{
+						path: '/user/applications/new',
+						name: 'newApplication',
+						component: './User/NewApplication/Step1',
+					},
+					{
+						path: '/user/applications/new/step2',
+						name: 'newApplicationStep2',
+						component: './User/NewApplication/Step2',
+					},
+
+					{
+						path: '/user/applications/new/step3',
+						name: 'newApplicationStep3',
+						component: './User/NewApplication/Step3',
+					},
+					{
+						path: '/user/applications/new/step4',
+						name: 'newApplicationStep4',
+						component: './User/NewApplication/Step4',
+					},
+					{
+						path: '/user/applications/new/step5',
+						name: 'newApplicationStep5',
+						component: './User/NewApplication/Step5',
+					},
+					{
+						path: '/user/applications/new/step6',
+						name: 'newApplicationStep6',
+						component: './User/NewApplication/Step6',
+					},
+
+					{
+						path: '/user/applications/:id',
+						name: 'detailApplication',
+						component: './User/DetailApplications',
+
+					}
+					
 					// {
 					// 	path: '/user/settings',
 					// 	component: './User/Settings', // Tạo component này sau
@@ -43,10 +89,51 @@
 	},
 	{
 		path: '/admin',
+		layout: false,
 		routes: [
+			// Routes không dùng layout (Auth pages)
 			{
 				path: '/admin/login',
 				component: './Admin/Auth/LoginPage',
+			},
+			// Routes sử dụng AdminLayout
+			{
+				path: '/admin',
+				component: '@/layouts/AdminLayout',
+				routes: [
+					// {
+					// 	path: '/admin/dashboard',
+					// 	component: './Admin/Dashboard',
+					// },
+					{
+						path: '/admin/statistics',
+						component: './Admin/Statistics',
+					},
+					{
+						path: '/admin/university',
+						component: './Admin/University',
+					},
+					{
+						path: '/admin/university/:universityId',
+						component: './Admin/University/Detail',
+					},
+					{
+						path: '/admin/subject-combinations',
+						component: './Admin/SubjectCombinations',
+					},
+					{
+						path: '/admin/applications/:id',
+						component: './Admin/DetailApplications',
+					}
+					// {
+					// 	path: '/admin/users',
+					// 	component: './Admin/Users',
+					// },
+					// {
+					// 	path: '/admin/settings',
+					// 	component: './Admin/Settings',
+					// },
+				],
 			},
 		],
 	},
