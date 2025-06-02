@@ -103,7 +103,6 @@ export default function useProfileModel() {
           ...response.data,
         } : null);
         
-        message.success('Cập nhật thông tin cá nhân thành công');
         return true;
       }
       return false;
@@ -135,7 +134,6 @@ export default function useProfileModel() {
           priorityGroup: response.data.priorityGroup,
         } : null);
         
-        message.success('Cập nhật thông tin học tập thành công');
         return true;
       }
       return false;
