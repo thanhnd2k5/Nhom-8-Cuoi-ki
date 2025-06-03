@@ -38,6 +38,20 @@ export interface UpdateStatusRequest {
   status: 'da_duyet' | 'tu_choi';
 }
 
+export interface GroupedApplication {
+  majorId: string;
+  majorName: string;
+  universityName: string;
+  applications: Application[];
+}
+
+export interface GroupedApplicationsResponse {
+  status: number;
+  success: boolean;
+  message: string;
+  data: GroupedApplication[];
+}
+
 // Get all applications
 export async function getAllApplications() {
   const response = await axios.get<ApplicationsResponse>('http://localhost:3456/admin/applications');
@@ -61,4 +75,12 @@ export async function getCompleteApplicationById(applicationId: string) {
     method: 'GET',
   });
   return response.data
+}
+
+// Get applications grouped by major of university
+export async function getApplicationsGroupedByMajorOfUniversity(universityId: string) {
+  const response = await axios.get<GroupedApplicationsResponse>(
+    `http://localhost:3456/admin/applications/university/${universityId}/grouped-by-major`
+  );
+  return response.data;
 }

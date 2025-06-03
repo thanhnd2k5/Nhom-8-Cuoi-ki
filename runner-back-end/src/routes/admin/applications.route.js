@@ -27,4 +27,13 @@ router.get('/complete/:applicationId',
     asyncHandler(ApplicationsController.getCompleteApplicationById)
 )
 
+// router.get('/grouped-by-major',
+//     asyncHandler(ApplicationsController.getApplicationsGroupedByMajor)
+// )
+
+router.get('/university/:universityId/grouped-by-major',
+    asyncHandler(checkUniversityExists),
+    asyncHandler(ApplicationsController.getApplicationsGroupedByMajorOfUniversity)
+)
+
 export default router 

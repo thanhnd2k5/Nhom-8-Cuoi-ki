@@ -265,3 +265,45 @@ export async function searchAllApplications(filters) {
 
     return applications
 }
+
+// Lấy đơn xét tuyển và nhóm theo ngành của một trường cụ thể
+export async function getApplicationsGroupedByMajorOfUniversity(universityId) {
+    // Lấy tất cả đơn của trường và populate thông tin cần thiết
+    const applications = await Application.find()
+        .populate({
+            path: 'universityMajorId',
+            match: { university_id: universityId },
+            populate: {
+                path: 'university_id',
+                model: 'University'
+            }
+        })
+        .populate('userId', 'name email')
+        .populate('subjectCombinationId')
+        .sort({ createdAt: -1 })
+
+    // Lọc ra các đơn có universityMajorId khác null (tức là match với universityId)
+    const filteredApplications = applications.filter(app => app.universityMajorId !== null)
+
+    // Nhóm đơn theo ngành
+    const groupedApplications = filteredApplications.reduce((acc, application) => {
+        const majorId = application.universityMajorId._id
+        const majorName = application.universityMajorId.name
+        const universityName = application.universityMajorId.university_id.name
+
+        if (!acc[majorId]) {
+            acc[majorId] = {
+                majorId,
+                majorName,
+                universityName,
+                applications: []
+            }
+        }
+
+        acc[majorId].applications.push(application)
+        return acc
+    }, {})
+
+    // Chuyển đổi object thành array
+    return Object.values(groupedApplications)
+}
