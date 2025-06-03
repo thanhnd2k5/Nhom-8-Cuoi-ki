@@ -68,3 +68,22 @@ export async function searchApplications(req, res) {
         })
     }
 }
+
+// export async function getApplicationsGroupedByMajor(req, res) {
+//     try {
+//         const groupedApplications = await ApplicationsService.getApplicationsGroupedByMajor()
+//         res.jsonify(groupedApplications)
+//     } catch (error) {
+//         abort(error, res)
+//     }
+// }
+
+export async function getApplicationsGroupedByMajorOfUniversity(req, res) {
+    try {
+        const universityId = req.university._id
+        const groupedApplications = await ApplicationsService.getApplicationsGroupedByMajorOfUniversity(universityId)
+        res.jsonify(groupedApplications)
+    } catch (error) {
+        abort(error, res)
+    }
+}

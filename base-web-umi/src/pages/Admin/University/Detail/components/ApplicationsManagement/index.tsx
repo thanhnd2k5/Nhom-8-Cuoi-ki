@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Tabs, Badge, Space } from 'antd';
 import { useModel, useParams } from 'umi';
 import ApplicationList from './ApplicationList';
+import GroupedApplications from './GroupedApplications';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -98,6 +99,18 @@ const ApplicationsManagement: React.FC = () => {
               applications={applications.filter(app => app.status === 'da_nhap_hoc')}
               loading={loading}
             />
+          </TabPane>
+
+          <TabPane
+            tab={
+              <Space>
+                Đơn theo ngành
+                <Badge count={applications.length} style={{ backgroundColor: '#1890ff' }} />
+              </Space>
+            }
+            key="grouped"
+          >
+            <GroupedApplications universityId={universityId} />
           </TabPane>
         </Tabs>
       </Card>
