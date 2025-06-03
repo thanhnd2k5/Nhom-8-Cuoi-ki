@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import {OAuth2Client} from 'google-auth-library'
 import {cache, LOGIN_EXPIRE_IN, TOKEN_TYPE, VALIDATE_EMAIL_REGEX} from '@/configs'
 import {abort, generateToken} from '@/utils/helpers'
-import {Admin, Permission, STATUS_ACCOUNT, User} from '@/models'
+import {Admin, Permission, HighSchoolProfile ,STATUS_ACCOUNT, User} from '@/models'
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
@@ -98,7 +98,19 @@ export async function registerUser(userData) {
     
     // Tạo user mới
     const user = await User.create(userData)
-        
+    
+    // Tạo hồ sơ học tập trống
+    await HighSchoolProfile.create({
+        userId: user._id,
+        highSchoolName: '',
+        gpaGrade10: null,
+        gpaGrade11: null,
+        gpaGrade12: null,
+        graduationYear: null,
+        priorityArea: '',
+        priorityGroup: ''
+    })
+
     return user
 }
 

@@ -70,14 +70,14 @@ export default function useProfileModel() {
           status: userProfileRes.data.status,
           
           // High school info
-          highSchoolId: highSchoolProfileRes.data._id,
-          gpaGrade10: highSchoolProfileRes.data.gpaGrade10,
-          gpaGrade11: highSchoolProfileRes.data.gpaGrade11,
-          gpaGrade12: highSchoolProfileRes.data.gpaGrade12,
-          graduationYear: highSchoolProfileRes.data.graduationYear,
-          highSchoolName: highSchoolProfileRes.data.highSchoolName,
-          priorityArea: highSchoolProfileRes.data.priorityArea,
-          priorityGroup: highSchoolProfileRes.data.priorityGroup,
+          highSchoolId: highSchoolProfileRes.data?._id,
+          gpaGrade10: highSchoolProfileRes.data?.gpaGrade10 || null,
+          gpaGrade11: highSchoolProfileRes.data?.gpaGrade11 || null,
+          gpaGrade12: highSchoolProfileRes.data?.gpaGrade12 || null,
+          graduationYear: highSchoolProfileRes?.data.graduationYear || null,
+          highSchoolName: highSchoolProfileRes?.data.highSchoolName || '',
+          priorityArea: highSchoolProfileRes?.data.priorityArea || '',
+          priorityGroup: highSchoolProfileRes?.data.priorityGroup || '',
         };
 
         setProfileData(combinedData);

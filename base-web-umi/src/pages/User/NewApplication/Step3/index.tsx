@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, Input, DatePicker, Select, Row, Col, Card, Radio, Button, message } from 'antd';
+import { Form, Input, DatePicker, Select, Row, Col, Card, Radio, Button, message, Spin } from 'antd';
 import { useModel, history } from 'umi';
 import moment from 'moment';
 import { graduationYears, priorityAreas, priorityGroups } from '@/utils/utils';
@@ -12,6 +12,14 @@ const { Option } = Select;
 const Step3: React.FC = () => {
   const { profileData, fetchProfile } = useModel('User.profile');
   const { formData, updateFormData } = useModel('User.applications');
+  const { 
+    provinces, 
+    loading: loadingProvinces, 
+    fetchProvinces, 
+    fetchDistricts, 
+    getDistrictsByProvince,
+    isLoadingDistricts 
+  } = useModel('Location.index');
   const [form] = Form.useForm();
 
   // Set initial values from profile data
@@ -39,6 +47,26 @@ const Step3: React.FC = () => {
   useEffect(() => {
     fetchProfile();
   }, []);
+
+  // Load provinces on component mount
+  useEffect(() => {
+    fetchProvinces();
+  }, [fetchProvinces]);
+
+  // Load districts when province changes
+  useEffect(() => {
+    const provinceId = form.getFieldValue('province');
+    if (provinceId) {
+      fetchDistricts(provinceId);
+    }
+  }, [form.getFieldValue('province')]);
+
+  const handleProvinceChange = (value: string) => {
+    form.setFieldsValue({ district: undefined }); // Reset district when province changes
+    if (value) {
+      fetchDistricts(value);
+    }
+  };
 
   const handleBack = () => {
     history.goBack();
@@ -165,8 +193,20 @@ const Step3: React.FC = () => {
               label="Tỉnh/Thành phố"
               rules={[{ required: true, message: 'Vui lòng chọn tỉnh/thành phố' }]}
             >
-              <Select placeholder="Chọn tỉnh/thành phố">
-                {/* Add province options here */}
+              <Select 
+                placeholder="Chọn tỉnh/thành phố"
+                onChange={handleProvinceChange}
+                loading={loadingProvinces}
+                showSearch
+                filterOption={(input, option) =>
+                  (option?.children as unknown as string)?.toLowerCase().includes(input.toLowerCase())
+                }
+              >
+                {provinces.map(province => (
+                  <Option key={province.id} value={province.id}>
+                    {province.name}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
           </Col>
@@ -179,8 +219,29 @@ const Step3: React.FC = () => {
               label="Quận/Huyện"
               rules={[{ required: true, message: 'Vui lòng chọn quận/huyện' }]}
             >
-              <Select placeholder="Chọn quận/huyện">
-                {/* Add district options here */}
+              <Select 
+                placeholder="Chọn quận/huyện"
+                disabled={!form.getFieldValue('province')}
+                loading={isLoadingDistricts(form.getFieldValue('province'))}
+                showSearch
+                filterOption={(input, option) =>
+                  (option?.children as unknown as string)?.toLowerCase().includes(input.toLowerCase())
+                }
+                notFoundContent={
+                  !form.getFieldValue('province') ? (
+                    'Vui lòng chọn tỉnh/thành phố trước'
+                  ) : isLoadingDistricts(form.getFieldValue('province')) ? (
+                    <Spin size="small" />
+                  ) : (
+                    'Không tìm thấy dữ liệu'
+                  )
+                }
+              >
+                {getDistrictsByProvince(form.getFieldValue('province')).map(district => (
+                  <Option key={district.id} value={district.id}>
+                    {district.name}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
           </Col>
