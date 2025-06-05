@@ -14,22 +14,10 @@ import {
 import { useModel } from 'umi';
 import moment from 'moment';
 import styles from './index.less';
+import { PersonalInfo } from '../../type';
 
 const { Option } = Select;
 const { Title, Text } = Typography;
-
-interface PersonalInfo {
-  fullName: string;
-  dob: string;
-  gender: string;
-  idNumber: string;
-  phone: string;
-  email: string;
-  address: string;
-  province: string;
-  district: string;
-  ethnic: string;
-}
 
 interface PersonalInfoFormProps {
   data: PersonalInfo;

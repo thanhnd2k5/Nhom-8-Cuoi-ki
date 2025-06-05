@@ -7,32 +7,9 @@ import ProfileHeader from './components/ProfileHeader';
 import PersonalInfoForm from './components/PersonalInfoForm';
 import EducationInfoForm from './components/EducationInfoForm';
 import styles from './index.less';
+import { PersonalInfo, EducationInfo } from './type';
 
 const { TabPane } = Tabs;
-
-// Types for form data
-interface PersonalInfo {
-  fullName: string;
-  dob: string;
-  gender: string;
-  idNumber: string;
-  phone: string;
-  email: string;
-  address: string;
-  province: string;
-  district: string;
-  ethnic: string;
-}
-
-interface EducationInfo {
-  school: string;
-  grade10: number | null;
-  grade11: number | null;
-  grade12: number | null;
-  graduationYear: string;
-  priorityArea: string;
-  priorityObject: string;
-}
 
 interface FormData extends PersonalInfo, EducationInfo {}
 
