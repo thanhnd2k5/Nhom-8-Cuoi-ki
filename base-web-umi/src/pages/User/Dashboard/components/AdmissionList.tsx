@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import moment from 'moment';
 
 const tabs = [
-  { key: 'all', label: 'Tất cả' },
-  { key: 'pending', label: 'Chờ duyệt' },
-  { key: 'approved', label: 'Đã duyệt' },
-  { key: 'rejected', label: 'Từ chối' },
+  { key: 'all', label: 'Tất cả', icon: '📋' },
+  { key: 'pending', label: 'Chờ duyệt', icon: '⏰' },
+  { key: 'approved', label: 'Đã duyệt', icon: '✅' },
+  { key: 'rejected', label: 'Từ chối', icon: '❌' },
 ];
 
 const statusMap = {
@@ -15,9 +14,21 @@ const statusMap = {
 };
 
 const statusLabelMap = {
-  cho_duyet: { color: '#eab308', label: 'Chờ duyệt' },
-  da_duyet: { color: '#c00', label: 'Đã duyệt' },
-  tu_choi: { color: '#888', label: 'Từ chối' },
+  cho_duyet: { 
+    color: 'linear-gradient(135deg, #eab308, #f59e0b)', 
+    label: 'Chờ duyệt',
+    bgColor: '#fef3c7'
+  },
+  da_duyet: { 
+    color: 'linear-gradient(135deg, #059669, #10b981)', 
+    label: 'Đã duyệt',
+    bgColor: '#d1fae5'
+  },
+  tu_choi: { 
+    color: 'linear-gradient(135deg, #6b7280, #9ca3af)', 
+    label: 'Từ chối',
+    bgColor: '#f3f4f6'
+  },
 };
 
 const AdmissionList = ({ admissions, universityMajors, subjectCombinations }) => {
@@ -43,20 +54,47 @@ const AdmissionList = ({ admissions, universityMajors, subjectCombinations }) =>
     return comb ? comb.code : '---';
   };
 
-  
-
   const filtered = tab === 'all'
     ? admissions
     : admissions.filter(item => item.status === statusMap[tab]);
 
   return (
-    <div style={{ background: '#f3f4f6', minHeight: 600, padding: 32 }}>
-      <div style={{ maxWidth: 900, margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24 }}>
-          <h2 style={{ fontWeight: 700, fontSize: 24, margin: 0, flex: 1 }}>Hồ sơ xét tuyển</h2>
-          
+    <div style={{ 
+      background: '#f8fafc', 
+      minHeight: 600, 
+      padding: 32,
+      borderRadius: 20
+    }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          marginBottom: 32 
+        }}>
+          <h2 style={{ 
+            fontWeight: 700, 
+            fontSize: 28, 
+            margin: 0, 
+            flex: 1,
+            color: '#1f2937',
+            background: 'linear-gradient(135deg, #dc2626, #ef4444)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}>
+            📚 Hồ sơ xét tuyển
+          </h2>
         </div>
-        <div style={{ display: 'flex', gap: 24, marginBottom: 24 }}>
+
+        {/* Tabs */}
+        <div style={{ 
+          display: 'flex', 
+          gap: 8, 
+          marginBottom: 32,
+          background: 'white',
+          padding: 8,
+          borderRadius: 16,
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
+        }}>
           {tabs.map(t => (
             <div
               key={t.key}
@@ -64,70 +102,183 @@ const AdmissionList = ({ admissions, universityMajors, subjectCombinations }) =>
               style={{
                 fontWeight: 600,
                 fontSize: 16,
-                color: tab === t.key ? '#c00' : '#222',
-                borderBottom: tab === t.key ? '3px solid #c00' : '3px solid transparent',
-                paddingBottom: 6,
-                cursor: 'pointer'
+                color: tab === t.key ? 'white' : '#6b7280',
+                background: tab === t.key ? 'linear-gradient(135deg, #dc2626, #ef4444)' : 'transparent',
+                borderRadius: 12,
+                padding: '12px 20px',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                flex: 1,
+                justifyContent: 'center'
               }}
             >
+              <span>{t.icon}</span>
               {t.label}
             </div>
           ))}
         </div>
+
+        {/* Content */}
         <div>
-          {filtered.length === 0 && <div style={{ color: '#888', textAlign: 'center', marginTop: 60 }}>Không có hồ sơ nào.</div>}
+          {filtered.length === 0 && (
+            <div style={{ 
+              color: '#6b7280', 
+              textAlign: 'center', 
+              marginTop: 60,
+              fontSize: 18,
+              padding: 40,
+              background: 'white',
+              borderRadius: 16,
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
+            }}>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>📭</div>
+              Không có hồ sơ nào.
+            </div>
+          )}
+          
           {filtered.map((item) => (
-            console.log('Admission item render:', item),
             <div key={item.id || item._id} style={{
-              background: '#fff',
-              borderRadius: 8,
-              padding: 20,
-              marginBottom: 18,
+              background: 'white',
+              borderRadius: 16,
+              padding: 24,
+              marginBottom: 20,
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              border: '1px solid #eee'
-            }}>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 4 }}>{item.university}</div>
-                <div style={{ color: '#555', marginBottom: 2 }}>Ngành: <b>{getMajorName(item.universityMajorId)}</b></div>
-                <div style={{ color: '#555', marginBottom: 2 }}>Tổ hợp xét tuyển: <b>{getCombinationName(item.subjectCombinationId)}</b></div>
-                <div style={{ color: '#888', fontSize: 14 }}>
-                  Ngày nộp: {item.created_at ? moment(item.created_at).format('DD/MM/YYYY') : '---'}
+              border: '1px solid #e5e7eb',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.transform = 'translateY(-2px)';
+              e.target.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.12)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
+            }}
+            >
+              <div style={{ flex: 1 }}>
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: 12, 
+                  marginBottom: 12 
+                }}>
+                  <div style={{
+                    width: 40,
+                    height: 40,
+                    background: 'linear-gradient(135deg, #dc2626, #ef4444)',
+                    borderRadius: 10,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 16
+                  }}>
+                    🏫
+                  </div>
+                  <div style={{ 
+                    fontWeight: 700, 
+                    fontSize: 20, 
+                    color: '#1f2937'
+                  }}>
+                    {item.university}
+                  </div>
                 </div>
-                <div style={{ color: '#888', fontSize: 14 }}>
-                  Ngày cập nhật: {item.updated_at ? moment(item.updated_at).format('DD/MM/YYYY') : '---'}
+                
+                <div style={{ marginLeft: 52, marginBottom: 16 }}>
+                  <div style={{ 
+                    color: '#374151', 
+                    marginBottom: 6,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8
+                  }}>
+                    <span>🎯</span>
+                    Ngành: <strong style={{ color: '#dc2626' }}>{getMajorName(item.universityMajorId)}</strong>
+                  </div>
+                  <div style={{ 
+                    color: '#374151', 
+                    marginBottom: 6,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8
+                  }}>
+                    <span>📊</span>
+                    Tổ hợp: <strong style={{ color: '#dc2626' }}>{getCombinationName(item.subjectCombinationId)}</strong>
+                  </div>
+                </div>
+
+                <div style={{ 
+                  display: 'flex', 
+                  gap: 24, 
+                  fontSize: 14, 
+                  color: '#6b7280',
+                  marginLeft: 52
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <span>📅</span>
+                    Ngày nộp: {item.created_at ? new Date(item.created_at).toLocaleDateString('vi-VN') : '---'}
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <span>🔄</span>
+                    Cập nhật: {item.updated_at ? new Date(item.updated_at).toLocaleDateString('vi-VN') : '---'}
+                  </div>
                 </div>
               </div>
-              <div style={{ textAlign: 'right', minWidth: 180 }}>
+
+              <div style={{ 
+                textAlign: 'right', 
+                minWidth: 200,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                gap: 12
+              }}>
                 <span style={{
-                  background: statusLabelMap[item.status]?.color || '#ccc',
-                  color: '#fff',
-                  borderRadius: 6,
-                  padding: '4px 14px',
-                  marginRight: 8,
+                  background: statusLabelMap[item.status]?.color || '#6b7280',
+                  color: 'white',
+                  borderRadius: 8,
+                  padding: '8px 16px',
                   fontWeight: 600,
-                  fontSize: 15
+                  fontSize: 14,
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+                  minWidth: 100,
+                  textAlign: 'center'
                 }}>
                   {statusLabelMap[item.status]?.label || item.status}
                 </span>
+                
                 <button
                   style={{
-                    background: '#fff',
-                    color: '#c00',
-                    border: '1.5px solid #c00',
-                    borderRadius: 6,
-                    padding: '6px 16px',
+                    background: 'linear-gradient(135deg, #dc2626, #ef4444)',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: 8,
+                    padding: '10px 20px',
                     fontWeight: 600,
                     cursor: 'pointer',
-                    marginLeft: 8,
-                    fontSize: 15
+                    fontSize: 14,
+                    boxShadow: '0 4px 12px rgba(220, 38, 38, 0.3)',
+                    transition: 'all 0.3s ease',
+                    minWidth: 120
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.transform = 'translateY(-1px)';
+                    e.target.style.boxShadow = '0 6px 16px rgba(220, 38, 38, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.transform = 'translateY(0)';
+                    e.target.style.boxShadow = '0 4px 12px rgba(220, 38, 38, 0.3)';
                   }}
                   onClick={() => {
                     window.location.href = `/user/applications/${item._id || item.id}`;
                   }}
                 >
-                  Xem chi tiết
+                  👁️ Xem chi tiết
                 </button>
               </div>
             </div>

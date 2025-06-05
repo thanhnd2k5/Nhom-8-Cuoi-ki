@@ -6,9 +6,9 @@ import AdmissionList from './components/AdmissionList';
 import useUniversityMajorsModel from '@/models/User/university_majors';
 import useSubjectCombinationsModel from '@/models/User/subject_combinations';
 
-const Dashboard: React.FC = () => {
-  const [user, setUser] = useState<any>({});
-  const [admissions, setAdmissions] = useState<any[]>([]);
+const Dashboard = () => {
+  const [user, setUser] = useState({});
+  const [admissions, setAdmissions] = useState([]);
 
   // Lấy danh sách ngành và tổ hợp môn
   const { universityMajors, fetchUniversityMajors } = useUniversityMajorsModel();
@@ -31,12 +31,17 @@ const Dashboard: React.FC = () => {
     created: admissions.length,
     pending: admissions.filter(item => item.status === 'cho_duyet').length,
     approved: admissions.filter(item => item.status === 'da_duyet').length,
-    // Nếu muốn thêm từ chối:
-    // rejected: admissions.filter(item => item.status === 'tu_choi').length,
+    rejected: admissions.filter(item => item.status === 'tu_choi').length,
   };
 
   return (
-    <div style={{ padding: 32, maxWidth: 1000, margin: '0 auto' }}>
+    <div style={{ 
+      padding: 32, 
+      maxWidth: 1200, 
+      margin: '0 auto',
+      background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+      minHeight: '100vh'
+    }}>
       <WelcomeBox name={user?.data?.name || ''} />
       <StatsBox stats={stats} />
       <AdmissionList
