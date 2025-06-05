@@ -1,4 +1,5 @@
 import jsPDF from 'jspdf';
+import '@/utils/Roboto'
 
 // Cấu hình font và style
 const PDF_CONFIG = {
@@ -52,19 +53,19 @@ export const addHeader = (doc, university, title, applicationId) => {
   
   // University name
   doc.setFontSize(fontSize.subtitle);
-  doc.setFont('helvetica', 'bold');
+  doc.setFont('Robotor', 'bold');
   const universityWidth = doc.getTextWidth(university);
   doc.text(university, (pageWidth - universityWidth) / 2, margins.top + 10);
   
   // Title
   doc.setFontSize(fontSize.title);
-  doc.setFont('helvetica', 'bold');
+  doc.setFont('Robotor', 'bold');
   const titleWidth = doc.getTextWidth(title);
   doc.text(title, (pageWidth - titleWidth) / 2, margins.top + 25);
   
   // Application ID
   doc.setFontSize(fontSize.small);
-  doc.setFont('helvetica', 'normal');
+  doc.setFont('Robotor', 'normal');
   const idText = `Mã hồ sơ: ${applicationId}`;
   const idWidth = doc.getTextWidth(idText);
   doc.text(idText, (pageWidth - idWidth) / 2, margins.top + 35);
@@ -83,7 +84,7 @@ export const addSection = (doc, title, startY, content) => {
   
   // Section title
   doc.setFontSize(fontSize.subtitle);
-  doc.setFont('helvetica', 'bold');
+  doc.setFont('Robotor', 'bold');
   doc.text(title, margins.left, currentY);
   currentY += 10;
   
@@ -93,23 +94,23 @@ export const addSection = (doc, title, startY, content) => {
   
   // Content
   doc.setFontSize(fontSize.normal);
-  doc.setFont('helvetica', 'normal');
+  doc.setFont('Robotor', 'normal');
   
   content.forEach(item => {
     if (item.type === 'info') {
-      doc.setFont('helvetica', 'bold');
+      doc.setFont('Robotor', 'bold');
       doc.text(item.label + ':', margins.left + 5, currentY + 5);
-      doc.setFont('helvetica', 'normal');
+      doc.setFont('Robotor', 'normal');
       doc.text(item.value, margins.left + 60, currentY + 5);
       currentY += 8;
     } else if (item.type === 'score') {
-      doc.setFont('helvetica', 'bold');
+      doc.setFont('Robotor', 'bold');
       doc.text(item.label + ':', margins.left + 5, currentY + 5);
-      doc.setFont('helvetica', 'normal');
+      doc.setFont('Robotor', 'normal');
       doc.text(item.value + ' điểm', margins.left + 60, currentY + 5);
       currentY += 8;
     } else if (item.type === 'highlight') {
-      doc.setFont('helvetica', 'bold');
+      doc.setFont('Robotor', 'bold');
       doc.setFontSize(fontSize.subtitle);
       const highlightText = `${item.label}: ${item.value}`;
       const textWidth = doc.getTextWidth(highlightText);
@@ -128,7 +129,7 @@ export const addFooter = (doc, pageNumber = 1, totalPages = 1) => {
   
   // Page number
   doc.setFontSize(fontSize.small);
-  doc.setFont('helvetica', 'normal');
+  doc.setFont('Robotor', 'normal');
   const pageText = `Trang ${pageNumber}/${totalPages}`;
   const pageTextWidth = doc.getTextWidth(pageText);
   doc.text(pageText, (pageWidth - pageTextWidth) / 2, pageHeight - margins.bottom + 5);
@@ -157,16 +158,16 @@ export const addSignatureSection = (doc, startY) => {
   
   // Left signature box
   doc.setFontSize(fontSize.normal);
-  doc.setFont('helvetica', 'bold');
+  doc.setFont('Robotor', 'bold');
   doc.text('NGƯỜI NỘP HỒ SƠ', leftBoxX + 10, currentY);
-  doc.setFont('helvetica', 'normal');
+  doc.setFont('Robotor', 'normal');
   doc.text('(Ký và ghi rõ họ tên)', leftBoxX + 5, currentY + 8);
   drawBox(doc, leftBoxX, currentY + 15, boxWidth, 40);
   
   // Right signature box
-  doc.setFont('helvetica', 'bold');
+  doc.setFont('Robotor', 'bold');
   doc.text('CÁN BỘ TIẾP NHẬN', rightBoxX + 10, currentY);
-  doc.setFont('helvetica', 'normal');
+  doc.setFont('Robotor', 'normal');
   doc.text('(Ký và đóng dấu)', rightBoxX + 10, currentY + 8);
   drawBox(doc, rightBoxX, currentY + 15, boxWidth, 40);
   
