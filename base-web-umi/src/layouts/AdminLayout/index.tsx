@@ -10,6 +10,7 @@ import {
   LogoutOutlined,
 } from '@ant-design/icons';
 import styles from './index.less';
+import { logoutAdmin} from '@/services/Admin/Auth/Login'
 
 const { Header, Sider, Content, Footer } = Layout;
 
@@ -19,6 +20,7 @@ const AdminLayout: React.FC = ({ children }) => {
 
   const handleLogout = async () => {
     await setInitialState((s) => ({ ...s, currentUser: undefined }));
+    await logoutAdmin();
     window.location.href = '/admin/login';
   };
 
