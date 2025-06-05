@@ -42,6 +42,7 @@ const DetailApplicationsPage: React.FC = () => {
   return (
     <div className="detail-applications-page">
       <ApplicationHeader
+        application={application}
         status={application.status}
         statusMap={statusMap}
         onBack={() => history.goBack()}

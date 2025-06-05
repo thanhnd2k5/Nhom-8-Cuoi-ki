@@ -1,14 +1,16 @@
 import React from 'react';
 import { Button, Badge } from 'antd';
 import { DownloadOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import PDFDownloadButton, { SimpleDownloadButton} from './PDFDownloadButton';
 
 interface Props {
+  application: any;
   status: string;
   statusMap: Record<string, { color: string; text: string }>;
   onBack: () => void;
 }
 
-const ApplicationHeader: React.FC<Props> = ({ status, statusMap, onBack }) => (
+const ApplicationHeader: React.FC<Props> = ({ application, status, statusMap, onBack }) => (
   <div className="header">
     <Button
       type="link"
@@ -22,7 +24,8 @@ const ApplicationHeader: React.FC<Props> = ({ status, statusMap, onBack }) => (
         status={statusMap[status]?.color as any}
         text={statusMap[status]?.text}
       />
-      <Button icon={<DownloadOutlined />}>Tải xuống hồ sơ</Button>
+      <PDFDownloadButton application={application} />
+      <SimpleDownloadButton application={application} />
     </div>
   </div>
 );
