@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Form, Input, DatePicker, Select, Row, Col, Card, Radio, Button, message } from 'antd';
+import { Form, Input, DatePicker, Select, Row, Col, Card, Radio, Button, message, Spin } from 'antd';
 import { useModel, history } from 'umi';
 import moment from 'moment';
 import { graduationYears, priorityAreas, priorityGroups } from '@/utils/utils';
@@ -13,6 +13,14 @@ const { Option } = Select;
 const Step3: React.FC = () => {
   const { profileData, fetchProfile } = useModel('User.profile');
   const { formData, updateFormData } = useModel('User.applications');
+  const { 
+    provinces, 
+    loading: loadingProvinces, 
+    fetchProvinces, 
+    fetchDistricts, 
+    getDistrictsByProvince,
+    isLoadingDistricts 
+  } = useModel('Location.index');
   const [form] = Form.useForm();
 
   // Set initial values from profile data
@@ -32,7 +40,7 @@ const Step3: React.FC = () => {
         school: profileData.highSchoolName,
         graduationYear: profileData.graduationYear,
         priorityArea: profileData.priorityArea,
-        priorityObject: profileData.priorityGroup,
+        priorityGroup: profileData.priorityGroup,
       });
     }
   }, [profileData, form]);
@@ -40,6 +48,26 @@ const Step3: React.FC = () => {
   useEffect(() => {
     fetchProfile();
   }, []);
+
+  // Load provinces on component mount
+  useEffect(() => {
+    fetchProvinces();
+  }, [fetchProvinces]);
+
+  // Load districts when province changes
+  useEffect(() => {
+    const provinceId = form.getFieldValue('province');
+    if (provinceId) {
+      fetchDistricts(provinceId);
+    }
+  }, [form.getFieldValue('province')]);
+
+  const handleProvinceChange = (value: string) => {
+    form.setFieldsValue({ district: undefined }); // Reset district when province changes
+    if (value) {
+      fetchDistricts(value);
+    }
+  };
 
   const handleBack = () => {
     history.goBack();
@@ -155,104 +183,139 @@ const Step3: React.FC = () => {
               </Col>
             </Row>
 
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="ethnic"
-                  label="Dân tộc"
-                  rules={[{ required: true, message: 'Vui lòng nhập dân tộc' }]}
-                >
-                  <Input placeholder="Nhập dân tộc" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="province"
-                  label="Tỉnh/Thành phố"
-                  rules={[{ required: true, message: 'Vui lòng chọn tỉnh/thành phố' }]}
-                >
-                  <Select placeholder="Chọn tỉnh/thành phố">
-                    {/* Add province options here */}
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="ethnic"
+              label="Dân tộc"
+              rules={[{ required: true, message: 'Vui lòng nhập dân tộc' }]}
+            >
+              <Input placeholder="Nhập dân tộc" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="province"
+              label="Tỉnh/Thành phố"
+              rules={[{ required: true, message: 'Vui lòng chọn tỉnh/thành phố' }]}
+            >
+              <Select 
+                placeholder="Chọn tỉnh/thành phố"
+                onChange={handleProvinceChange}
+                loading={loadingProvinces}
+                showSearch
+                filterOption={(input, option) =>
+                  (option?.children as unknown as string)?.toLowerCase().includes(input.toLowerCase())
+                }
+              >
+                {provinces.map(province => (
+                  <Option key={province.id} value={province.id}>
+                    {province.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+        </Row>
 
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="district"
-                  label="Quận/Huyện"
-                  rules={[{ required: true, message: 'Vui lòng chọn quận/huyện' }]}
-                >
-                  <Select placeholder="Chọn quận/huyện">
-                    {/* Add district options here */}
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="address"
-                  label="Địa chỉ"
-                  rules={[{ required: true, message: 'Vui lòng nhập địa chỉ' }]}
-                >
-                  <Input placeholder="Nhập địa chỉ" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="school"
-                  label="Trường THPT"
-                  rules={[{ required: true, message: 'Vui lòng chọn trường THPT' }]}
-                >
-                  <Input placeholder="Nhập trường THPT" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="graduationYear"
-                  label="Năm tốt nghiệp"
-                  rules={[{ required: true, message: 'Vui lòng chọn năm tốt nghiệp' }]}
-                >
-                  <Select placeholder="Chọn năm tốt nghiệp">
-                    {graduationYears.map((year) => (
-                      <Option key={year} value={year}>{year}</Option>
-                    ))}
-                  </Select>
-                </Form.Item></Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  name="priorityArea"
-                  label="Khu vực ưu tiên"
-                  rules={[{ required: true, message: 'Vui lòng chọn khu vực ưu tiên' }]}
-                >
-                  <Radio.Group>
-                    {priorityAreas.map((area) => (
-                      <Radio key={area.value} value={area.value}>{area.label}</Radio>
-                    ))}
-                  </Radio.Group>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  name="priorityGroup"
-                  label="Đối tượng ưu tiên"
-                  rules={[{ required: true, message: 'Vui lòng chọn đối tượng ưu tiên' }]}
-                >
-                  <Radio.Group>
-                    {priorityGroups.map((object) => (
-                      <Radio key={object.value} value={object.value}>{object.label}</Radio>
-                    ))}
-                  </Radio.Group>
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-          <div className="card-footer">
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="district"
+              label="Quận/Huyện"
+              rules={[{ required: true, message: 'Vui lòng chọn quận/huyện' }]}
+            >
+              <Select 
+                placeholder="Chọn quận/huyện"
+                disabled={!form.getFieldValue('province')}
+                loading={isLoadingDistricts(form.getFieldValue('province'))}
+                showSearch
+                filterOption={(input, option) =>
+                  (option?.children as unknown as string)?.toLowerCase().includes(input.toLowerCase())
+                }
+                notFoundContent={
+                  !form.getFieldValue('province') ? (
+                    'Vui lòng chọn tỉnh/thành phố trước'
+                  ) : isLoadingDistricts(form.getFieldValue('province')) ? (
+                    <Spin size="small" />
+                  ) : (
+                    'Không tìm thấy dữ liệu'
+                  )
+                }
+              >
+                {getDistrictsByProvince(form.getFieldValue('province')).map(district => (
+                  <Option key={district.id} value={district.id}>
+                    {district.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="address"
+              label="Địa chỉ"
+              rules={[{ required: true, message: 'Vui lòng nhập địa chỉ' }]}
+            >
+              <Input placeholder="Nhập địa chỉ" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="school"
+              label="Trường THPT"
+              rules={[{ required: true, message: 'Vui lòng chọn trường THPT' }]}
+            >
+              <Input placeholder="Nhập trường THPT" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="graduationYear"
+              label="Năm tốt nghiệp"
+              rules={[{ required: true, message: 'Vui lòng chọn năm tốt nghiệp' }]}
+            >
+              <Select placeholder="Chọn năm tốt nghiệp">
+                {graduationYears.map((year) => (
+                  <Option key={year} value={year}>{year}</Option>
+                ))}
+              </Select>
+            </Form.Item></Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="priorityArea"
+              label="Khu vực ưu tiên"
+              rules={[{ required: true, message: 'Vui lòng chọn khu vực ưu tiên' }]}
+            >
+              <Radio.Group>
+                {priorityAreas.map((area) => (
+                  <Radio key={area.value} value={area.value}>{area.label}</Radio>
+                ))}
+              </Radio.Group>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="priorityGroup"
+              label="Đối tượng ưu tiên"
+              rules={[{ required: true, message: 'Vui lòng chọn đối tượng ưu tiên' }]}
+            >
+              <Radio.Group>
+                {priorityGroups.map((object) => (
+                  <Radio key={object.value} value={object.value}>{object.label}</Radio>
+                ))}
+              </Radio.Group>
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
+      <div className="card-footer">
             <Button onClick={handleBack}>
               <ArrowLeftOutlined />
               Quay lại

@@ -10,5 +10,6 @@ router.get('/:universityId',
     asyncHandler(checkUniversityExists),
     asyncHandler(controller.getOne)
 )
+router.get('/university/admission-method', asyncHandler(controller.getByAdmissionMethod))
 
 export default router

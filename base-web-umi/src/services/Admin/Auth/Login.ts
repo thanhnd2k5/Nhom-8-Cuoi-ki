@@ -18,3 +18,9 @@ interface LoginParams {
       data,
     });
   }
+
+  export async function logoutAdmin() {
+    return request('http://localhost:3456/admin/auth/logout', {
+      method: 'POST'
+    })
+  }

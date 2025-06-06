@@ -73,11 +73,16 @@
 					},
 
 					{
+						path: '/user/applications/search',
+						name: 'SearchApplicationsPage',
+						component: './User/SearchApplicationsPage',
+					},
+
+					{
 						path: '/user/applications/:id',
 						name: 'detailApplication',
 						component: './User/DetailApplications',
-
-					}
+					},
 					
 					// {
 					// 	path: '/user/settings',

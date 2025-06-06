@@ -37,7 +37,7 @@ const UniversityDetailPage: React.FC = () => {
             <MajorsManagement />
           </TabPane>
           <TabPane tab="Quản lý đơn xét tuyển" key="applications">
-            <ApplicationsManagement />
+            <ApplicationsManagement universityId={universityId}/>
           </TabPane>
           <TabPane tab="Thống kê" key="statistics">
             {/* Component thống kê sẽ được thêm vào đây */}

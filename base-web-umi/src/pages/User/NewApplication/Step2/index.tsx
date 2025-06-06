@@ -29,9 +29,13 @@ const Step2Page: React.FC = () => {
   const needsSubjectCombination = ['tot_nghiep'].includes(admissionMethod);
 
   useEffect(() => {
-    // Fetch universities on component mount
-    fetchUniversities();
-  }, []);
+    // Fetch universities based on admission method
+    if (admissionMethod) {
+      fetchUniversities(admissionMethod);
+    } else {
+      fetchUniversities();
+    }
+  }, [admissionMethod]);
 
   useEffect(() => {
     // Fetch majors when university is selected

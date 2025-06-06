@@ -85,6 +85,25 @@ export async function uploadDocument(file: File) {
   return response.data;
 }
 
+export async function searchApplications(filters: {
+  universityId?: string;
+  applicationCode?: string;
+  status?: string;
+  admissionMethod?: string;
+  startDate?: string;
+  endDate?: string;
+}): Promise<ApplicationResponse> {
+  const queryParams = new URLSearchParams();
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value) queryParams.append(key, value);
+  });
+
+  const response = await request(`http://localhost:3456/users/applications/search?${queryParams.toString()}`, {
+    method: 'GET',
+  });
+  return response.data;
+}
+
 export async function getCompleteApplicationById(applicationId: string) {
   const response = await request(`http://localhost:3456/users/applications/complete/${applicationId}`, {
     method: 'GET',

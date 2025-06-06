@@ -14,6 +14,7 @@ import {
   SettingOutlined,
   UserOutlined,
   FileTextOutlined,
+  SearchOutlined,
 } from '@ant-design/icons';
 import styles from './index.less';
 import { handleLogout } from '@/models/User/auth';
@@ -31,6 +32,7 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
   // Xác định menu item được chọn dựa trên pathname
   const getSelectedKey = () => {
     const pathname = location.pathname;
+    if (pathname.includes('/applications/search')) return 'searchApplicationsPage'
     if (pathname.includes('/profile')) return 'profile';
     if (pathname.includes('/applications')) return 'applications';
     if (pathname.includes('/settings')) return 'settings';
@@ -85,6 +87,9 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
             </Menu.Item>
             <Menu.Item key="applications" icon={<FileTextOutlined />}>
               <Link to="/user/applications">Hồ sơ xét tuyển</Link>
+            </Menu.Item>
+            <Menu.Item key="searchApplicationsPage" icon={<SearchOutlined />}>
+              <Link to="/user/applications/search">Tìm hiếm hồ sơ</Link>
             </Menu.Item>
             <Menu.Item key="settings" icon={<SettingOutlined />}>
               <Link to="/user/settings">Cài đặt</Link>

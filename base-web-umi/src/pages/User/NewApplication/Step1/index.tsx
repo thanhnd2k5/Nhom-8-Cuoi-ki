@@ -4,40 +4,13 @@ import { ArrowRightOutlined } from '@ant-design/icons';
 import { useModel, history } from 'umi';
 import NewApplicationLayout from '../NewApplicationLayout';
 import './NewApplication.less';
+import { admissionMethods} from '@/utils/utils'
 
 const { Group: RadioGroup } = Radio;
 
 const Step1Page: React.FC = () => {
   const { updateFormData } = useModel('User.applications');
   const [selectedAdmissionMethod, setSelectedAdmissionMethod] = useState<string>('');
-
-  // Các phương thức xét tuyển
-  const admissionMethods = [
-    {
-      id: 'hoc_ba',
-      name: 'Xét tuyển học bạ',
-      description: 'Xét tuyển dựa trên kết quả học tập THPT (điểm trung bình các môn học)',
-      icon: '📚'
-    },
-    {
-      id: 'tot_nghiep',
-      name: 'Điểm thi THPT Quốc gia',
-      description: 'Xét tuyển dựa trên kết quả kỳ thi THPT Quốc gia',
-      icon: '📝'
-    },
-    {
-      id: 'dgnl',
-      name: 'Đánh giá năng lực',
-      description: 'Xét tuyển dựa trên kết quả bài thi đánh giá năng lực của các trường đại học',
-      icon: '🎯'
-    },
-    {
-      id: 'tu_duy',
-      name: 'Đánh giá tư duy',
-      description: 'Xét tuyển dựa trên kết quả bài thi đánh giá tư duy logic và sáng tạo',
-      icon: '🧠'
-    }
-  ];
 
   const handleMethodChange = (e: any) => {
     setSelectedAdmissionMethod(e.target.value);

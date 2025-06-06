@@ -7,12 +7,7 @@ import ApplicationHeader from './component/ApplicationHeader';
 import ApplicationInfoCard from './component/ApplicationInfoCard';
 import ApplicationScoresCard from './component/ApplicationScoresCard';
 import ApplicationDocumentsCard from './component/ApplicationDocumentsCard';
-
-const statusMap = {
-  cho_duyet: { color: 'processing', text: 'Chờ duyệt' },
-  da_duyet: { color: 'success', text: 'Đã duyệt' },
-  tu_choi: { color: 'error', text: 'Từ chối' },
-};
+import { statusMap } from '@/utils/utils'
 
 const DetailApplicationsPage: React.FC = () => {
   const history = useHistory();

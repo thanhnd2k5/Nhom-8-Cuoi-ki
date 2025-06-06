@@ -1,7 +1,7 @@
 import { Application } from './applications';
 import { useState, useCallback, useEffect } from 'react';
 import { message } from 'antd';
-import { getApplications, getApplicationDetail, createCompleteApplication, uploadDocument } from '@/services/User/applications';
+import { getApplications, getApplicationDetail, createCompleteApplication, uploadDocument, searchApplications } from '@/services/User/applications';
 
 export interface Application {
   _id: string;
@@ -67,6 +67,10 @@ export interface CompleteApplication {
   profile: ApplicationProfile;
   resultData: ApplicationResult;
   documentsData: ApplicationDocument[];
+}
+
+export interface ApplicationResponse {
+  // Define the structure of the response from searchApplications
 }
 
 export default () => {
@@ -189,6 +193,16 @@ export default () => {
     setCurrentApplication(null);
   }, []);
 
+  const handleSearchApplications = useCallback(async (filters: any): Promise<ApplicationResponse> => {
+    try {
+      const result = await searchApplications(filters);
+      return result;
+    } catch (error) {
+      message.error('Lỗi khi tìm kiếm hồ sơ');
+      throw error;
+    }
+  }, []);
+
   return {
     // State
     applications,
@@ -206,5 +220,6 @@ export default () => {
     clearCurrentApplication,
     handleSubmit,
     updateFormData,
+    handleSearchApplications,
   };
 }; 

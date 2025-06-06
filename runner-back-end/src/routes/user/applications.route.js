@@ -15,6 +15,8 @@ router.post('/',
     asyncHandler(ApplicationsController.createApplication)
 )
 
+router.get('/search', asyncHandler(ApplicationsController.searchApplications))
+
 router.put('/:applicationId',
     asyncHandler(checkApplicationExists),
     asyncHandler(validate(updateApplicationSchema)),

@@ -47,3 +47,43 @@ export async function getCompleteApplicationById(req, res) {
     const application = await ApplicationsService.getCompleteApplicationById(applicationId)
     res.jsonify(application)
 }
+
+export async function searchApplications(req, res) {
+    try {
+        const filters = {
+            universityName: req.query.universityName,
+            applicationCode: req.query.applicationCode,
+            status: req.query.status,
+            admissionMethod: req.query.admissionMethod,
+            startDate: req.query.startDate,
+            endDate: req.query.endDate
+        }
+
+        const applications = await ApplicationsService.searchAllApplications(filters)
+        res.jsonify(applications)
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
+// export async function getApplicationsGroupedByMajor(req, res) {
+//     try {
+//         const groupedApplications = await ApplicationsService.getApplicationsGroupedByMajor()
+//         res.jsonify(groupedApplications)
+//     } catch (error) {
+//         abort(error, res)
+//     }
+// }
+
+export async function getApplicationsGroupedByMajorOfUniversity(req, res) {
+    try {
+        const universityId = req.university._id
+        const groupedApplications = await ApplicationsService.getApplicationsGroupedByMajorOfUniversity(universityId)
+        res.jsonify(groupedApplications)
+    } catch (error) {
+        abort(error, res)
+    }
+}
