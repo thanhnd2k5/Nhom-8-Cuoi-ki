@@ -6,6 +6,7 @@ import { graduationYears, priorityAreas, priorityGroups } from '@/utils/utils';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import NewApplicationLayout from '../NewApplicationLayout';
+import './step3.less';
 
 const { Option } = Select;
 
@@ -97,85 +98,90 @@ const Step3: React.FC = () => {
   };
 
   return (
-    <NewApplicationLayout currentStep={2}>
-    <Card title="Thông tin cá nhân" className="mb-4">
-      <Form
-        form={form}
-        layout="vertical"
-      >
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="name"
-              label="Họ và tên"
-              rules={[{ required: true, message: 'Vui lòng nhập họ và tên' }]}
-            >
-              <Input placeholder="Nhập họ và tên" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="email"
-              label="Email"
-              rules={[
-                { required: true, message: 'Vui lòng nhập email' },
-                { type: 'email', message: 'Email không hợp lệ' }
-              ]}
-            >
-              <Input placeholder="Nhập email" />
-            </Form.Item>
-          </Col>
-        </Row>
+    <div className="step3-page">
+      <NewApplicationLayout currentStep={2}>
+        <Card className="main-card">
+          <div className="card-header">
+            <h2>Bước 3:Thông tin cá nhân</h2>
+            <p>Vui lòng điền đầy đủ thông tin cá nhân của bạn</p>
+          </div>
+          <Form
+            form={form}
+            layout="vertical"
+          >
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="name"
+                  label="Họ và tên"
+                  rules={[{ required: true, message: 'Vui lòng nhập họ và tên' }]}
+                >
+                  <Input placeholder="Nhập họ và tên" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="email"
+                  label="Email"
+                  rules={[
+                    { required: true, message: 'Vui lòng nhập email' },
+                    { type: 'email', message: 'Email không hợp lệ' }
+                  ]}
+                >
+                  <Input placeholder="Nhập email" />
+                </Form.Item>
+              </Col>
+            </Row>
 
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="gender"
-              label="Giới tính"
-              rules={[{ required: true, message: 'Vui lòng chọn giới tính' }]}
-            >
-              <Select placeholder="Chọn giới tính">
-                <Option value="male">Nam</Option>
-                <Option value="female">Nữ</Option>
-                <Option value="other">Khác</Option>
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="dob"
-              label="Ngày sinh"
-              rules={[{ required: true, message: 'Vui lòng chọn ngày sinh' }]}
-            >
-              <DatePicker 
-                style={{ width: '100%' }}
-                placeholder="Chọn ngày sinh"
-                format="DD/MM/YYYY"
-              />
-            </Form.Item>
-          </Col>
-        </Row>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="gender"
+                  label="Giới tính"
+                  rules={[{ required: true, message: 'Vui lòng chọn giới tính' }]}
+                >
+                  <Select placeholder="Chọn giới tính">
+                    <Option value="male">Nam</Option>
+                    <Option value="female">Nữ</Option>
+                    <Option value="other">Khác</Option>
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="dob"
+                  label="Ngày sinh"
+                  rules={[{ required: true, message: 'Vui lòng chọn ngày sinh' }]}
+                >
+                  <DatePicker 
+                    style={{ width: '100%' }}
+                    placeholder="Chọn ngày sinh"
+                    format="DD/MM/YYYY"
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
 
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="cccd"
-              label="Số CCCD"
-              rules={[{ required: true, message: 'Vui lòng nhập số CCCD' }]}
-            >
-              <Input placeholder="Nhập số CCCD" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item
-              name="phone"
-              label="Số điện thoại"
-              rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}
-            >
-              <Input placeholder="Nhập số điện thoại" />
-            </Form.Item>
-          </Col>
-        </Row>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item
+                  name="cccd"
+                  label="Số CCCD"
+                  rules={[{ required: true, message: 'Vui lòng nhập số CCCD' }]}
+                >
+                  <Input placeholder="Nhập số CCCD" />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item
+                  name="phone"
+                  label="Số điện thoại"
+                  rules={[{ required: true, message: 'Vui lòng nhập số điện thoại' }]}
+                >
+                  <Input placeholder="Nhập số điện thoại" />
+                </Form.Item>
+              </Col>
+            </Row>
 
         <Row gutter={16}>
           <Col span={12}>
@@ -322,8 +328,9 @@ const Step3: React.FC = () => {
               Tiếp tục
             </Button>
           </div>
-    </Card>
-    </NewApplicationLayout>
+        </Card>
+      </NewApplicationLayout>
+    </div>
   );
 };
 

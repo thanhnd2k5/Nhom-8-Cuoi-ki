@@ -1,7 +1,7 @@
 .step2-page {
     min-height: 100vh;
-    background-color: #f5f5f5;
-    padding: 24px;
+    background-color: #f7f8fa;
+    padding: 32px;
   
     .page-header {
       margin-bottom: 24px;
@@ -28,139 +28,75 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: white;
-        padding: 24px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  
-        .step {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          min-width: 120px;
-  
-          .step-number {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            color: #999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 500;
-            margin-bottom: 8px;
-          }
-  
-          .step-title {
-            font-size: 12px;
-            color: #999;
-            text-align: center;
-          }
-  
-          &.active {
-            .step-number {
-              background-color: #1890ff;
-              color: white;
-            }
-  
-            .step-title {
-              color: #1890ff;
-              font-weight: 500;
-            }
-          }
-  
-          &.completed {
-            .step-number {
-              background-color: #52c41a;
-              color: white;
-            }
-  
-            .step-title {
-              color: #52c41a;
-              font-weight: 500;
-            }
-          }
-        }
-  
-        .step-line {
-          flex: 1;
-          height: 2px;
-          background-color: #f0f0f0;
-          margin: 0 16px;
-          margin-bottom: 24px;
-  
-          &.completed {
-            background-color: #52c41a;
-          }
-        }
       }
     }
   
     .main-card {
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      max-width: 700px;
+      margin: 0 auto;
   
       .card-header {
-        padding: 24px 24px 0;
-        border-bottom: 1px solid #f0f0f0;
+        padding: 32px 32px 0;
+        border-bottom: none;
         margin-bottom: 24px;
   
         h2 {
-          font-size: 20px;
-          font-weight: 600;
-          color: #262626;
+          font-size: 28px;
+          font-weight: 700;
+          color: #222;
           margin: 0 0 8px 0;
+          text-align: center;
         }
   
         p {
-          color: #8c8c8c;
+          color: #888;
           margin: 0;
-          padding-bottom: 24px;
+          text-align: center;
+          font-size: 16px;
         }
       }
   
       .card-content {
-        padding: 0 24px;
+        padding: 0 32px;
   
         .method-alert {
           margin-bottom: 24px;
-          border-radius: 6px;
+          border-radius: 10px;
+          font-size: 16px;
+          .ant-alert-message {
+            font-weight: 600;
+            color: #d32f2f;
+          }
+          .ant-alert-description {
+            color: #d32f2f;
+          }
+          background: #fff0f0;
+          border: 1.5px solid #ffd6d6;
         }
   
         .selection-form {
           .ant-form-item {
             margin-bottom: 24px;
-  
-            .ant-form-item-label {
-              label {
-                font-weight: 500;
-                color: #262626;
-              }
+            .ant-form-item-label label {
+              font-weight: 500;
+              color: #222;
+              font-size: 15px;
             }
-  
             .ant-select {
               .ant-select-selector {
-                border-radius: 6px;
-                border: 1px solid #d9d9d9;
-                
+                border-radius: 10px;
+                min-height: 48px;
+                font-size: 16px;
+                border: 1.5px solid #d9d9d9;
                 &:hover {
-                  border-color: #40a9ff;
+                  border-color: #d32f2f;
                 }
               }
-  
-              &.ant-select-focused {
-                .ant-select-selector {
-                  border-color: #1890ff;
-                  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
-                }
-              }
-  
-              &.ant-select-disabled {
-                .ant-select-selector {
-                  background-color: #f5f5f5;
-                  color: #bfbfbf;
-                }
+              &.ant-select-focused .ant-select-selector {
+                border-color: #d32f2f;
+                box-shadow: 0 0 0 2px rgba(211,47,47,0.10);
               }
             }
           }
@@ -173,20 +109,34 @@
       }
   
       .card-footer {
-        padding: 24px;
-        border-top: 1px solid #f0f0f0;
+        padding: 32px;
+        border-top: none;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        background: none;
   
         .ant-btn {
-          min-width: 100px;
-          height: 40px;
-          border-radius: 6px;
-          font-weight: 500;
-  
-          &[disabled] {
-            opacity: 0.6;
+          min-width: 120px;
+          height: 44px;
+          border-radius: 10px;
+          font-weight: 600;
+          font-size: 16px;
+        }
+        .ant-btn-primary {
+          background: #d32f2f;
+          border: none;
+          color: #fff;
+          &:hover {
+            background: #b71c1c;
+          }
+        }
+        .ant-btn:not(.ant-btn-primary) {
+          background: #fff;
+          color: #222;
+          border: 1.5px solid #e0e0e0;
+          &:hover {
+            background: #f5f5f5;
           }
         }
       }
@@ -199,20 +149,6 @@
       padding: 16px;
   
       .step-indicator .step-progress {
-        padding: 16px;
-  
-        .step {
-          min-width: 80px;
-  
-          .step-title {
-            font-size: 10px;
-          }
-        }
-  
-        .step-line {
-          margin: 0 8px;
-          margin-bottom: 16px;
-        }
       }
   
       .main-card {
