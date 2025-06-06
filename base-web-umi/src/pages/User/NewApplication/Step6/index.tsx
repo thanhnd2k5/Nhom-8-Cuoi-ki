@@ -9,13 +9,14 @@ import './step6.less';
 const Step6: React.FC = () => {
   const { profileData } = useModel('User.profile');
   const { formData } = useModel('User.applications');
-  const { universities } = useModel('User.university');
+  const { universities, fetchUniversities } = useModel('User.university');
   const { universityMajors, fetchUniversityMajors } = useModel('User.university_majors');
   const { handleSubmit, submitting } = useModel('User.applications');
     console.log(formData);
 
   useEffect(() => {
         fetchUniversityMajors(formData.university)
+        fetchUniversities();
   }, []);
 
   // 1. Tìm ngành học
