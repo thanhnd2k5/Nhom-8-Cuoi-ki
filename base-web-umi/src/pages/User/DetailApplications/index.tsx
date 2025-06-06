@@ -45,6 +45,7 @@ const DetailApplicationsPage: React.FC = () => {
         status={application.status}
         statusMap={statusMap}
         onBack={() => history.goBack()}
+        applicationData={data}  // Truyền toàn bộ data từ API thay vì normalized data
       />
       <ApplicationInfoCard application={application} statusMap={statusMap} />
       <div className="section">
