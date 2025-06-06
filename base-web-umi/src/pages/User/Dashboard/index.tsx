@@ -5,6 +5,7 @@ import StatsBox from './components/StatsBox';
 import AdmissionList from './components/AdmissionList';
 import useUniversityMajorsModel from '@/models/User/university_majors';
 import useSubjectCombinationsModel from '@/models/User/subject_combinations';
+import './Dashboard.less';
 
 const Dashboard: React.FC = () => {
   const [user, setUser] = useState<any>({});
@@ -36,7 +37,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: 32, maxWidth: 1000, margin: '0 auto' }}>
+    <div className="dashboard-page">
       <WelcomeBox name={user?.data?.name || ''} />
       <StatsBox stats={stats} />
       <AdmissionList

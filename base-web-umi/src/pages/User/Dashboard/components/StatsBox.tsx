@@ -1,36 +1,23 @@
 import React from 'react';
-
-const boxStyle = {
-  background: '#fff',
-  borderRadius: 8,
-  padding: '16px 24px',
-  minWidth: 140,
-  textAlign: 'center',
-  border: '1px solid #eee',
-  fontWeight: 600,
-  fontSize: 15,
-  boxShadow: 'none',
-};
-const numStyle = {
-  fontSize: 24,
-  fontWeight: 800,
-  color: '#c00',
-  marginTop: 8,
-};
+import { FileTextOutlined, ClockCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import './StatsBox.less';
 
 const StatsBox = ({ stats }: { stats: any }) => (
-  <div style={{ display: 'flex', gap: 20, marginBottom: 28 }}>
-    <div style={boxStyle}>
-      <div>Hồ sơ đã tạo</div>
-      <div style={numStyle}>{stats.created}</div>
+<div className="stats-container">
+    <div className="stats-box">
+      <FileTextOutlined className="stats-icon" />
+      <div className="stats-label">Hồ sơ đã tạo</div>
+      <div className="stats-value">{stats.created}</div>
     </div>
-    <div style={boxStyle}>
-      <div>Đang xét duyệt</div>
-      <div style={numStyle}>{stats.pending}</div>
+    <div className="stats-box">
+      <ClockCircleOutlined className="stats-icon" />
+      <div className="stats-label">Đang xét duyệt</div>
+      <div className="stats-value">{stats.pending}</div>
     </div>
-    <div style={boxStyle}>
-      <div>Đã duyệt</div>
-      <div style={numStyle}>{stats.approved}</div>
+    <div className="stats-box">
+      <CheckCircleOutlined className="stats-icon" />
+      <div className="stats-label">Đã duyệt</div>
+      <div className="stats-value">{stats.approved}</div>
     </div>
   </div>
 );
