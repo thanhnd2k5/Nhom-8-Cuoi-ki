@@ -51,51 +51,47 @@ const Step1Page: React.FC = () => {
   };
 
   return (
-    <NewApplicationLayout currentStep={0}>
-      <Card className="main-card">
-        <div className="card-header">
+    <div className="new-application-page">
+      <NewApplicationLayout currentStep={0}>
+        <div className="step1-header">
           <h2>Bước 1: Chọn phương thức xét tuyển</h2>
           <p>Chọn phương thức xét tuyển phù hợp với bạn</p>
         </div>
-
-        <div className="card-content">
-          <RadioGroup 
-            value={selectedAdmissionMethod} 
-            onChange={handleMethodChange}
-            className="admission-methods"
-          >
+        <Card className="main-card">
+          <div className="admission-methods">
             {admissionMethods.map((method) => (
-              <div 
+              <div
                 key={method.id}
                 className={`method-card ${selectedAdmissionMethod === method.id ? 'selected' : ''}`}
                 onClick={() => setSelectedAdmissionMethod(method.id)}
               >
-                <Radio value={method.id} className="method-radio">
-                  <div className="method-content">
-                    <div className="method-icon">{method.icon}</div>
-                    <div className="method-info">
-                      <h3 className="method-name">{method.name}</h3>
-                      <p className="method-description">{method.description}</p>
-                    </div>
-                  </div>
-                </Radio>
+                <input
+                  type="radio"
+                  checked={selectedAdmissionMethod === method.id}
+                  onChange={() => setSelectedAdmissionMethod(method.id)}
+                  style={{ display: 'none' }}
+                />
+                <div className="method-icon">{method.icon}</div>
+                <div className="method-info">
+                  <div className="method-name">{method.name}</div>
+                  <div className="method-description">{method.description}</div>
+                </div>
               </div>
             ))}
-          </RadioGroup>
-        </div>
-
-        <div className="card-footer">
-          <Button 
-            type="primary" 
-            icon={<ArrowRightOutlined />}
-            onClick={handleNext}
-            disabled={!selectedAdmissionMethod}
-          >
-            Tiếp tục
-          </Button>
-        </div>
-      </Card>
-    </NewApplicationLayout>
+          </div>
+          <div className="card-footer">
+            <Button
+              type="primary"
+              icon={<ArrowRightOutlined />}
+              onClick={handleNext}
+              disabled={!selectedAdmissionMethod}
+            >
+              Tiếp tục
+            </Button>
+          </div>
+        </Card>
+      </NewApplicationLayout>
+    </div>
   );
 };
 
