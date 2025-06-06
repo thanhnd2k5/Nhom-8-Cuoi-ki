@@ -1,8 +1,17 @@
 import React from 'react';
+import { history } from 'umi';
 import styles from '../LandingPage.less';
 import anh1 from '../../../assets/anh1.png';
 
 const HeroSection: React.FC = () => {
+  const handleRegister = () => {
+    history.push('/user/register');
+  };
+
+  const handleLearnMore = () => {
+    history.push('/about');
+  };
+
   return (
     <section className={styles.heroSection} style={{ background: 'rgb(248 213 220)' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 32 }}>
@@ -17,10 +26,10 @@ const HeroSection: React.FC = () => {
             University giúp bạn dễ dàng đăng ký xét tuyển đại học, theo dõi trạng thái hồ sơ và nhận thông báo kết quả nhanh chóng.
           </p>
           <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', margin: '24px 0' }}>
-            <button style={{ background: '#94221e', color: '#fff', border: 'none', borderRadius: 8, padding: '12px 32px', fontSize: 18, fontWeight: 600, cursor: 'pointer' }}>
+            <button style={{ background: '#94221e', color: '#fff', border: 'none', borderRadius: 8, padding: '12px 32px', fontSize: 18, fontWeight: 600, cursor: 'pointer' }} onClick={handleRegister}>
               Bắt đầu ngay
             </button>
-            <button style={{ background: '#fff', color: '#94221e', border: '2px solid ', borderRadius: 8, padding: '12px 32px', fontSize: 18, fontWeight: 600, cursor: 'pointer' }}>
+            <button style={{ background: '#fff', color: '#94221e', border: '2px solid ', borderRadius: 8, padding: '12px 32px', fontSize: 18, fontWeight: 600, cursor: 'pointer' }} onClick={handleLearnMore}>
               Tìm hiểu thêm
             </button>
           </div>

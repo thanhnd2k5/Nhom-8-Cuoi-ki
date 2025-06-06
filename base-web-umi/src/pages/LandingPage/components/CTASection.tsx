@@ -1,6 +1,16 @@
 import React from 'react';
+import { history } from 'umi';
+
 
 const CTASection: React.FC = () => {
+  const handleRegister = () => {
+    history.push('/user/register');
+  };
+
+  const handleLogin = () => {
+    history.push('/user/login');
+  };
+
   return (
     <section style={{ padding: '40px 0' }}>
       <div style={{ maxWidth: 900, margin: '0 auto' }}>
@@ -11,6 +21,7 @@ const CTASection: React.FC = () => {
           </p>
           <div style={{ marginTop: 32, display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center' }}>
             <button 
+              onClick={handleRegister}
               style={{ 
                 background: '#fff', 
                 color: '#252021', 
@@ -34,6 +45,7 @@ const CTASection: React.FC = () => {
               Đăng ký ngay
             </button>
             <button 
+              onClick={handleLogin}
               style={{ 
                 background: '#fff', 
                 color: '#252021', 
