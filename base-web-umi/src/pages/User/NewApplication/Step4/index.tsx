@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Form, Card, Row, Col, Button, InputNumber } from 'antd';
 import { useModel, history } from 'umi';
 import NewApplicationLayout from '../NewApplicationLayout';
-
+import './step4.less';
 interface SubjectCombination {
   _id: string;
   subjects: string[];
@@ -145,19 +145,27 @@ const Step4: React.FC = () => {
   }
 
   return (
+    <div className="step4-page">
     <NewApplicationLayout currentStep={3}>
-      <Card title="Nhập điểm học tập" className="mb-4">
+      <Card className="main-card">
+        <div className="card-header">
+          <h2>Bước 4: Nhập điểm học tập</h2>
+          <p>Vui lòng điền đầy đủ thông tin điểm học tập của bạn</p>
+        </div>
         <Form form={form} layout="vertical">
           {formFields}
         </Form>
+        <div className="card-footer">
+          <Button onClick={handleBack}>
+            Quay lại
+          </Button>
+          <Button type="primary" onClick={handleSubmit}>
+            Tiếp tục
+          </Button>
+        </div>
       </Card>
-      <div className="flex justify-end gap-4">
-        <Button onClick={handleBack}>Quay lại</Button>
-        <Button type="primary" onClick={handleSubmit}>
-          Tiếp tục
-        </Button>
-      </div>
     </NewApplicationLayout>
+  </div>
   );
 };
 

@@ -6,6 +6,8 @@ import { useModel, history } from 'umi';
 import NewApplicationLayout from '../NewApplicationLayout';
 import useApplicationsModel from '@/models/User/applications';
 import { requiredDocumentsByMethod } from '@/utils/utils';
+import './step5.less';
+
 
 const Step5: React.FC = () => {
   const { formData, updateFormData } = useModel('User.applications');
@@ -46,37 +48,54 @@ const Step5: React.FC = () => {
     history.goBack();
   };
 
-  return (  
-    <NewApplicationLayout currentStep={4}>
-      <Card title="Tải lên minh chứng" className="mb-4">
-        <Form form={form} layout="vertical">
-          {documents.map(doc => (
-            <Form.Item
-              key={doc.type}
-              label={doc.label}
-              required={doc.required}
-            >
-              <Upload
-                listType="picture"
-                maxCount={1}
-                fileList={fileList[doc.type] || []}
-                onChange={info => handleChange(doc.type, info)}
-                beforeUpload={() => false}
+  return (
+    <div className="step5-page">
+      <NewApplicationLayout currentStep={4}>
+        <Card className="main-card">
+          <div className="card-header">
+            <h2>Bước 5: Tải lên minh chứng</h2>
+            <p>Vui lòng tải lên các giấy tờ minh chứng cần thiết</p>
+          </div>
+          <Form form={form} layout="vertical">
+            {documents.map(doc => (
+              <Form.Item
+                key={doc.type}
+                label={doc.label}
+                required={doc.required}
+                className="upload-proof-item"
               >
-                <Button icon={<UploadOutlined />}>Tải lên</Button>
-              </Upload>
-            </Form.Item>
-          ))}
-        </Form>
-      </Card>
-
-      <div className="flex justify-end gap-4">
-        <Button onClick={handleBack}>Quay lại</Button>
-        <Button type="primary" onClick={handleSubmit}>
-          Tiếp tục
-        </Button>
-      </div>
-    </NewApplicationLayout>
+                <Upload
+                  listType="picture"
+                  maxCount={1}
+                  fileList={fileList[doc.type] || []}
+                  onChange={info => handleChange(doc.type, info)}
+                  beforeUpload={() => false}
+                  showUploadList={{
+                    showRemoveIcon: true,
+                    showPreviewIcon: true,
+                  }}
+                >
+                  {(fileList[doc.type]?.length ?? 0) === 0 && (
+                    <Button
+                      icon={<UploadOutlined />}
+                      className={`upload-btn${doc.required ? ' required' : ''}`}
+                    >
+                      Tải lên
+                    </Button>
+                  )}
+                </Upload>
+              </Form.Item>
+            ))}
+          </Form>
+          <div className="card-footer">
+            <Button onClick={handleBack}>Quay lại</Button>
+            <Button type="primary" onClick={handleSubmit}>
+              Tiếp tục
+            </Button>
+          </div>
+        </Card>
+      </NewApplicationLayout>
+    </div>
   );
 };
 

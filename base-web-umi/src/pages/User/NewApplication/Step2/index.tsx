@@ -98,168 +98,128 @@ const Step2Page: React.FC = () => {
   };
 
   return (
-    <NewApplicationLayout currentStep={1}>
-      <div className="step2-page">
-        <div className="page-header">
-          <Button 
-            type="text" 
-            icon={<ArrowLeftOutlined />} 
-            onClick={handleBack}
-            className="back-button"
-          >
-            Quay lại bước trước
-          </Button>
-        </div>
-
-        <div className="page-content">
-          <div className="step-indicator">
-            <div className="step-progress">
-              <div className="step completed">
-                <div className="step-number">1</div>
-                <div className="step-title">Chọn phương thức</div>
-              </div>
-              <div className="step-line completed"></div>
-              <div className="step active">
-                <div className="step-number">2</div>
-                <div className="step-title">Trường & ngành</div>
-              </div>
-              <div className="step-line"></div>
-              <div className="step">
-                <div className="step-number">3</div>
-                <div className="step-title">Thông tin cá nhân</div>
-              </div>
-              <div className="step-line"></div>
-              <div className="step">
-                <div className="step-number">4</div>
-                <div className="step-title">Hoàn thành</div>
-              </div>
-            </div>
+    <div className="step2-page">
+      <NewApplicationLayout currentStep={1}>
+        <Card className="main-card">
+          <div className="card-header">
+            <h2>Bước 2: Chọn trường và ngành</h2>
+            <p>Chọn trường đại học, ngành học và tổ hợp xét tuyển</p>
           </div>
+          <div className="card-content">
+            <Alert
+              message={<b>Phương thức xét tuyển đã chọn:</b>}
+              description={admissionMethodNames[admissionMethod as keyof typeof admissionMethodNames]}
+              type="error"
+              showIcon
+              className="method-alert"
+            />
 
-          <Card className="main-card">
-            <div className="card-header">
-              <h2>Bước 2: Chọn trường và ngành</h2>
-              <p>Chọn trường đại học, ngành học và tổ hợp xét tuyển</p>
-            </div>
-
-            <div className="card-content">
-              <Alert
-                message="Phương thức xét tuyển đã chọn"
-                description={admissionMethodNames[admissionMethod as keyof typeof admissionMethodNames]}
-                type="info"
-                showIcon
-                className="method-alert"
-              />
-
-              <Form
-                form={form}
-                layout="vertical"
-                className="selection-form"
+            <Form
+              form={form}
+              layout="vertical"
+              className="selection-form"
+            >
+              <Form.Item
+                label="Trường đại học"
+                name="university"
+                rules={[{ required: true, message: 'Vui lòng chọn trường đại học' }]}
               >
+                <Select
+                  placeholder="Chọn trường đại học"
+                  loading={universitiesLoading}
+                  onChange={handleUniversityChange}
+                  size="large"
+                  showSearch
+                  value={formData.university || selectedUniversity}
+                  filterOption={(input, option) =>
+                    (option?.children as unknown as string)?.toLowerCase().includes(input.toLowerCase())
+                  }
+                >
+                  {universities.map((university: University) => (
+                    <Option key={university._id} value={university._id}>
+                      {university.name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+
+              <Form.Item
+                label="Ngành học"
+                name="major"
+                rules={[{ required: true, message: 'Vui lòng chọn ngành học' }]}
+              >
+                <Select
+                  placeholder={selectedUniversity ? "Chọn ngành học" : "Vui lòng chọn trường đại học trước"}
+                  loading={majorsLoading}
+                  onChange={handleMajorChange}
+                  disabled={!selectedUniversity}
+                  size="large"
+                  showSearch
+                  value={formData.universityMajorId || selectedMajor}
+                  filterOption={(input, option) =>
+                    (option?.children as unknown as string)?.toLowerCase().includes(input.toLowerCase())
+                  }
+                >
+                  {universityMajors
+                    .filter(major => major.admission_methods.includes(admissionMethod))
+                    .map(major => (
+                      <Option key={major._id} value={major._id}>
+                        {major.name}
+                      </Option>
+                    ))}
+                </Select>
+              </Form.Item>
+
+              {selectedMajor && needsSubjectCombination && (
                 <Form.Item
-                  label="Trường đại học"
-                  name="university"
-                  rules={[{ required: true, message: 'Vui lòng chọn trường đại học' }]}
+                  label="Tổ hợp xét tuyển"
+                  name="combination"
+                  rules={[{ required: true, message: 'Vui lòng chọn tổ hợp xét tuyển' }]}
                 >
                   <Select
-                    placeholder="Chọn trường đại học"
-                    loading={universitiesLoading}
-                    onChange={handleUniversityChange}
+                    placeholder={selectedMajor ? "Chọn tổ hợp xét tuyển" : "Vui lòng chọn ngành học trước"}
+                    onChange={handleCombinationChange}
+                    disabled={!selectedMajor}
                     size="large"
                     showSearch
-                    value={formData.university || selectedUniversity}
-                    filterOption={(input, option) =>
-                      (option?.children as unknown as string)?.toLowerCase().includes(input.toLowerCase())
-                    }
+                    value={formData.subjectCombinationId || selectedCombination}
                   >
-                    {universities.map((university: University) => (
-                      <Option key={university._id} value={university._id}>
-                        {university.name}
+                    {getAvailableCombinations().map(combination => (
+                      <Option key={combination._id} value={combination._id}>
+                        {combination.code} ({combination.subjects.join(', ')})
                       </Option>
                     ))}
                   </Select>
                 </Form.Item>
-
-                <Form.Item
-                  label="Ngành học"
-                  name="major"
-                  rules={[{ required: true, message: 'Vui lòng chọn ngành học' }]}
-                >
-                  <Select
-                    placeholder={selectedUniversity ? "Chọn ngành học" : "Vui lòng chọn trường đại học trước"}
-                    loading={majorsLoading}
-                    onChange={handleMajorChange}
-                    disabled={!selectedUniversity}
-                    size="large"
-                    showSearch
-                    value={formData.universityMajorId || selectedMajor}
-                    filterOption={(input, option) =>
-                      (option?.children as unknown as string)?.toLowerCase().includes(input.toLowerCase())
-                    }
-                  >
-                    {universityMajors
-                      .filter(major => major.admission_methods.includes(admissionMethod))
-                      .map(major => (
-                        <Option key={major._id} value={major._id}>
-                          {major.name}
-                        </Option>
-                      ))}
-                  </Select>
-                </Form.Item>
-
-                {selectedMajor && needsSubjectCombination && (
-                  <Form.Item
-                    label="Tổ hợp xét tuyển"
-                    name="combination"
-                    rules={[{ required: true, message: 'Vui lòng chọn tổ hợp xét tuyển' }]}
-                  >
-                    <Select
-                      placeholder={selectedMajor ? "Chọn tổ hợp xét tuyển" : "Vui lòng chọn ngành học trước"}
-                      onChange={handleCombinationChange}
-                      disabled={!selectedMajor}
-                      size="large"
-                      showSearch
-                      value={formData.subjectCombinationId || selectedCombination}
-                    >
-                      {getAvailableCombinations().map(combination => (
-                        <Option key={combination._id} value={combination._id}>
-                          {combination.code} ({combination.subjects.join(', ')})
-                        </Option>
-                      ))}
-                    </Select>
-                  </Form.Item>
-                )}
-              </Form>
-
-              { selectedMajor && needsSubjectCombination && (
-                <Alert
-                  message="Lưu ý về tổ hợp xét tuyển"
-                  description="Tổ hợp xét tuyển sẽ được sử dụng để tính điểm xét tuyển. Vui lòng chọn tổ hợp phù hợp với điểm số của bạn."
-                  type="warning"
-                  showIcon
-                  className="combination-note"
-                />
               )}
-            </div>
+            </Form>
 
-            <div className="card-footer">
-              <Button onClick={handleBack}>
-                <ArrowLeftOutlined />
-                Quay lại
-              </Button>
-              <Button 
-                type="primary" 
-                icon={<ArrowRightOutlined />}
-                onClick={handleNext}
-                disabled={!isFormValid()}
-              >
-                Tiếp tục
-              </Button>
-            </div>
-          </Card>
-        </div>
-      </div>
-    </NewApplicationLayout>
+            { selectedMajor && needsSubjectCombination && (
+              <Alert
+                message="Lưu ý về tổ hợp xét tuyển"
+                description="Tổ hợp xét tuyển sẽ được sử dụng để tính điểm xét tuyển. Vui lòng chọn tổ hợp phù hợp với điểm số của bạn."
+                type="warning"
+                showIcon
+                className="combination-note"
+              />
+            )}
+          </div>
+          <div className="card-footer">
+            <Button onClick={handleBack} icon={<ArrowLeftOutlined />}>
+              Quay lại
+            </Button>
+            <Button
+              type="primary"
+              icon={<ArrowRightOutlined />}
+              onClick={handleNext}
+              disabled={!isFormValid()}
+            >
+              Tiếp tục
+            </Button>
+          </div>
+        </Card>
+      </NewApplicationLayout>
+    </div>
   );
 };
 

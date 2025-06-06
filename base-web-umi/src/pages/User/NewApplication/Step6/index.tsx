@@ -4,18 +4,19 @@ import { useModel, history } from 'umi';
 import { getUniversityMajors } from '@/services/User/university_majors';
 import { admissionMethodNames } from '@/utils/utils';
 import NewApplicationLayout from '../NewApplicationLayout';
-
+import './step6.less';
 
 const Step6: React.FC = () => {
   const { profileData } = useModel('User.profile');
   const { formData } = useModel('User.applications');
-  const { universities } = useModel('User.university');
+  const { universities, fetchUniversities } = useModel('User.university');
   const { universityMajors, fetchUniversityMajors } = useModel('User.university_majors');
   const { handleSubmit, submitting } = useModel('User.applications');
     console.log(formData);
 
   useEffect(() => {
         fetchUniversityMajors(formData.university)
+        fetchUniversities();
   }, []);
 
   // 1. Tìm ngành học
@@ -57,10 +58,14 @@ const Step6: React.FC = () => {
   }
 
   return (
-    <NewApplicationLayout currentStep={5}>
-        <div>
-        <Card title="Xác nhận thông tin" className="mb-4">
-            <Descriptions bordered column={2}>
+    <div className="step6-page">
+      <NewApplicationLayout currentStep={5}>
+        <Card className="main-card">
+          <div className="card-header">
+            <h2>Bước 6: Xác nhận thông tin</h2>
+            <p>Vui lòng kiểm tra lại toàn bộ thông tin trước khi gửi hồ sơ</p>
+          </div>
+          <Descriptions bordered column={2} className="confirm-descriptions">
             <Descriptions.Item label="Họ và tên" span={2}>
                 {profileData?.name}
             </Descriptions.Item>
@@ -85,24 +90,22 @@ const Step6: React.FC = () => {
             <Descriptions.Item label="Phương thức xét tuyển">
                 {admissionMethodNames[formData?.admissionMethod] || formData?.admissionMethod}
             </Descriptions.Item>
-            </Descriptions>
-        </Card>
-
-        <div className="flex justify-end gap-4">
+          </Descriptions>
+          <div className="card-footer">
             <Button onClick={handleBack}>Quay lại</Button>
             <Button type="primary" loading={submitting} onClick={async () => {
               const success = await handleSubmit();
               if (success) {
-                // Chuyển sang trang thành công hoặc reset form, v.v.
                 history.push('/user/applications');
               }
             }}>
               Gửi hồ sơ
             </Button>
-        </div>
-        </div>
-    </NewApplicationLayout>
-    );
+          </div>
+        </Card>
+      </NewApplicationLayout>
+    </div>
+  );
 };
 
 export default Step6; 
