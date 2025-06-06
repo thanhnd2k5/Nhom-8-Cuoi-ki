@@ -71,6 +71,8 @@
     "cors": "^2.8.5",
     "fs-extra": "^11.2.0",
     "js-file-download": "^0.4.12",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
