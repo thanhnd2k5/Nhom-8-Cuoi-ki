@@ -62,6 +62,9 @@ export interface ApplicationDetailResponse {
       university: string;
       name: string;
     };
+    admissionPeriodId: {
+      name: string;
+    };
     subjectCombinationId: {
       code: string;
     };
@@ -96,6 +99,7 @@ export interface NormalizedApplication {
   email: string;
   phone: string;
   university: string;
+  admissionPeriod: string;
   major: string;
   combination?: string;
   status: string;

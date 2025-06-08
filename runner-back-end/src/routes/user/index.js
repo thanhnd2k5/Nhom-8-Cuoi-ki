@@ -8,6 +8,8 @@ import documentsRouter from './documents.route'
 import universityRouter from './university.route'
 import universityMajorsRouter from './university_majors.route'
 import subjectCombinationsRouter from './subject_combinations.route'
+import admissionPeriodRoute from './admission_periods.route'
+
 
 
 const user = Router()
@@ -21,5 +23,6 @@ user.use('/documents', documentsRouter)
 user.use('/universities', universityRouter)
 user.use('/university-majors', universityMajorsRouter)
 user.use('/subject-combinations', subjectCombinationsRouter)
+user.use('/admission-periods', admissionPeriodRoute)
 
 export default user

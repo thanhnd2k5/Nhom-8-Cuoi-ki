@@ -72,6 +72,7 @@ export default () => {
       email: profile?.email || '',
       phone: profile?.phone || '',
       university: application.universityMajorId.university,
+      admissionPeriod: application.admissionPeriodId.name,
       major: application.universityMajorId.name,
       status: application.status,
       dates: {
