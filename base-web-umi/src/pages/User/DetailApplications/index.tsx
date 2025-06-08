@@ -40,6 +40,7 @@ const DetailApplicationsPage: React.FC = () => {
         status={application.status}
         statusMap={statusMap}
         onBack={() => history.goBack()}
+        application={application}
       />
       <ApplicationInfoCard application={application} statusMap={statusMap} />
       <div className="section">
