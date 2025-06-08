@@ -44,7 +44,6 @@ export async function getAllApplicationsByUserId(userId) {
 
 export async function createCompleteApplication(userId, formData) {
     const { applicationData, resultData, documentsData, profileData } = formData
-
     // 1. Tạo đơn xét tuyển
     const application = new Application({
         userId,

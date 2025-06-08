@@ -37,8 +37,8 @@ export async function sendApplicationStatusEmail(application) {
 }
 
 export async function sendNewApplicationEmail(data) {
-    const { application, profile, result } = data
-    const { userId, universityMajorId, admissionMethod, _id: applicationId } = application
+    const { application, profile, applicationResult } = data
+    const { userId, universityMajorId, universityId ,admissionMethod, _id: applicationId } = application
     
     // Format phương thức xét tuyển
     let admissionMethodText = ''
@@ -61,28 +61,28 @@ export async function sendNewApplicationEmail(data) {
 
     // Format kết quả học tập
     let resultText = ''
-    if (result) {
-        if (result.method === 'hoc_ba') {
+    if (applicationResult) {
+        if (applicationResult.method === 'hoc_ba') {
             resultText = `
                 <p>Kết quả học tập:</p>
                 <ul>
-                    <li>Điểm trung bình lớp 10: ${result.gpaGrade10}</li>
-                    <li>Điểm trung bình lớp 11: ${result.gpaGrade11}</li>
-                    <li>Điểm trung bình lớp 12: ${result.gpaGrade12}</li>
+                    <li>Điểm trung bình lớp 10: ${applicationResult.gpaGrade10}</li>
+                    <li>Điểm trung bình lớp 11: ${applicationResult.gpaGrade11}</li>
+                    <li>Điểm trung bình lớp 12: ${applicationResult.gpaGrade12}</li>
                 </ul>
             `
-        } else if (result.method === 'tot_nghiep') {
+        } else if (applicationResult.method === 'tot_nghiep') {
             resultText = `
                 <p>Kết quả thi tốt nghiệp THPT:</p>
                 <ul>
-                    ${Object.entries(result.subjectScores).map(([subject, score]) => 
+                    ${Object.entries(applicationResult.subjectScores).map(([subject, score]) => 
         `<li>${subject}: ${score}</li>`
     ).join('')}
                 </ul>
             `
         } else {
             resultText = `
-                <p>Kết quả thi: ${result.totalScore} điểm</p>
+                <p>Kết quả thi: ${applicationResult.totalScore} điểm</p>
             `
         }
     }
@@ -100,6 +100,8 @@ export async function sendNewApplicationEmail(data) {
                 <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 15px 0;">
                     <h3 style="color: #2c3e50; margin-top: 0;">Thông tin đơn xét tuyển</h3>
                     <p><strong>Mã đơn:</strong> ${applicationId}</p>
+                    <p><strong>Trường đại học:</strong> ${universityMajorId.university}</p>
+                    <p><strong>Kỳ xét tuyển:</strong> ${application.admissionPeriodId.name}</p>
                     <p><strong>Ngành đăng ký:</strong> ${universityMajorId.name}</p>
                     <p><strong>Phương thức xét tuyển:</strong> ${admissionMethodText}</p>
                     ${resultText}
