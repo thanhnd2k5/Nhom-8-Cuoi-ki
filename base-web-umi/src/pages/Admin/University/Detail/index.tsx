@@ -4,6 +4,7 @@ import { useParams, history } from 'umi';
 import { useModel } from 'umi';
 import MajorsManagement from './components/MajorsManagement';
 import ApplicationsManagement from './components/ApplicationsManagement';
+import Statistic from './components/Statistic';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -40,7 +41,7 @@ const UniversityDetailPage: React.FC = () => {
             <ApplicationsManagement universityId={universityId}/>
           </TabPane>
           <TabPane tab="Thống kê" key="statistics">
-            {/* Component thống kê sẽ được thêm vào đây */}
+            <Statistic />
           </TabPane>
           <TabPane tab="Cài đặt" key="settings">
             {/* Component cài đặt sẽ được thêm vào đây */}
