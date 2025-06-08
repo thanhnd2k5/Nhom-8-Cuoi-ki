@@ -6,6 +6,7 @@ import universityMajorsRouter from './university_majors.route'
 import subjectCombinationsRouter from './subject_combinations.route'
 import applicationsRouter from './applications.route'
 import statisticsRouter from './statistics.route'
+import admissionPeriodsRouter from './admission_periods.route'
 
 const admin = Router()
 
@@ -16,5 +17,6 @@ admin.use('/university-majors', universityMajorsRouter)
 admin.use('/subject-combinations', subjectCombinationsRouter)
 admin.use('/applications', applicationsRouter)
 admin.use('/statistics', statisticsRouter)
+admin.use('/admission-periods', admissionPeriodsRouter)
 
 export default admin

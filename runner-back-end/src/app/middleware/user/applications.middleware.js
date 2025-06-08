@@ -1,4 +1,4 @@
-import { Application } from '@/models'
+import { Application, AdmissionPeriod } from '@/models'
 import { isValidObjectId } from 'mongoose'
 import { abort } from '@/utils/helpers'
 
@@ -13,4 +13,33 @@ export const checkApplicationExists = async (req, res, next) => {
     }
     req.application = application
     next()
+}
+
+export const checkAdmissionPeriodOpen = async (req, res, next) => {
+    const admissionPeriodId = req.body.admissionPeriodId
+    if (!admissionPeriodId) {
+        abort(400, 'Admission period ID is required')
+    }
+    if (!isValidObjectId(admissionPeriodId)) {
+        abort(400, 'Invalid admission period ID')
+    }
+
+    const admissionPeriod = await AdmissionPeriod.findById(admissionPeriodId)
+    if (!admissionPeriod) {
+        abort(404, 'Admission period not found')
+    }
+    const status = calculateStatus(admissionPeriod.startDate, admissionPeriod.endDate)
+    if (status !== 'open') {
+        abort(400, 'Admission period is not open')
+    }
+
+    req.admissionPeriod = admissionPeriod
+    next()
+}
+
+function calculateStatus(startDate, endDate) {
+    const now = new Date()
+    if (now < startDate) return 'pending'
+    if (now > endDate) return 'closed'
+    return 'open'
 }

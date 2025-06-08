@@ -40,6 +40,7 @@ export async function createCompleteApplication(req, res) {
         const applicationData = {
             universityMajorId: req.body.universityMajorId,
             subjectCombinationId: req.body.subjectCombinationId,
+            admissionPeriodId: req.body.admissionPeriodId,
             admissionMethod: req.body.admissionMethod,
         }
         const resultData = JSON.parse(req.body.resultData)

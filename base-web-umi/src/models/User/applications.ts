@@ -137,6 +137,7 @@ export default () => {
       form.append('universityMajorId', formData.universityMajorId);
       form.append('admissionMethod', formData.admissionMethod);
       form.append('subjectCombinationId', formData.subjectCombinationId);
+      form.append('admissionPeriodId', formData.admissionPeriodId);
 
       // Thêm profileData
       form.append('profileData', JSON.stringify(formData.profileData));

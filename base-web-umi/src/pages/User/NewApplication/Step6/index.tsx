@@ -11,11 +11,14 @@ const Step6: React.FC = () => {
   const { formData } = useModel('User.applications');
   const { universities, fetchUniversities } = useModel('User.university');
   const { universityMajors, fetchUniversityMajors } = useModel('User.university_majors');
+  const { admissionPeriodDetail, fetchAdmissionPeriodDetail } = useModel('User.AdmissionPeriods');
+
   const { handleSubmit, submitting } = useModel('User.applications');
     console.log(formData);
 
   useEffect(() => {
         fetchUniversityMajors(formData.university)
+        fetchAdmissionPeriodDetail(formData.admissionPeriodId)
         fetchUniversities();
   }, []);
 
@@ -77,6 +80,9 @@ const Step6: React.FC = () => {
             </Descriptions.Item>
             <Descriptions.Item label="Tên trường">
                 {universities.find(u => u._id === formData?.university)?.name}
+            </Descriptions.Item>
+            <Descriptions.Item label="Tên đợt tuyển sinh">
+                {admissionPeriodDetail?.name}
             </Descriptions.Item>
             <Descriptions.Item label="Tên ngành học">
                 {universityMajors.find(m => m._id === formData?.universityMajorId)?.name}
