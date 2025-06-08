@@ -3,6 +3,7 @@ import { ADMISSION_METHOD } from '@/models/base'
 export const createApplicationSchema = Joi.object({
     universityMajorId: Joi.string().required(),
     subjectCombinationId: Joi.string(),
+    admissionPeriodId: Joi.string().required(),
     admissionMethod: Joi.string().valid(...Object.values(ADMISSION_METHOD)),
     status: Joi.string()
 })

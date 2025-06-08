@@ -22,6 +22,9 @@ const ApplicationInfoCard: React.FC<Props> = ({ application, statusMap }) => (
       <Descriptions.Item label="Tên trường">
         {application.university}
       </Descriptions.Item>
+      <Descriptions.Item label="Tên đợt tuyển sinh">
+        {application.admissionPeriod}
+      </Descriptions.Item>
       <Descriptions.Item label="Tên ngành học">
         {application.major}
       </Descriptions.Item>

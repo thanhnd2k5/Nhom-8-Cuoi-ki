@@ -16,6 +16,7 @@ export {default as SubjectCombination} from './subject_combinations'
 export {default as ApplicationResult} from './application_results'
 export {default as HighSchoolProfile} from './high_school_profiles'
 export {default as UniversityMajors} from './university_majors'
+export {default as AdmissionPeriod} from './admission_periods'
 
 
 

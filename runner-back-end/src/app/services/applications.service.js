@@ -27,6 +27,7 @@ export async function getApplicationById(id) {
         .populate('userId', 'name email')
         .populate('universityMajorId')
         .populate('subjectCombinationId')
+        .populate('admissionPeriodId')
 
     return application
 }
@@ -36,6 +37,7 @@ export async function getAllApplicationsByUserId(userId) {
         .populate('userId')
         .populate('universityMajorId')
         .populate('subjectCombinationId')
+        .populate('admissionPeriodId')
 
     return applications
 }
@@ -47,6 +49,7 @@ export async function createCompleteApplication(userId, formData) {
     const application = new Application({
         userId,
         universityMajorId: applicationData.universityMajorId,
+        admissionPeriodId: applicationData.admissionPeriodId,
         subjectCombinationId: applicationData.subjectCombinationId || null,
         admissionMethod: applicationData.admissionMethod,
         status: 'cho_duyet'
@@ -96,6 +99,7 @@ export async function getCompleteApplicationById(applicationId) {
         .populate('userId', 'name email')
         .populate('universityMajorId')
         .populate('subjectCombinationId')
+        .populate('admissionPeriodId')
         .lean()
 
 
@@ -147,6 +151,7 @@ export async function getAllApplications() {
         .populate('userId', 'name email')
         .populate('universityMajorId')
         .populate('subjectCombinationId')
+        .populate('admissionPeriodId')
         .sort({ createdAt: -1 })
 
     return applications
@@ -161,6 +166,7 @@ export async function getApplicationsByUniversity(universityId) {
         })
         .populate('userId', 'name email')
         .populate('subjectCombinationId')
+        .populate('admissionPeriodId')
         .sort({ createdAt: -1 })
 
     // Lọc ra các đơn có universityMajorId khác null (tức là match với universityId)
@@ -201,6 +207,9 @@ export async function searchUserApplications(userId, filters) {
             $lte: new Date(filters.endDate)
         }
     }
+    if (filters.admissionPeriodId) {
+        query.admissionPeriodId = filters.admissionPeriodId
+    }
 
     const applications = await Application.find(query)
         .populate({
@@ -211,6 +220,7 @@ export async function searchUserApplications(userId, filters) {
             }
         })
         .populate('subjectCombinationId')
+        .populate('admissionPeriodId')
         .sort({ created_at: -1 })
 
     return applications
@@ -250,6 +260,9 @@ export async function searchAllApplications(filters) {
             $lte: new Date(filters.endDate)
         }
     }
+    if (filters.admissionPeriodId) {
+        query.admissionPeriodId = filters.admissionPeriodId
+    }
 
     const applications = await Application.find(query)
         .populate('userId', 'name email')
@@ -261,6 +274,7 @@ export async function searchAllApplications(filters) {
             }
         })
         .populate('subjectCombinationId')
+        .populate('admissionPeriodId')
         .sort({ created_at: -1 })
 
     return applications
@@ -268,7 +282,6 @@ export async function searchAllApplications(filters) {
 
 // Lấy đơn xét tuyển và nhóm theo ngành của một trường cụ thể
 export async function getApplicationsGroupedByMajorOfUniversity(universityId) {
-    // Lấy tất cả đơn của trường và populate thông tin cần thiết
     const applications = await Application.find()
         .populate({
             path: 'universityMajorId',
@@ -280,6 +293,7 @@ export async function getApplicationsGroupedByMajorOfUniversity(universityId) {
         })
         .populate('userId', 'name email')
         .populate('subjectCombinationId')
+        .populate('admissionPeriodId')
         .sort({ createdAt: -1 })
 
     // Lọc ra các đơn có universityMajorId khác null (tức là match với universityId)

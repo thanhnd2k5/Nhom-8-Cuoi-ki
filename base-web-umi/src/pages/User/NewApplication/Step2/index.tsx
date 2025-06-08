@@ -19,10 +19,12 @@ const Step2Page: React.FC = () => {
   const [selectedUniversity, setSelectedUniversity] = useState<string>('');
   const [selectedMajor, setSelectedMajor] = useState<string>('');
   const [selectedCombination, setSelectedCombination] = useState<string>('');
+  const [selectedAdmissionPeriod, setSelectedAdmissionPeriod] = useState<string>('');
 
   // Models
   const { universities, loading: universitiesLoading, fetchUniversities } = useUniversityModel();
   const { universityMajors, loading: majorsLoading, fetchUniversityMajors } = useUniversityMajorsModel();
+  const { admissionPeriods, loading: periodsLoading, fetchAdmissionPeriodsByUniversity } = useModel('User.AdmissionPeriods');
   const { formData, updateFormData } = useModel('User.applications');
 
   // Check if current method needs subject combination
@@ -38,11 +40,13 @@ const Step2Page: React.FC = () => {
   }, [admissionMethod]);
 
   useEffect(() => {
-    // Fetch majors when university is selected
+    // Fetch majors and admission periods when university is selected
     if (selectedUniversity) {
+      fetchAdmissionPeriodsByUniversity(selectedUniversity);
       fetchUniversityMajors(selectedUniversity);
       setSelectedMajor('');
       setSelectedCombination('');
+      setSelectedAdmissionPeriod('');
     }
   }, [selectedUniversity]);
 
@@ -55,7 +59,11 @@ const Step2Page: React.FC = () => {
 
   const handleUniversityChange = (value: string) => {
     setSelectedUniversity(value);
-    form.setFieldsValue({ major: undefined, combination: undefined });
+    form.setFieldsValue({ 
+      major: undefined, 
+      combination: undefined,
+      admissionPeriod: undefined 
+    });
   };
 
   const handleMajorChange = (value: string) => {
@@ -65,6 +73,10 @@ const Step2Page: React.FC = () => {
 
   const handleCombinationChange = (value: string) => {
     setSelectedCombination(value);
+  };
+
+  const handleAdmissionPeriodChange = (value: string) => {
+    setSelectedAdmissionPeriod(value);
   };
 
   const handleBack = () => {
@@ -77,13 +89,13 @@ const Step2Page: React.FC = () => {
       subjectCombinationId: selectedCombination,
       admissionMethod: admissionMethod,
       university: selectedUniversity,
-      // ... các trường khác nếu có
+      admissionPeriodId: selectedAdmissionPeriod,
     });
     history.push(`/user/applications/new/step3`);
   };
 
   const isFormValid = () => {
-    if (!selectedUniversity || !selectedMajor) return false;
+    if (!selectedUniversity || !selectedMajor || !selectedAdmissionPeriod) return false;
     if (needsSubjectCombination && !selectedCombination) return false;
     return true;
   };
@@ -95,6 +107,12 @@ const Step2Page: React.FC = () => {
     if (!selectedMajorData) return [];
     const availableCombinations = selectedMajorData.subject_combination_ids
     return availableCombinations
+  };
+
+  // Filter active admission periods
+  const getActiveAdmissionPeriods = () => {
+    console.log(admissionPeriods)
+    return admissionPeriods.filter(period => period.isActive && period.status === 'open');
   };
 
   return (
@@ -138,6 +156,27 @@ const Step2Page: React.FC = () => {
                   {universities.map((university: University) => (
                     <Option key={university._id} value={university._id}>
                       {university.name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+
+              <Form.Item
+                label="Đợt tuyển sinh"
+                name="admissionPeriod"
+                rules={[{ required: true, message: 'Vui lòng chọn đợt tuyển sinh' }]}
+              >
+                <Select
+                  placeholder={selectedUniversity ? "Chọn đợt tuyển sinh" : "Vui lòng chọn trường đại học trước"}
+                  loading={periodsLoading}
+                  onChange={handleAdmissionPeriodChange}
+                  disabled={!selectedUniversity}
+                  size="large"
+                  value={formData.admissionPeriodId || selectedAdmissionPeriod}
+                >
+                  {getActiveAdmissionPeriods().map(period => (
+                    <Option key={period._id} value={period._id}>
+                      {period.name}
                     </Option>
                   ))}
                 </Select>

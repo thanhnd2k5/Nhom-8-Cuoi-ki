@@ -1,5 +1,6 @@
 import createModel, { ADMISSION_METHOD } from './base'
 import { Schema } from 'mongoose'
+
 const Application = createModel(
     'Application',
     'applications',
@@ -12,6 +13,11 @@ const Application = createModel(
         universityMajorId: {
             type: Schema.Types.ObjectId,
             ref: 'UniversityMajors',
+            required: true,
+        },
+        admissionPeriodId: {
+            type: Schema.Types.ObjectId,
+            ref: 'AdmissionPeriod',
             required: true,
         },
         admissionMethod: {
