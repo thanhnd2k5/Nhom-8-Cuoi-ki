@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment';
+import './AdmissionList.less';
 
 const tabs = [
   { key: 'all', label: 'Tất cả' },
@@ -50,30 +51,19 @@ const AdmissionList = ({ admissions, universityMajors, subjectCombinations }) =>
     : admissions.filter(item => item.status === statusMap[tab]);
 
   return (
-    <div style={{ background: '#f3f4f6', minHeight: 600, padding: 32 }}>
-      <div style={{ maxWidth: 900, margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 24 }}>
-          <h2 style={{ fontWeight: 700, fontSize: 24, margin: 0, flex: 1 }}>Hồ sơ xét tuyển</h2>
-          
-        </div>
-        <div style={{ display: 'flex', gap: 24, marginBottom: 24 }}>
-          {tabs.map(t => (
-            <div
-              key={t.key}
-              onClick={() => setTab(t.key)}
-              style={{
-                fontWeight: 600,
-                fontSize: 16,
-                color: tab === t.key ? '#c00' : '#222',
-                borderBottom: tab === t.key ? '3px solid #c00' : '3px solid transparent',
-                paddingBottom: 6,
-                cursor: 'pointer'
-              }}
-            >
-              {t.label}
-            </div>
-          ))}
-        </div>
+    <div className="admission-list-section">
+      <div className="admission-list-title">Hồ sơ xét tuyển</div>
+      <div className="admission-tabs">
+        {tabs.map(t => (
+          <div
+            key={t.key}
+            className={`tab${tab === t.key ? ' active' : ''}`}
+            onClick={() => setTab(t.key)}
+          >
+            {t.label}
+          </div>
+        ))}
+      </div>
         <div>
           {filtered.length === 0 && <div style={{ color: '#888', textAlign: 'center', marginTop: 60 }}>Không có hồ sơ nào.</div>}
           {filtered.map((item) => (
@@ -134,7 +124,6 @@ const AdmissionList = ({ admissions, universityMajors, subjectCombinations }) =>
           ))}
         </div>
       </div>
-    </div>
   );
 };
 
