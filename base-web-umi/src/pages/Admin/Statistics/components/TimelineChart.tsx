@@ -30,6 +30,9 @@ const TimelineChart: React.FC = () => {
     }
   };
 
+  const chartData = getData();
+  console.log('Line chart data:', chartData);
+
   const config = {
     data: getData(),
     xField: 'date',
@@ -66,13 +69,8 @@ const TimelineChart: React.FC = () => {
         formatter: (v: string) => `${v} hồ sơ`,
       },
     },
-    tooltip: {
-      formatter: (datum: any) => {
-        return {
-          name: 'Số lượng hồ sơ',
-          value: `${datum.count} hồ sơ`,
-        };
-      },
+    meta: {
+      count: { alias: 'Số lượng hồ sơ' }
     },
   };
 

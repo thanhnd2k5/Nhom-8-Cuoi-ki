@@ -51,12 +51,15 @@ export default () => {
       const res = await getAllUniversityMajors(universityId);
       if (res.success) {
         setMajors(res.data);
+        return res.data;
       } else {
         message.error('Không thể tải danh sách ngành học');
+        return [];
       }
     } catch (error) {
       message.error('Lỗi kết nối API');
       console.error('Error fetching majors:', error);
+      return [];
     } finally {
       setLoading(false);
     }

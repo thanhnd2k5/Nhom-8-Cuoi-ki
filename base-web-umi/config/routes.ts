@@ -106,10 +106,10 @@
 				path: '/admin',
 				component: '@/layouts/AdminLayout',
 				routes: [
-					// {
-					// 	path: '/admin/dashboard',
-					// 	component: './Admin/Dashboard',
-					// },
+					{
+						path: '/admin/dashboard',
+						component: './Admin/Dashboard',
+					},
 					{
 						path: '/admin/statistics',
 						component: './Admin/Statistics',
