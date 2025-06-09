@@ -13,15 +13,14 @@ interface Props {
 }
 
 const HotMajors: React.FC<Props> = ({ majors, universities, applications }) => {
-
   const hotMajors = [...majors]
     .sort((a, b) => {
-      const countA = applications.filter(app => String(app.universityMajorId) === String(a._id)).length;
-      const countB = applications.filter(app => String(app.universityMajorId) === String(b._id)).length;
+      const countA = applications.filter(app => String(app.universityMajorId._id) === String(a._id)).length;
+      const countB = applications.filter(app => String(app.universityMajorId._id) === String(b._id)).length;
       return countB - countA;
     })
     .slice(0, 5);
-
+    console.log(hotMajors);
   return (
     <Card
       title={
@@ -37,7 +36,7 @@ const HotMajors: React.FC<Props> = ({ majors, universities, applications }) => {
         renderItem={(item, idx) => {
           const university = universities.find(u => u._id === item.university_id);
           const applicationCount = applications.filter(
-            app => String(app.universityMajorId) === String(item._id)
+            app => String(app.universityMajorId._id) === String(item._id)
           ).length;
 
           return (
