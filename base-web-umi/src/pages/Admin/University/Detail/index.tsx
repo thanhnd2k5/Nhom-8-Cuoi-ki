@@ -47,9 +47,6 @@ const UniversityDetailPage: React.FC = () => {
           <TabPane tab="Thống kê" key="statistics">
             <Statistic />
           </TabPane>
-          <TabPane tab="Cài đặt" key="settings">
-            {/* Component cài đặt sẽ được thêm vào đây */}
-          </TabPane>
         </Tabs>
       </Card>
     </div>

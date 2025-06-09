@@ -62,6 +62,9 @@ export interface ApplicationDetailResponse {
       university: string;
       name: string;
     };
+    admissionPeriodId: {
+      name: string;
+    };
     subjectCombinationId: {
       code: string;
     };
@@ -75,8 +78,10 @@ export interface ApplicationDetailResponse {
     gpaGrade10?: number;
     gpaGrade11?: number;
     gpaGrade12?: number;
+    subjectScores: Record<string, number>;
   };
   documents: Array<{
+    type: string;
     fileUrl: string;
     fileType: string;
   }>;
@@ -94,6 +99,7 @@ export interface NormalizedApplication {
   email: string;
   phone: string;
   university: string;
+  admissionPeriod: string;
   major: string;
   combination?: string;
   status: string;
@@ -102,6 +108,7 @@ export interface NormalizedApplication {
     updated: string;
   };
   scores: Record<string, number>;
+  subjectScores: Record<string, number>;
   totalScore: number;
   method: string;
   priority: {
@@ -112,7 +119,6 @@ export interface NormalizedApplication {
   documents: {
     name: string;
     type: string;
-    size: string;
     url: string;
   }[];
 } 

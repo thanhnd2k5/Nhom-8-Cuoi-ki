@@ -36,11 +36,6 @@ const AdminLayout: React.FC = ({ children }) => {
       label: <Link to="/admin/statistics">Thống kê</Link>,
     },
     {
-      key: '/admin/users',
-      icon: <UserOutlined />,
-      label: <Link to="/admin/users">Quản lý người dùng</Link>,
-    },
-    {
         key: '/admin/university',
       icon: <FileTextOutlined />,
       label: <Link to="/admin/university">Quản lý trường đại học</Link>,
@@ -49,11 +44,6 @@ const AdminLayout: React.FC = ({ children }) => {
       key: '/admin/subject-combinations',
       icon: <FileTextOutlined />,
       label: <Link to="/admin/subject-combinations">Quản lý tổ hợp môn</Link>,
-    },
-    {
-      key: '/admin/settings',
-      icon: <SettingOutlined />,
-      label: <Link to="/admin/settings">Cài đặt</Link>,
     },
     {
       type: 'divider',

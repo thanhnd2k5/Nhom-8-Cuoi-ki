@@ -62,7 +62,6 @@ const ApplicationList: React.FC<ApplicationListProps> = ({
       cho_duyet: { color: 'warning', text: 'Chờ duyệt' },
       da_duyet: { color: 'success', text: 'Đã duyệt' },
       tu_choi: { color: 'error', text: 'Đã từ chối' },
-      da_nhap_hoc: { color: 'processing', text: 'Đã nhập học' },
     };
     const config = statusConfig[status as keyof typeof statusConfig];
     return <Tag color={config.color}>{config.text}</Tag>;

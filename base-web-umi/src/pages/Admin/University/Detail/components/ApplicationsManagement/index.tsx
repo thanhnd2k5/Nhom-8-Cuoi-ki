@@ -88,22 +88,6 @@ const ApplicationsManagement: React.FC = () => {
           <TabPane
             tab={
               <Space>
-                Đã nhập học
-                <Badge count={getApplicationCount('da_nhap_hoc')} style={{ backgroundColor: '#1890ff' }} />
-              </Space>
-            }
-            key="da_nhap_hoc"
-          >
-            <ApplicationList
-              status="da_nhap_hoc"
-              applications={applications.filter(app => app.status === 'da_nhap_hoc')}
-              loading={loading}
-            />
-          </TabPane>
-
-          <TabPane
-            tab={
-              <Space>
                 Đơn theo ngành
                 <Badge count={applications.length} style={{ backgroundColor: '#1890ff' }} />
               </Space>

@@ -91,9 +91,6 @@ const UserLayout: React.FC<UserLayoutProps> = ({ children }) => {
             <Menu.Item key="searchApplicationsPage" icon={<SearchOutlined />}>
               <Link to="/user/applications/search">Tìm hiếm hồ sơ</Link>
             </Menu.Item>
-            <Menu.Item key="settings" icon={<SettingOutlined />}>
-              <Link to="/user/settings">Cài đặt</Link>
-            </Menu.Item>
           </Menu>
         </Sider>
         
