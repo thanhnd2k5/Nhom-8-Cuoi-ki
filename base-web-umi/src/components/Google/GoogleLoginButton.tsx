@@ -9,7 +9,7 @@ const GoogleLoginButton = () => {
         const id_token = credentialResponse.credential;
         try {
             const res = await loginWithGoogle({ id_token });
-            const response = res.data?.data;
+            const response = res.data?.data.access_token;
             if (response) {
                 setAuthToken(response);
                 message.success("Đăng nhập Google thành công!");
