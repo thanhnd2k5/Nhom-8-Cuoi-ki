@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, Button, Row, Col, Typography, Badge } from 'antd';
-import { EyeOutlined } from '@ant-design/icons';
+import { Card, Button, Row, Col, Typography, Badge, Tooltip } from 'antd';
+import { EyeOutlined, ClockCircleOutlined, CalendarOutlined } from '@ant-design/icons';
 import { history } from 'umi';
 import moment from 'moment';
 import type { Application } from '@/models/User/applications';
@@ -97,7 +97,9 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application }) => {
     <Card className={styles.applicationCard}>
       <div className={styles.cardHeader}>
         <div className={styles.cardTitle}>
-          <Title level={4}>{application.universityMajorId.name}</Title>
+          <Tooltip title={application.universityMajorId.name}>
+            <Title level={4} ellipsis={{ rows: 2 }}>{application.universityMajorId.name}</Title>
+          </Tooltip>
           <Text type="secondary">Mã ngành: {application.universityMajorId.code}</Text>
         </div>
         <div className={styles.cardStatus}>
@@ -130,13 +132,19 @@ const ApplicationCard: React.FC<ApplicationCardProps> = ({ application }) => {
         <Row gutter={[16, 8]}>
           <Col xs={24} md={12}>
             <div className={styles.infoItem}>
-              <Text type="secondary">Ngày nộp</Text>
+              <Text type="secondary">
+                <ClockCircleOutlined style={{ marginRight: 8 }} />
+                Ngày nộp
+              </Text>
               <Text>{moment(application.created_at).format('DD/MM/YYYY')}</Text>
             </div>
           </Col>
           <Col xs={24} md={12}>
             <div className={styles.infoItem}>
-              <Text type="secondary">Ngày cập nhật</Text>
+              <Text type="secondary">
+                <CalendarOutlined style={{ marginRight: 8 }} />
+                Ngày cập nhật
+              </Text>
               <Text>{moment(application.updated_at).format('DD/MM/YYYY')}</Text>
             </div>
           </Col>

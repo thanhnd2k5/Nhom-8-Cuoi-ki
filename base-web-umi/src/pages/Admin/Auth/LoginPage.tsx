@@ -16,7 +16,7 @@
         console.log(res.data);
         setAuthTokenAdmin(res.data.data.access_token)
         message.success('Đăng nhập thành công!');
-        history.push('/admin');
+        history.push('/admin/dashboard');
       } catch (err: any) {
         message.error(err.message || 'Đăng nhập thất bại');
       } finally {

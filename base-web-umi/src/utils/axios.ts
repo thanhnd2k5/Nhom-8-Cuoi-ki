@@ -96,7 +96,7 @@ axios.interceptors.response.use(
 					});
 					break;
 
-				case 401:
+				case 401: {
 					// Nếu có access token (có thể access token hết hạn) thì mới cảnh báo
 					if (originalRequest?.headers?.Authorization)
 						notification.error({
@@ -115,8 +115,17 @@ axios.interceptors.response.use(
 					//   // history.replace('/user/login');
 					// }
 
-					if (originalRequest._retry) break;
-					break;
+						// Xóa token tương ứng
+						if (originalRequest.url.includes('/admin/')) {
+							localStorage.removeItem('adminToken');
+							window.location.href = '/admin/login'; // hoặc dùng history.replace
+						} else if (originalRequest.url.includes('/users/')) {
+							localStorage.removeItem('userToken');
+							window.location.href = '/user/login'; // hoặc trang login user
+						}
+
+						return Promise.reject(error); // Đảm bảo reject để tránh bị "treo"
+					}
 				// return routeLogin('Unauthorize');
 
 				///////////////////////////////////////////////////////////////////
