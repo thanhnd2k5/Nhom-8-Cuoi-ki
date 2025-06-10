@@ -3,7 +3,7 @@ import { message } from 'antd';
 import {
   getAdmissionPeriodsByUniversityId,
 } from '@/services/User/AdmissionPeriods';
-import { getAdmissionPeriodById } from '@/services/Admin/AdmissionPeriods';
+import { getAdmissionPeriodById } from '@/services/User/AdmissionPeriods';
 
 export interface AdmissionPeriod {
   _id: string;
