@@ -13,7 +13,7 @@ const GoogleLoginButton = () => {
             if (response) {
                 setAuthToken(response);
                 message.success("Đăng nhập Google thành công!");
-                setTimeout(() => window.location.href = "/", 500);
+                setTimeout(() => window.location.href = "/user/dashboard", 500);
             }
         } catch (err) {
             message.error("Đăng nhập Google thất bại!");
