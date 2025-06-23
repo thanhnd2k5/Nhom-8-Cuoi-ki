@@ -1,29 +1,36 @@
-import request from '@/utils/axios';
+import axios from '@/utils/axios';
+
+const BASE_URL = 'http://localhost:3456/users/universities';
 
 interface University {
-    success: boolean;
-    message: string;
-    data: {
-        _id: string;
-        name: string;
-        code: string;
-        address: string;
-        majors: Array<{
-            _id: string;
-            name: string;
-            code: string;
-            admission_methods: string[];
-        }>;
-    }[];
+  success: boolean;
+  message: string;
+  data: {
+    _id: string;
+    name: string;
+    code: string;
+    address: string;
+    majors: Array<{
+      _id: string;
+      name: string;
+      code: string;
+      admission_methods: string[];
+    }>;
+  }[];
 }
 
+// Lấy tất cả các trường đại học
 export const getUniversities = async (): Promise<University> => {
-    const response = await request.get('http://localhost:3456/users/universities');
-    return response.data;
+  const response = await axios.get(BASE_URL);
+  return response.data;
 };
 
-export const getUniversitiesByAdmissionMethod = async (admissionMethod: string): Promise<University> => {
-    const response = await request.get(`http://localhost:3456/users/universities/university/admission-method?admissionMethod=${admissionMethod}`);
-    return response.data;
+// Lấy các trường theo phương thức xét tuyển
+export const getUniversitiesByAdmissionMethod = async (
+  admissionMethod: string
+): Promise<University> => {
+  const response = await axios.get(`${BASE_URL}/admission-method`, {
+    params: { admissionMethod },
+  });
+  return response.data;
 };
-

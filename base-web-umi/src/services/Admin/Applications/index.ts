@@ -52,35 +52,42 @@ export interface GroupedApplicationsResponse {
   data: GroupedApplication[];
 }
 
+// ===== BASE URL =====
+const ADMIN_BASE_URL = 'http://localhost:3456/admin/applications';
+const USER_BASE_URL = 'http://localhost:3456/users/applications';
+
+// ===== API functions =====
+
 // Get all applications
 export async function getAllApplications() {
-  const response = await axios.get<ApplicationsResponse>('http://localhost:3456/admin/applications');
+  const response = await axios.get<ApplicationsResponse>(`${ADMIN_BASE_URL}`);
   return response.data;
 }
 
 // Get applications by university
 export async function getApplicationsByUniversity(universityId: string) {
-  const response = await axios.get<ApplicationsResponse>(`http://localhost:3456/admin/applications/university/${universityId}`);
+  const response = await axios.get<ApplicationsResponse>(`${ADMIN_BASE_URL}/university/${universityId}`);
   return response.data;
 }
 
 // Update application status
 export async function updateApplicationStatus(applicationId: string, data: UpdateStatusRequest) {
-  const response = await axios.patch<ApplicationsResponse>(`http://localhost:3456/admin/applications/${applicationId}/status`, data);
+  const response = await axios.patch<ApplicationsResponse>(`${ADMIN_BASE_URL}/${applicationId}/status`, data);
   return response.data;
-} 
+}
 
+// Get complete application by ID (from user-side API)
 export async function getCompleteApplicationById(applicationId: string) {
-  const response = await request(`http://localhost:3456/users/applications/complete/${applicationId}`, {
+  const response = await request(`${USER_BASE_URL}/complete/${applicationId}`, {
     method: 'GET',
   });
-  return response.data
+  return response.data;
 }
 
 // Get applications grouped by major of university
 export async function getApplicationsGroupedByMajorOfUniversity(universityId: string) {
   const response = await axios.get<GroupedApplicationsResponse>(
-    `http://localhost:3456/admin/applications/university/${universityId}/grouped-by-major`
+    `${ADMIN_BASE_URL}/university/${universityId}/grouped-by-major`
   );
   return response.data;
 }

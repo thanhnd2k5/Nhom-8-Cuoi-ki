@@ -1,4 +1,9 @@
-import request from '@/utils/axios';
+import axios from '@/utils/axios';
+
+// ===== BASE URL =====
+const USER_BASE_URL = 'http://localhost:3456/users';
+const PROFILE_URL = `${USER_BASE_URL}/profile`;
+const HIGH_SCHOOL_PROFILE_URL = `${USER_BASE_URL}/high-school-profile`;
 
 // Types cho API responses
 export interface UserProfileResponse {
@@ -68,31 +73,8 @@ export interface UpdateHighSchoolProfileRequest {
 // API functions
 
 export async function getUserProfile(): Promise<UserProfileResponse> {
-  const response = await request(`http://localhost:3456/users/profile`, {
-    method: 'GET',
-  });
+  const response = await axios.get(PROFILE_URL);
   return response.data;
 }
 
-export async function updateUserProfile(data: UpdateUserProfileRequest): Promise<UserProfileResponse> {
-  const response = await request(`http://localhost:3456/users/profile`, {
-    method: 'PUT',
-    data,
-  });
-  return response.data;
-}
-
-export async function getHighSchoolProfile(): Promise<HighSchoolProfileResponse> {
-  const response = await request(`http://localhost:3456/users/high-school-profile`, {
-    method: 'GET',
-  });
-  return response.data;
-}
-
-export async function updateHighSchoolProfile(data: UpdateHighSchoolProfileRequest): Promise<HighSchoolProfileResponse> {
-  const response = await request(`http://localhost:3456/users/high-school-profile`, {
-    method: 'PUT',
-    data,
-  });
-  return response.data;
-} 
+export async function updateUserProfile(data: UpdateUserProfileR)
